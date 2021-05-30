@@ -1,10 +1,17 @@
 import './App.sass';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Header from './components/header/Header';
 
-function App() {
+const App = () => {
   return (
-    <div>
-          Kitchen Leader
-    </div>
+    <>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" component={Header} exact />
+          <Redirect to="/" />
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 }
 
