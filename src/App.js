@@ -2,6 +2,7 @@ import './App.sass';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Header from './components/header/Header';
 import Main from './containers/main/Main';
+import Footer from './components/footer/Footer';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
             <Redirect to="/" />
           </Switch>
         </BrowserRouter>
+        <Footer />
     </>
   );
 }
