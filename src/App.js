@@ -5,12 +5,14 @@ import Header from './components/header/Header';
 const App = () => {
   return (
     <>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" component={Header} exact />
-          <Redirect to="/" />
-        </Switch>
-      </BrowserRouter>
+      <Header>
+        <BrowserRouter>
+          <Switch>
+            {/* <Route path="/" component={Main} exact /> */}
+            <Redirect to="/" />
+          </Switch>
+        </BrowserRouter>
+      </Header>
     </>
   );
 }
