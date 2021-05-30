@@ -1,3 +1,5 @@
+@import '../../_querymixings'
+    
 .main-page-card
     display: flex
     flex-direction: row
@@ -6,6 +8,9 @@
     width: auto
     position: relative
     border-radius: 1.5em
+
+    @include breakpoint($size: medium)
+    
 
 .card-image
     height: 100%
