@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './MainPageCard.sass'
 
 const MainPageCard = (props) => {
@@ -9,7 +10,7 @@ const MainPageCard = (props) => {
                 <div className='card-text'>
                     <span className='main-card-title'>{props.title}</span>
                     <span className='main-card-description'>{props.description}</span>
-                    <button className='main-card-button'>{props.buttonName}</button>
+                    <Link className='main-card-button' to={props.link}>{props.buttonName}</Link>
                 </div>
             </div>
         </div>
