@@ -1,12 +1,20 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchLogin } from '../../store/actions/authActionCreator';
 import './Login.sass';
 
 const Login = () => {
-    const [error, setError] = useState(true);
-    const [disabled, setDisabled] = useState(true);
+    const [error, setError] = useState(null);
+    const [disabled, setDisabled] = useState(false);
+    const dispatch = useDispatch();
+    
+    const validateLogin = (event) => {
+        event.preventDefault();
 
-    const validateLoginFields = (event) => {
+        const email = event.target[0].value;
+        const password = event.target[1].value;
 
+        dispatch(fetchLogin(email, password));
     }
 
     return (
@@ -20,7 +28,7 @@ const Login = () => {
 
             {/* {error && <ErrorMsg /> } */}
 
-            <form className='auth-form' onSubmit={e => validateLoginFields(e)}>
+            <form className='auth-form' onSubmit={event => validateLogin(event)}>
 
                 <div className='input-field'>
                     <label for='login-email'>E-mail</label>
@@ -29,10 +37,10 @@ const Login = () => {
 
                 <div className='input-field'>
                     <label for='login-pw'>Password</label>
-                    <input className='input-text' type="email" name="email" id='login-pw'></input>
+                    <input className='input-text' type="password" name="email" id='login-pw'></input>
                 </div>
 
-                <button className="login-btn" name="submit" type="submit" disabled={disabled}>Submit</button>
+                <button className="login-btn" name="submit" type="submit" disabled={disabled}>Log In</button>
 
             </form>
         </div>
