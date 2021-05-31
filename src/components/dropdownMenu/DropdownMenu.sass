@@ -10,21 +10,53 @@
     transform: translateX(-45%)
     background-color: #ffffff
     border: 0.1em solid #e6e6e6
-    padding: 1em
+    padding: 1rem
     overflow: hidden
+    transition: height 0.5s ease
 
 .menu-item
-    text-decoration: none
-    color: black
-    heigth: 50px
+    height: 50px
     display: flex
     align-items: center
     border-radius: 8px
     transition: background 0.5s
-    padding: 0.5em
+    padding: 0.5rem
+    text-decoration: none
+    color: black
 
 .menu-item:hover
     background-color: #e6e6e6
 
-span.icon-right
-    margin-left: auto 
+.icon-right
+    margin-left: auto
+
+.menu
+    width: 100%
+
+.menu-primary-enter
+    position: absolute
+    transform: translateX(-110%)
+
+.menu-primary-enter-active
+    transform: translateX(0%)
+    transition: all 0.5s ease
+
+.menu-primary-exit
+    position: absolute
+
+.menu-primary-exit-active
+    transform: translateX(-110%)
+    transition: all 0.5s ease
+
+.menu-secondary-enter
+    transform: translateX(110%)
+
+.menu-secondary-enter-active
+    transform: translateX(0%)
+    transition: all 0.5s ease
+
+.menu-secondary-exit
+
+.menu-secondary-exit-active
+    transform: translateX(110%)
+    transition: all 0.5s ease

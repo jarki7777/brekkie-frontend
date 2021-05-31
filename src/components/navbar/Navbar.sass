@@ -1,4 +1,4 @@
-@import '../../_querymixings'
+// @import '../../_querymixings'
 
 span.logo
     position: absolute
@@ -6,20 +6,18 @@ span.logo
     font-weight: 900
     
 .navbar
-    align-items: center
-    background-color: #ffffff
-    border-bottom: 0.15em solid #e6e6e6
     height: 60px
+    background-color: #ffffff
+    padding: 0 1rem
+    border-bottom: 0.15em solid #e6e6e6
     font-family: 'SF-Pro'
     font-weight: 900
-    padding-left: 1em
-    padding-right: 1em
     position: sticky
     top: 0
     z-index: 500
 
-    @include breakpoint($size: xlarge)
-        justify-content: space-around
+    // @include breakpoint($size: xlarge)
+    //     justify-content: space-around
 
 .navbar-nav
     max-width: 100%
