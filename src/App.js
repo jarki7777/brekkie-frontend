@@ -1,13 +1,13 @@
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import Header from './components/header/Header';
 import Main from './containers/main/Main';
 import Footer from './components/footer/Footer';
+import Header from './components/header/Header';
 
 const App = () => {
   return (
     <>
-      <Header />
       <BrowserRouter>
+        <Header />
         <Switch>
           <Route path="/" component={Main} exact />
           <Redirect to="/" />
