@@ -8,8 +8,12 @@
     width: auto
     position: relative
     border-radius: 1.5em
+    max-width: 95%
 
-    @include breakpoint($size: medium)
+    @include breakpoint($size: large)
+        max-width: 1024px
+        margin-left: 1em
+        margin-right: 1em
     
 
 .card-image
@@ -38,13 +42,15 @@
     width: 80%
 
 .main-card-title
-    font-family: 'SF-Pro bolder'
+    font-family: 'SF-Pro'
+    font-weight: 700
     font-size: 1.2em
     color: white
     text-shadow: 0.05em 0.05em 0.05em black
 
 .main-card-description
-    font-family: 'SF-Pro bold'
+    font-family: 'SF-Pro'
+    font-weight: 400
     color: white
     text-shadow: 0.05em 0.05em 0.05em black
 
@@ -57,7 +63,8 @@
     text-decoration: none
     display: inline-block
     font-size: 16px
-    font-family: 'SF-Pro bold'
+    font-family: 'SF-Pro'
+    font-weight: 700
     border-radius: 1.5em
     cursor: pointer
     transition: 0.3s ease all

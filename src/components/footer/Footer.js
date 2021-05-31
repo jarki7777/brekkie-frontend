@@ -9,7 +9,7 @@ const Footer = () => {
                 <a href="https://twitter.com" target="_blank" rel="noreferrer"><i className="fab fa-twitter fa-2x"></i></a>
             </div>
             <div className="companyInfo">
-                <div className="kian">My App</div>
+                <div>My App</div>
                 <div>Copyright ©2021</div>
             </div>
         </div>
