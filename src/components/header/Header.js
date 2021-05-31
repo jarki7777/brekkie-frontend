@@ -1,15 +1,20 @@
-import { useState } from 'react';
-import './Header.sass';
+import Navbar from "../navbar/Navbar";
+import NavItem from "../navItem/NavItem";
+import DropdownMenu from '../dropdownMenu/DropdownMenu'
+import { ReactComponent as Search } from '../../icons/search-solid.svg';
+import { ReactComponent as Menu } from '../../icons/bars-menu.svg';
 
 const Header = () => {
-    const [userRole, setUserRole] = useState(true);
-
     return (
-        <div className='header'>
-            <div className='logo'>This is a logo</div>
-            {userRole && <div><i className="fas fa-bars"></i></div>}
-        </div>
+        <>
+            <Navbar>
+                <NavItem icon={<Search />} />
+                <NavItem icon={<Menu />}> 
+                    <DropdownMenu />
+                </NavItem>
+            </Navbar>
+        </>
     );
 }
 
-export default Header;
+export default Header
