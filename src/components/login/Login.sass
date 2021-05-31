@@ -1,27 +1,96 @@
 .login-container
-    width: 425px
+    width: 380px
     display: flex
     flex-direction: column
     justify-content: space-evenly
     align-items: center
-    border: 0.1em solid red
     padding: 1em
-    
-.login-btn
-    background-color: #A08E81
+    border: 0.1em solid #e6e6e6
+    border-radius: 0.25em
+    background-color: #ffffff
+
+.auth-logo
+    height: 40px
+    width: auto
+    display: flex
+    justify-content: center
+    align-items: center
+    font-weight: 900
+
+.toggle-auth
+    height: 30px
+    width: 100%
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+
+.active-auth
+    width: 15%
+    display: flex
+    flex-direction: row
+    border-bottom: 0.3em solid black
+
+.inactive-auth
+    width: 80%
+    display: flex
+    flex-direction: row
+    color: #00000033
+    border-bottom: 0.1em solid #e6e6e6
+    padding-bottom: 0.2em
+    padding-left: 1em
+
+.active-auth, .inactive-auth
+    cursor: pointer
+
+.auth-form
+    width: 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+.input-field
+    width: 100%
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: flex-start
+    margin-top: 1.5em
+
+.input-text
+    width: 99%
+    height: 1.8em
+    background-color: #e6e6e6
     border: none
-    color: white
-    padding: 15px 32px
+    border-radius: 0.2em
+    transition: all 0.3s ease
+
+.input-text:focus
+    background-color: #00000026
+
+.input-text:hover
+    box-shadow: inset 1.5px 1.5px #00000033, inset -1.5px -1.5px #00000033
+
+.input-text:focus:hover
+    box-shadow: 0px 0px 5px #00000033
+
+.login-btn
+    height: 1.8em
+    width: 99%
+    background-color: black
+    border: none
+    margin-top: 1.5em
     text-align: center
     text-decoration: none
     display: inline-block
     font-size: 16px
     font-family: 'SF-Pro'
     font-weight: 700
-    border-radius: 1.5em
+    border-radius: 0.2em
     cursor: pointer
+    color: white
     transition: 0.3s
 
 .login-btn:hover
-    color: black
-    filter: brightness(1.2)
+    background-color: #000000B3
