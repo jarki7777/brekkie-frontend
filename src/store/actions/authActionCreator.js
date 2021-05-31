@@ -1,7 +1,6 @@
 import { SET_LOGIN_STATE, SET_ROLE_STATE } from './actionTypes';
 
 export const fetchLogin = (email, password) => {
-    console.log(process.env.REACT_APP_LOGIN_URL)
     return async (dispatch) => {
         try {
             let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_LOGIN_URL}`, {
@@ -13,21 +12,23 @@ export const fetchLogin = (email, password) => {
                 })
             });
             res = await res.json();
-            const role = res.role;            
-            console.log(res);
-            dispatch(
-                {
-                    type: SET_LOGIN_STATE,
-                    payload: true
-                }
-            );
+            const role = res.role;
+            if (res.token) {
+                dispatch(
+                    {
+                        type: SET_LOGIN_STATE,
+                        payload: true
+                    }
+                );
 
-            dispatch(
-                {
-                    type: SET_ROLE_STATE,
-                    payload: role
-                }
-            )
+                dispatch(
+                    {
+                        type: SET_ROLE_STATE,
+                        payload: role
+                    }
+                )
+            }
+            return res;
         } catch (e) {
             console.log(e);
         }
