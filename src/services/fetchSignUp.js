@@ -6,7 +6,7 @@ export const fetchSignUp = async (username, email, password) => {
             body: JSON.stringify({ username, email, password })
         });
         const status = res.status;
-        res = await res.json();
+        if (res.status !== 201) res = await res.json();
         res = { ...res, status }
         return res;
     } catch (e) {

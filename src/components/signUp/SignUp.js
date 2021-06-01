@@ -36,11 +36,10 @@ const SignUp = () => {
 
             const res = await fetchSignUp(username, email, password);
             if (res.status === 201) return/*redirect*/
-            if (res.status === 409) return/*used username or email*/
-            if (res.status === 400) return/*check pw*/
+            if (res.status === 409) setError(res.message);
 
         } catch (e) {
-            setError(e.message);
+            setError('Service is currently unavailable, please try again later');
         }
     }
 
