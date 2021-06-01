@@ -1,19 +1,27 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchLogin } from '../../store/actions/authActionCreator';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLogin } from '../../services/fetchLogin';
+import { setLogin } from '../../store/actions/authActionCreator';
 import './Login.sass';
 
 const Login = () => {
     const [error, setError] = useState(null);
+    const [disabled, setDisabled] = useState(false);
+    const [message, setMessage] = useState(null);
     const dispatch = useDispatch();
-    
-    const validateLogin = (event) => {
+    const loginState = useSelector((state) => state.loginState.login);
+
+    console.log(message);
+
+    const validateLogin = async (event) => {
         event.preventDefault();
 
         const email = event.target[0].value;
         const password = event.target[1].value;
-
-        dispatch(fetchLogin(email, password));
+        const res = await fetchLogin(email, password);
+        
+        if (res.status === 200) dispatch(setLogin(res));
+        if (res.status === 404) setMessage('Please verify that the email and password are correct');
     }
 
     return (
