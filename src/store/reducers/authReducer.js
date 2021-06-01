@@ -1,8 +1,9 @@
-import { SET_LOGIN_STATE, SET_ROLE_STATE } from '../actions/actionTypes';
+import { SET_LOGIN_STATE, SET_ROLE_STATE, SET_TOKEN } from '../actions/actionTypes';
 
 const authInitialState = {
     login: false,
-    role: 'client'
+    role: 'client',
+    token: null
 }
 
 const authReducer = (authState = authInitialState, action) => {
@@ -19,6 +20,13 @@ const authReducer = (authState = authInitialState, action) => {
                 {
                     ...authState,
                     role: action.payload
+                }
+            );
+        case SET_TOKEN:
+            return (
+                {
+                    ...authState,
+                    token: action.payload
                 }
             );
         default:
