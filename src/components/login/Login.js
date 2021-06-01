@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogin } from '../../services/fetchLogin';
 import { setLogin } from '../../store/actions/authActionCreator';
 import { ReactComponent as Close } from '../../icons/times-solid.svg';
+import ReactDom from 'react-dom';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './Login.sass';
 
@@ -30,7 +31,7 @@ const Login = (props) => {
         }
     }
 
-    return (
+    return ReactDom.createPortal(
         <>
             <div className='modal-overlay'></div>
             <div className='login-container'>
@@ -60,7 +61,8 @@ const Login = (props) => {
 
                 </form>
             </div>
-        </>
+        </>,
+        document.getElementById('login-portal')
     );
 }
 

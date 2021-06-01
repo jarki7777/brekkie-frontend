@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { fetchSignUp } from '../../services/fetchSignUp';
 import { validateUsername, validateEmail, validatePassword } from '../../util/validateInput';
 import { ReactComponent as Close } from '../../icons/times-solid.svg';
+import ReactDom from 'react-dom';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './SignUp.sass';
 
@@ -45,7 +46,7 @@ const SignUp = (props) => {
         }
     }
 
-    return (
+    return ReactDom.createPortal(
         <>
             <div className='modal-overlay'></div>
             <div className='login-container'>
@@ -87,7 +88,8 @@ const SignUp = (props) => {
 
                 </form>
             </div>
-        </>
+        </>,
+        document.getElementById('signup-portal')
     );
 }
 
