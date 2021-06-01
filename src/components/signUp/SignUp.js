@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchSignUp } from '../../services/fetchSignUp';
 import { validateUsername, validateEmail, validatePassword } from '../../util/validateInput';
 import { ReactComponent as Close } from '../../icons/times-solid.svg';
@@ -8,7 +8,10 @@ import './SignUp.sass';
 
 const SignUp = (props) => {
     const [error, setError] = useState(null);
-    if (!props.open) return null;
+
+    useEffect(() => {
+        if (!props.open) return null;
+    }, []);
 
     const checkUserName = (event) => {
         event.preventDefault();
@@ -38,7 +41,10 @@ const SignUp = (props) => {
             if (!email || !password || !username) throw new Error('All fields are required');
 
             const res = await fetchSignUp(username, email, password);
-            if (res.status === 201) return/*redirect*/
+            if (res.status === 201) {
+                props.setOpenLogin(true);
+                props.setOpenSignUp(false);
+            }
             if (res.status === 409) setError(res.message);
 
         } catch (e) {
