@@ -7,7 +7,6 @@ import { ReactComponent as Liked } from '../../icons/heart-solid.svg';
 import { ReactComponent as Stats } from '../../icons/chart-bar-solid.svg';
 import { ReactComponent as Inventory } from '../../icons/list-ul-solid.svg';
 import { ReactComponent as ShoppingList } from '../../icons/shopping-cart-solid.svg';
-import { Link } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import { useState, useRef, useEffect } from 'react';
 
@@ -28,15 +27,15 @@ const DropdownMenu = () => {
 
     const DropDownItem = (props) => {
         return (
-            <Link href='/' className='menu-item' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+            <span href='/' className='menu-item' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
                 <span className='icon-button'>{props.leftIcon}</span>
                 {props.children}
                 <span className='icon-right'>{props.rightIcon}</span>
-            </Link>
+            </span>
         );
     }
     return (
-        <div className='dropdown' style={{ height: menuHeight }} ref={dropdownRef}>
+        <div className='dropdown' style={{ height: menuHeight }}>
             <CSSTransition in={activeMenu === 'main'}
                 unmountOnExit
                 timeout={500}                
