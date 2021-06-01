@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import './Navbar.sass';
+import { ReactComponent as Logo } from '../../logo.svg';
 
 const Navbar = (props) => {
-    const [userRole, setUserRole] = useState(true);
 
     return (
         <nav className='navbar'>
-            <span className='logo'>This is a logo</span>
+            <span className='main-logo'><Logo /></span>
             <ul className='navbar-nav'>{props.children}</ul>
         </nav>
     );

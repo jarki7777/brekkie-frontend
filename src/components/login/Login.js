@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { fetchLogin } from '../../services/fetchLogin';
 import { setLogin } from '../../store/actions/authActionCreator';
 import { ReactComponent as Close } from '../../icons/times-solid.svg';
+import { ReactComponent as Logo } from '../../logo.svg';
 import ReactDom from 'react-dom';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './Login.sass';
@@ -11,7 +12,7 @@ import { useEffect } from 'react';
 const Login = (props) => {
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
-    
+
     useEffect(() => {
         if (!props.open) return null;
     }, []);
@@ -41,7 +42,9 @@ const Login = (props) => {
             <div className='modal-overlay'></div>
             <div className='login-container'>
                 <div className='icon-button close-icon' onClick={props.onClose}><Close /></div>
-                <span className='auth-logo'>This is a logo</span>
+                <span className='auth-logo'>
+                    <span className='small-logo'><Logo /></span>
+                </span>
 
                 <div className='toggle-auth'>
                     <div className='active-auth'>Log In</div>

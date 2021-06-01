@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchSignUp } from '../../services/fetchSignUp';
 import { validateUsername, validateEmail, validatePassword } from '../../util/validateInput';
 import { ReactComponent as Close } from '../../icons/times-solid.svg';
+import { ReactComponent as Logo } from '../../logo.svg';
 import ReactDom from 'react-dom';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './SignUp.sass';
@@ -57,7 +58,9 @@ const SignUp = (props) => {
             <div className='modal-overlay'></div>
             <div className='login-container'>
                 <div className='icon-button close-icon' onClick={props.onClose}><Close /></div>
-                <span className='auth-logo'>This is a logo</span>
+                <span className='auth-logo'>
+                    <span className='small-logo'><Logo /></span>
+                </span>
 
                 <div className='toggle-auth'>
                     <div className='inactive-login' onClick={props.showLogin}>Log In</div>
