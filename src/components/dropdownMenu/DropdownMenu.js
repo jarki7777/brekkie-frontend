@@ -9,21 +9,24 @@ import { ReactComponent as Inventory } from '../../icons/list-ul-solid.svg';
 import { ReactComponent as ShoppingList } from '../../icons/shopping-cart-solid.svg';
 import { CSSTransition } from 'react-transition-group';
 import { useState, useRef, useEffect } from 'react';
+import { LOG_OUT } from '../../store/actions/actionTypes';
+import { useDispatch } from 'react-redux';
 
 
 const DropdownMenu = () => {
     const [activeMenu, setActiveMenu] = useState('main');
     const [menuHeight, setMenuHeight] = useState(null);
     const dropdownRef = useRef(null);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setMenuHeight(dropdownRef.current?.firstChild.offsetHeight)
-      }, [])
+    }, [])
 
     const calcHeight = (el) => {
         const height = el.offsetHeight;
         setMenuHeight(height);
-      }
+    }
 
     const DropDownItem = (props) => {
         return (
@@ -34,18 +37,23 @@ const DropdownMenu = () => {
             </span>
         );
     }
+    const logOut = { type: LOG_OUT }
     return (
         <div className='dropdown' style={{ height: menuHeight }}>
             <CSSTransition in={activeMenu === 'main'}
                 unmountOnExit
-                timeout={500}                
+                timeout={500}
                 classNames='menu-primary'
                 onEnter={calcHeight}
             >
                 <div className='menu'>
                     <DropDownItem leftIcon={<Profile />} goToMenu='userInfo'>User info</DropDownItem>
                     <DropDownItem leftIcon={<Food />}>Recipes</DropDownItem>
-                    <DropDownItem rightIcon={<SignOut />}>SignOut</DropDownItem>
+                    <span className='sign-out-menu-item' onClick={() => dispatch(logOut)}>
+                        <span className='icon-button'></span>
+                        SignOut
+                        <span className='icon-right'><SignOut /></span>
+                    </span>
                 </div>
 
             </CSSTransition>

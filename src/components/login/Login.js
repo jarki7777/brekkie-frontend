@@ -6,12 +6,16 @@ import { ReactComponent as Close } from '../../icons/times-solid.svg';
 import ReactDom from 'react-dom';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './Login.sass';
+import { useEffect } from 'react';
 
 const Login = (props) => {
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
     const loginState = useSelector((state) => state.loginState.login);
-    if (!props.open) return null;
+    useEffect(() => {
+        if (!props.open) return null;
+    }, []);
+
 
     const validateLogin = async (event) => {
         event.preventDefault();
