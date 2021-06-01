@@ -2,26 +2,30 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogin } from '../../services/fetchLogin';
 import { setLogin } from '../../store/actions/authActionCreator';
+import ErrorMsg from '../errorMsg/ErrorMsg';
 import './Login.sass';
 
 const Login = () => {
     const [error, setError] = useState(null);
-    const [disabled, setDisabled] = useState(false);
-    const [message, setMessage] = useState(null);
     const dispatch = useDispatch();
     const loginState = useSelector((state) => state.loginState.login);
 
-    console.log(message);
-
     const validateLogin = async (event) => {
         event.preventDefault();
+        try {
+            const email = event.target[0].value;
+            const password = event.target[1].value;
+            if (!email || !password) throw new Error('All fields are required');
 
-        const email = event.target[0].value;
-        const password = event.target[1].value;
-        const res = await fetchLogin(email, password);
-        
-        if (res.status === 200) dispatch(setLogin(res));
-        if (res.status === 404) setMessage('Please verify that the email and password are correct');
+            const res = await fetchLogin(email, password);
+            if (res.status === 200) {
+                dispatch(setLogin(res));
+                setError(null);
+            }
+            if (res.status === 404) setError('Please verify that the email and password are correct');
+        } catch (e) {
+            setError(e.message);
+        }
     }
 
     return (
@@ -33,7 +37,7 @@ const Login = () => {
                 <div className='inactive-auth'>Sign Up</div>
             </div>
 
-            {/* {error && <ErrorMsg /> } */}
+            {error && <ErrorMsg>{error}</ErrorMsg>}
 
             <form className='auth-form' onSubmit={event => validateLogin(event)}>
 
