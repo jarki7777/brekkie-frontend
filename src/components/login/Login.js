@@ -1,17 +1,21 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchLogin } from '../../services/fetchLogin';
 import { setLogin } from '../../store/actions/authActionCreator';
 import { ReactComponent as Close } from '../../icons/times-solid.svg';
 import ReactDom from 'react-dom';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './Login.sass';
+import { useEffect } from 'react';
 
 const Login = (props) => {
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
-    const loginState = useSelector((state) => state.loginState.login);
-    if (!props.open) return null;
+    
+    useEffect(() => {
+        if (!props.open) return null;
+    }, []);
+
 
     const validateLogin = async (event) => {
         event.preventDefault();
@@ -26,6 +30,7 @@ const Login = (props) => {
                 setError(null);
             }
             if (res.status === 404) setError('Please verify that the email and password are correct');
+            return props.setOpenLogin(false);
         } catch (e) {
             setError(e.message);
         }

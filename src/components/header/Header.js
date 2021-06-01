@@ -21,25 +21,31 @@ const Header = () => {
                 {!loginState.login &&
                     <div className='nav-item-not-logged'>
                         <button className='nav-bar-auth-btn' onClick={() => setOpenLogin(true)}>Log In</button>
-                        <Login
-                            open={openLogin}
-                            onClose={() => setOpenLogin(false)}
-                            showSignUp={() => {
-                                setOpenLogin(false);
-                                setOpenSignUp(true);
-                            }}
-                        />
                         <button className='nav-bar-auth-btn' onClick={() => setOpenSignUp(true)}>Sign Up</button>
-                        <SignUp
-                            open={openSignUp}
-                            onClose={() => setOpenSignUp(false)}
-                            showLogin={() => {
-                                setOpenSignUp(false);
-                                setOpenLogin(true);
-                            }}
-                        />
                     </div>
                 }
+                {openLogin &&
+
+                    <Login setOpenLogin={setOpenLogin}
+                        open={openLogin}
+                        onClose={() => setOpenLogin(false)}
+                        showSignUp={() => {
+                            setOpenLogin(false);
+                            setOpenSignUp(true);
+                        }}
+                    />
+                }
+                {openSignUp &&
+                    <SignUp setOpenSignUp={setOpenSignUp} setOpenLogin={setOpenLogin}
+                        open={openSignUp}
+                        onClose={() => setOpenSignUp(false)}
+                        showLogin={() => {
+                            setOpenSignUp(false);
+                            setOpenLogin(true);
+                        }}
+                    />
+                }
+
                 {loginState.login && <NavItem icon={<Menu />}>
                     <DropdownMenu />
                 </NavItem>}
