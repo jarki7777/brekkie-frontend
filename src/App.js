@@ -2,16 +2,13 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Main from './containers/main/Main';
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
-import SignUp from './components/signUp/SignUp';
-import Login from './components/login/Login';
+
 const App = () => {
   return (
     <>
       <BrowserRouter>
         <Header />
         <Switch>
-          {/* <Route path='/auth' component={SignUp} exact /> */}
-          <Route path='/auth' component={Login} exact />
           <Route path='/' component={Main} exact />
           <Redirect to='/' />
         </Switch>

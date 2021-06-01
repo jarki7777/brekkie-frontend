@@ -1,8 +1,8 @@
 import './Main.sass';
 import MainPageCard from '../../components/mainPageCard/MainPageCard';
 
-
 const Main = () => {
+
     return (
         <>
             <div className='main-container'>

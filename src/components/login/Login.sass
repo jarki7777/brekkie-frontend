@@ -8,6 +8,22 @@
     border: 0.1em solid #e6e6e6
     border-radius: 0.25em
     background-color: #ffffff
+    z-index: 1000
+    // position: relative
+    position: fixed
+    top: 50%
+    left: 50%
+    margin-right: '-50%'
+    transform: translate(-50%, -50%)
+
+.modal-overlay
+    position: fixed
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    background-color: rgba(0, 0, 0, 0.7)
+    z-index: 900
 
 .auth-logo
     height: 40px
@@ -95,3 +111,18 @@
 
 .login-btn:hover
     background-color: #000000B3
+
+.close-icon
+    width: 15px
+    height: 15px
+    position: absolute
+    top: 1%
+    right: 1%
+    transition: 0.3s
+    cursor: pointer
+
+.close-icon:hover
+    background-color: black
+
+.close-icon:hover svg
+    color: white
