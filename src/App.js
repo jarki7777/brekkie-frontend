@@ -10,8 +10,8 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Switch>
-          <Route path='/auth' component={SignUp} exact />
-          {/* <Route path='/auth' component={Login} exact /> */}
+          {/* <Route path='/auth' component={SignUp} exact /> */}
+          <Route path='/auth' component={Login} exact />
           <Route path='/' component={Main} exact />
           <Redirect to='/' />
         </Switch>

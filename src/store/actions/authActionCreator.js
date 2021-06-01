@@ -1,9 +1,9 @@
-import { SET_LOGIN_STATE, SET_ROLE_STATE } from './actionTypes';
+import { SET_LOGIN_STATE, SET_ROLE_STATE, SET_TOKEN } from './actionTypes';
 
 export const setLogin = (res) => {
     return async (dispatch) => {
         try {
-            const role = res.role;
+            const { role, token } = res;
             if (res.token) {
                 dispatch(
                     {
@@ -11,11 +11,16 @@ export const setLogin = (res) => {
                         payload: true
                     }
                 );
-
                 dispatch(
                     {
                         type: SET_ROLE_STATE,
                         payload: role
+                    }
+                )
+                dispatch(
+                    {
+                        type: SET_TOKEN,
+                        payload: token
                     }
                 )
                 return res;
