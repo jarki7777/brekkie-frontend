@@ -38,16 +38,16 @@ const Login = () => {
             <form className='auth-form' onSubmit={event => validateLogin(event)}>
 
                 <div className='input-field'>
-                    <label for='login-email'>E-mail</label>
+                    <label htmlFor='login-email'>E-mail</label>
                     <input className='input-text' type="email" name="email" id='login-email'></input>
                 </div>
 
                 <div className='input-field'>
-                    <label for='login-pw'>Password</label>
+                    <label htmlFor='login-pw'>Password</label>
                     <input className='input-text' type="password" name="email" id='login-pw'></input>
                 </div>
 
-                <button className="login-btn" name="submit" type="submit" disabled={disabled}>Log In</button>
+                <button className="login-btn" name="submit" type="submit">Log In</button>
 
             </form>
         </div>
