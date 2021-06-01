@@ -2,7 +2,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Main from './containers/main/Main';
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
-import RecipeDetail from './components/recipeDetail/RecipeDetail';
+import RecipeView from './containers/recipeView/RevipeView';
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
         <Header />
         <Switch>
           <Route path='/' component={Main} exact />
-          <Route path='/recipe' component={RecipeDetail} exact />
+          <Route path='/recipe' component={RecipeView} exact />
           <Redirect to='/' />
         </Switch>
       </BrowserRouter>

@@ -2,7 +2,7 @@ export const fetchLogin = async (email, password) => {
     try {
         let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_LOGIN_URL}`, {
             method: 'POST',
-            headers: { "Content-Type": "application/json" },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
         });
         const status = res.status;

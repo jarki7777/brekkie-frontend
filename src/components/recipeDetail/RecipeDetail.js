@@ -27,13 +27,13 @@ export const RecipeDetail = (props) => {
                 <div className='note-elements'>{props.notes}</div>
             </div>
             <div className='nutritional-info'>
-                <div className='recipe-fat'>{props.fat}</div>
-                <div className='recipe-saturated-fat'>{props.saturatedFat}</div>
-                <div className='recipe-sodium'>{props.sodium}</div>
-                <div className='recipe-carbs'>{props.carbs}</div>
-                <div className='recipe-fiber'>{props.fiber}</div>
-                <div className='recipe-sugar'>{props.sugar}</div>
-                <div className='recipe-protein'>{props.protein}</div>
+                <div className='recipe-macronutrient'>{props.fat}</div>
+                <div className='recipe-macronutrient'>{props.saturatedFat}</div>
+                <div className='recipe-macronutrient'>{props.sodium}</div>
+                <div className='recipe-macronutrient'>{props.carbs}</div>
+                <div className='recipe-macronutrient'>{props.fiber}</div>
+                <div className='recipe-macronutrient'>{props.sugar}</div>
+                <div className='recipe-macronutrient'>{props.protein}</div>
             </div>
         </div>
     );
