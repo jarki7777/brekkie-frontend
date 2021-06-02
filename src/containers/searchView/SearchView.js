@@ -22,8 +22,7 @@ const SearchView = () => {
 
     useEffect(() => {
         if (!token) history.push('/');
-        console.log(recipes)
-    }, [token, history, recipes]);
+    }, [token, history]);
 
     const search = async (event) => {
         event.preventDefault();
@@ -33,6 +32,7 @@ const SearchView = () => {
         setSearchWithInventory(withInventory);
         setTotalPages(null);
         setPage(1);
+        setError(null);
 
         try {
 
@@ -42,6 +42,7 @@ const SearchView = () => {
                 setPrevPage(res.hasPrevPage);
                 setNextPage(res.hasNextPage);
                 setRecipes(res.docs);
+                if (res.docs.length === 0) setError('Sorry, no recipes were found');
             }
 
             if (keyword && !withInventory) {
@@ -50,6 +51,7 @@ const SearchView = () => {
                 setPrevPage(res.hasPrevPage);
                 setNextPage(res.hasNextPage);
                 setRecipes(res.docs);
+                if (res.docs.length === 0) setError('Sorry, no recipes were found');
             }
 
             if (withInventory) {
@@ -58,7 +60,9 @@ const SearchView = () => {
                 setPrevPage(res.hasPrevPage);
                 setNextPage(res.hasNextPage);
                 setRecipes(res.docs);
+                if (res.docs.length === 0) setError('Sorry, no recipes were found');
             }
+
 
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
