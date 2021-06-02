@@ -15,7 +15,7 @@ const Login = (props) => {
 
     useEffect(() => {
         if (!props.open) return null;
-    }, []);
+    }, [props.open]);
 
 
     const validateLogin = async (event) => {
@@ -29,9 +29,9 @@ const Login = (props) => {
             if (res.status === 200) {
                 dispatch(setLogin(res));
                 setError(null);
+                return props.setOpenLogin(false);
             }
             if (res.status === 404) setError('Please verify that the email and password are correct');
-            return props.setOpenLogin(false);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }

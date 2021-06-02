@@ -12,7 +12,7 @@ const SignUp = (props) => {
 
     useEffect(() => {
         if (!props.open) return null;
-    }, []);
+    }, [props.open]);
 
     const checkUserName = (event) => {
         event.preventDefault();
