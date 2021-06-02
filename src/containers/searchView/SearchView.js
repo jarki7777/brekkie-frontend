@@ -3,13 +3,15 @@ import RecipeCard from '../../components/recipeCard/RecipeCard';
 import { useState, useEffect } from 'react';
 import Pagination from '../../components/pagination/Pagination';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetchRecipe';
+import { SET_RECIPE_ID } from '../../store/actions/actionTypes';
 
 const SearchView = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
+    const dispatch = useDispatch();
     const [error, setError] = useState(null);
     const [recipes, setRecipes] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
@@ -146,7 +148,13 @@ const SearchView = () => {
     }
 
     const goToRecipe = (id) => {
-        /*dispatch recipe id and redirect to recipeView*/
+        console.log(id)
+        dispatch(
+            {
+                type: SET_RECIPE_ID,
+                payload: id
+            }
+        );
     }
 
     return (
@@ -168,7 +176,7 @@ const SearchView = () => {
                 {recipes.length === 0 && !error && <span>Use the search tools above to find your next favorite recipe</span>}
                 {recipes.map(recipe => <RecipeCard
                     key={recipes.indexOf(recipe)}
-                    goToRecipe={goToRecipe(recipe._id)}
+                    goToRecipe={() => goToRecipe(recipe._id)}
                     img={recipe.img}
                     title={recipe.title}
                     calories={recipe.caloriesPerServe}
