@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Pagination from '../../components/pagination/Pagination';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetchRecipe';
 import { SET_RECIPE_ID } from '../../store/actions/actionTypes';
 
@@ -140,7 +140,7 @@ const SearchView = () => {
                     setPage(res.page);
                     setRecipes(res.docs);
                 }
-                window.scrollTo(0, 0)
+                window.scrollTo(0, 0);
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
             }
@@ -148,7 +148,6 @@ const SearchView = () => {
     }
 
     const goToRecipe = (id) => {
-        console.log(id)
         dispatch(
             {
                 type: SET_RECIPE_ID,
@@ -168,13 +167,13 @@ const SearchView = () => {
                     <button className='login-btn search-btn' name='submit' type='submit'>Find recipes</button>
                 </div>
                 <div>
-                    <label className='input-check' htmlFor='search-inventory'>Use my inventory ingredients</label>
+                    <label className='input-check' htmlFor='search-inventory'>Use my ingredients inventory</label>
                     <input className='input-check' type="checkbox" name='search by inventory' id='search-inventory'></input>
                 </div>
             </form>
             <div className='results-container'>
-                {recipes.length === 0 && !error && <span>Use the search tools above to find your next favorite recipe</span>}
-                {recipes.map(recipe => <RecipeCard
+                {recipes.length === 0 && !error && <span>Use the search tools above to find your next favorite recipe!</span>}
+                {recipes.map(recipe => <Link className='recipe-card-link' to='/recipe'><RecipeCard
                     key={recipes.indexOf(recipe)}
                     goToRecipe={() => goToRecipe(recipe._id)}
                     img={recipe.img}
@@ -183,7 +182,7 @@ const SearchView = () => {
                     likes={recipe.timesFavorite}
                     calification={recipe.calification}
                     totalVotes={recipe.totalVotes}
-                />)}
+                /></Link>)}
             </div>
 
             <Pagination
