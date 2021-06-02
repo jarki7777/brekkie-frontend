@@ -6,7 +6,7 @@ import { ReactComponent as Calification } from '../../icons/star-solid.svg';
 export const RecipeCard = (props) => {
 
     return (
-        <div className='recipe-card-container'>
+        <div className='recipe-card-container' onClick={props.goToRecipe}>
             <img className='recipe-card-img' src={process.env.PUBLIC_URL + "/img/" + props.img} alt='recipe final result'></img>
             <div className='recipe-card-cover'>
                 <span className='card-recipe-title'>{props.title}</span>
