@@ -14,7 +14,7 @@ const SearchView = () => {
     const [recipes, setRecipes] = useState(null);
     const [totalPages, setTotalPages] = useState(1);
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(50);
+    const [limit, setLimit] = useState(10);
     const [prevPage, setPrevPage] = useState(false);
     const [nextPage, setNextPage] = useState(false);
     const [searchTerm, setSearchTerm] = useState(null);
@@ -159,7 +159,7 @@ const SearchView = () => {
                     <input className='input-check' type="checkbox" name='search by inventory' id='search-inventory'></input>
                 </div>
             </form>
-
+            
             {recipes && recipes.map(recipe => <RecipeCard 
                 key={recipes.indexOf(recipe)}
                 goToRecipe={goToRecipe(recipe._id)}
