@@ -14,7 +14,7 @@ const SearchView = () => {
     const [recipes, setRecipes] = useState(null);
     const [totalPages, setTotalPages] = useState(1);
     const [page, setPage] = useState(1);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(50);
     const [prevPage, setPrevPage] = useState(false);
     const [nextPage, setNextPage] = useState(false);
     const [searchTerm, setSearchTerm] = useState(null);
@@ -140,7 +140,7 @@ const SearchView = () => {
         }
     }
 
-    const goToRecipe = () => {
+    const goToRecipe = (id) => {
         /*dispatch recipe id and redirect to recipeView*/
     }
 
@@ -158,18 +158,18 @@ const SearchView = () => {
                     <label className='input-check' htmlFor='search-inventory'>Use my inventory ingredients</label>
                     <input className='input-check' type="checkbox" name='search by inventory' id='search-inventory'></input>
                 </div>
-
             </form>
 
-            <RecipeCard
-                goToRecipe={goToRecipe}
-                img='IMG_2443-700x933.jpg'
-                title='3 Ingredient Pomegranate Balsamic Chicken'
-                calories='221'
-                likes='1325'
-                calification='4.3'
-                totalVotes='3135'
-            />
+            {recipes && recipes.map(recipe => <RecipeCard 
+                key={recipes.indexOf(recipe)}
+                goToRecipe={goToRecipe(recipe._id)}
+                img={recipe.img}
+                title={recipe.title}
+                calories={recipe.caloriesPerServe}
+                likes={recipe.timesFavorite}
+                calification={recipe.calification}
+                totalVotes={recipe.totalVotes}
+            />)}
 
             <Pagination
                 actualPage={page}
