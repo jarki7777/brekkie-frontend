@@ -1,7 +1,7 @@
 import './RecipeDetail.sass'
 import { ReactComponent as Liked } from '../../icons/heart-solid.svg';
 import { ReactComponent as Calification } from '../../icons/star-solid.svg';
-
+import NutritionalInfo from '../nutritionalInfo/NutritionalInfo';
 
 export const RecipeDetail = (props) => {
     const ingredients = props.ingredients;
@@ -37,7 +37,6 @@ export const RecipeDetail = (props) => {
                 </div>
             </div>
 
-            <div className='section-border'></div>
             <div className='recipe-description'>{props.description}</div>
 
             <div className='sub-title'>
@@ -81,52 +80,16 @@ export const RecipeDetail = (props) => {
                 <span>Nutritional facts per serving:</span>
             </div>
 
-            <div className='nutritional-info'>
-                <ul>
-                    <li className='recipe-list'>
-                        <div className='recipe-nutrient'>
-                            <span>Fat:</span>
-                            <span>{props.fat}</span>
-                        </div>
-                    </li>
-                    <li className='recipe-list'>
-                        <div className='recipe-nutrient'>
-                            <span>Saturated fat:</span>
-                            <span>{props.saturatedFat}</span>
-                        </div>
-                    </li>
-                    <li className='recipe-list'>
-                        <div className='recipe-nutrient'>
-                            <span>Sodium:</span>
-                            <span>{props.sodium}</span>
-                        </div>
-                    </li>
-                    <li className='recipe-list'>
-                        <div className='recipe-nutrient'>
-                            <span>Carbs:</span>
-                            <span>{props.carbs}</span>
-                        </div>
-                    </li>
-                    <li className='recipe-list'>
-                        <div className='recipe-nutrient'>
-                            <span>Fiber:</span>
-                            <span>{props.fiber}</span>
-                        </div>
-                    </li>
-                    <li className='recipe-list'>
-                        <div className='recipe-nutrient'>
-                            <span>Sugar:</span>
-                            <span>{props.sugar}</span>
-                        </div>
-                    </li>
-                    <li className='recipe-list'>
-                        <div className='recipe-nutrient'>
-                            <span>Protein:</span>
-                            <span>{props.protein}</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <NutritionalInfo
+                fat={props.fat}
+                saturatedFat={props.saturatedFat}
+                sodium={props.sodium}
+                carbs={props.carbs}
+                fiber={props.fiber}
+                sugar={props.sugar}
+                protein={props.protein}
+            />
+
         </div >
     );
 }

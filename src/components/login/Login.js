@@ -33,7 +33,7 @@ const Login = (props) => {
             if (res.status === 404) setError('Please verify that the email and password are correct');
             return props.setOpenLogin(false);
         } catch (e) {
-            setError(e.message);
+            setError('Service is currently unavailable, please try again later');
         }
     }
 
@@ -57,15 +57,15 @@ const Login = (props) => {
 
                     <div className='input-field'>
                         <label htmlFor='login-email'>E-mail</label>
-                        <input className='input-text' type="email" name="email" id='login-email'></input>
+                        <input className='input-text' type='email' name='email' id='login-email'></input>
                     </div>
 
                     <div className='input-field'>
                         <label htmlFor='login-pw'>Password</label>
-                        <input className='input-text' type="password" name="email" id='login-pw'></input>
+                        <input className='input-text' type="password" name='email' id='login-pw'></input>
                     </div>
 
-                    <button className="login-btn" name="submit" type="submit">Log In</button>
+                    <button className='login-btn' name='submit' type='submit'>Log In</button>
 
                 </form>
             </div>
