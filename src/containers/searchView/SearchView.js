@@ -22,7 +22,8 @@ const SearchView = () => {
 
     useEffect(() => {
         if (!token) history.push('/');
-    }, [token, history]);
+        console.log(recipes)
+    }, [token, history, recipes]);
 
     const search = async (event) => {
         event.preventDefault();
@@ -35,7 +36,7 @@ const SearchView = () => {
 
         try {
 
-            if (!keyword || !withInventory) {
+            if (!keyword && !withInventory) {
                 const res = await fetchAll(page, limit, token);
                 setTotalPages(res.totalPages);
                 setPrevPage(res.hasPrevPage);
@@ -69,7 +70,7 @@ const SearchView = () => {
             const newPage = page - 1;
             try {
 
-                if (!searchTerm || !searchWithInventory) {
+                if (!searchTerm && !searchWithInventory) {
                     const res = await fetchAll(newPage, limit, token);
                     setTotalPages(res.totalPages);
                     setPrevPage(res.hasPrevPage);
@@ -107,7 +108,7 @@ const SearchView = () => {
             const newPage = page + 1;
             try {
 
-                if (!searchTerm || !searchWithInventory) {
+                if (!searchTerm && !searchWithInventory) {
                     const res = await fetchAll(newPage, limit, token);
                     setTotalPages(res.totalPages);
                     setPrevPage(res.hasPrevPage);
@@ -159,8 +160,8 @@ const SearchView = () => {
                     <input className='input-check' type="checkbox" name='search by inventory' id='search-inventory'></input>
                 </div>
             </form>
-            
-            {recipes && recipes.map(recipe => <RecipeCard 
+
+            {recipes && recipes.map(recipe => <RecipeCard
                 key={recipes.indexOf(recipe)}
                 goToRecipe={goToRecipe(recipe._id)}
                 img={recipe.img}
