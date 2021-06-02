@@ -10,7 +10,7 @@ import './Header.sass';
 import { useState } from "react";
 
 const Header = () => {
-    const loginState = useSelector((state) => state.loginState);
+    const loginState = useSelector(state => state.loginState);
     const [openLogin, setOpenLogin] = useState(false);
     const [openSignUp, setOpenSignUp] = useState(false);
 
