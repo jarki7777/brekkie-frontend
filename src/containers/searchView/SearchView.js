@@ -7,8 +7,9 @@ const SearchView = () => {
         img='IMG_2443-700x933.jpg'
         title='3 Ingredient Pomegranate Balsamic Chicken'
         calories='221'
-        likes='0'
-        totalVotes='0'
+        likes='1325'
+        calification='4.3'
+        totalVotes='3135'
         />
     );
 }
