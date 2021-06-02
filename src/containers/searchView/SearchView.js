@@ -5,7 +5,7 @@ import Pagination from '../../components/pagination/Pagination';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchAll, fetchByKeyword } from '../../services/fetchRecipe';
+import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetchRecipe';
 import { fetchInventory } from '../../services/fecthUserData';
 
 const SearchView = () => {
@@ -16,7 +16,6 @@ const SearchView = () => {
     const [totalPages, setTotalPages] = useState(null);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
-    const [inventory, setInventory] = useState(null);
 
     useEffect(() => {
         if (!token) history.push('/');
@@ -26,13 +25,13 @@ const SearchView = () => {
     const getUserInventory = async () => {
         try {
             const res = await fetchInventory(token)
-            setInventory(res);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
 
     const search = async (event) => {
+        setRecipes(null);
         event.preventDefault();
         try {
             const keyword = event.target[0].value;
@@ -48,6 +47,13 @@ const SearchView = () => {
                 const res = await fetchByKeyword(keyword, page, limit, token);
                 setTotalPages(res.totalPages);
                 setRecipes(res.docs);
+            }
+
+            if (withInventory) {
+                const res = await fetchByInventory(page, limit, token);
+                setTotalPages(res.totalPages);
+                setRecipes(res.docs);
+                console.log(recipes, 'inventory');
             }
 
         } catch (e) {
