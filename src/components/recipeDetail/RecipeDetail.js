@@ -37,7 +37,6 @@ export const RecipeDetail = (props) => {
                 </div>
             </div>
 
-            <div className='section-border'></div>
             <div className='recipe-description'>{props.description}</div>
 
             <div className='sub-title'>
