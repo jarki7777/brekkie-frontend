@@ -6,54 +6,57 @@ import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetchRecipe';
-import { fetchInventory } from '../../services/fecthUserData';
 
 const SearchView = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
     const [error, setError] = useState(null);
     const [recipes, setRecipes] = useState(null);
-    const [totalPages, setTotalPages] = useState(null);
+    const [totalPages, setTotalPages] = useState(1);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
+    const [prevPage, setPrevPage] = useState(false);
+    const [nextPage, setNextPage] = useState(false);
+    const [searchTerm, setSearchTerm] = useState(null);
+    const [searchWithInventory, setSearchWithInventory] = useState(null);
 
     useEffect(() => {
         if (!token) history.push('/');
-        getUserInventory();
-    }, [token]);
-
-    const getUserInventory = async () => {
-        try {
-            const res = await fetchInventory(token)
-        } catch (e) {
-            setError('Service is currently unavailable, please try again later');
-        }
-    }
+    }, [token, history]);
 
     const search = async (event) => {
-        setRecipes(null);
         event.preventDefault();
+        const keyword = event.target[0].value;
+        const withInventory = event.target[2].checked;
+        setSearchTerm(keyword);
+        setSearchWithInventory(withInventory);
+        setTotalPages(null);
+        setPage(1);
+
         try {
-            const keyword = event.target[0].value;
-            const withInventory = event.target[2].checked;
 
             if (!keyword || !withInventory) {
                 const res = await fetchAll(page, limit, token);
                 setTotalPages(res.totalPages);
+                setPrevPage(res.hasPrevPage);
+                setNextPage(res.hasNextPage);
                 setRecipes(res.docs);
             }
 
             if (keyword && !withInventory) {
                 const res = await fetchByKeyword(keyword, page, limit, token);
                 setTotalPages(res.totalPages);
+                setPrevPage(res.hasPrevPage);
+                setNextPage(res.hasNextPage);
                 setRecipes(res.docs);
             }
 
             if (withInventory) {
                 const res = await fetchByInventory(page, limit, token);
                 setTotalPages(res.totalPages);
+                setPrevPage(res.hasPrevPage);
+                setNextPage(res.hasNextPage);
                 setRecipes(res.docs);
-                console.log(recipes, 'inventory');
             }
 
         } catch (e) {
@@ -61,12 +64,80 @@ const SearchView = () => {
         }
     }
 
-    const goPrevious = () => {
-        console.log('prev');
+    const goPrevious = async () => {
+        if (prevPage) {
+            const newPage = page - 1;
+            try {
+
+                if (!searchTerm || !searchWithInventory) {
+                    const res = await fetchAll(newPage, limit, token);
+                    setTotalPages(res.totalPages);
+                    setPrevPage(res.hasPrevPage);
+                    setNextPage(res.hasNextPage);
+                    setPage(res.page);
+                    setRecipes(res.docs);
+                }
+
+                if (searchTerm && !searchWithInventory) {
+                    const res = await fetchByKeyword(searchTerm, page, limit, token);
+                    setTotalPages(res.totalPages);
+                    setPrevPage(res.hasPrevPage);
+                    setNextPage(res.hasNextPage);
+                    setPage(res.page);
+                    setRecipes(res.docs);
+                }
+
+                if (searchWithInventory) {
+                    const res = await fetchByInventory(page, limit, token);
+                    setTotalPages(res.totalPages);
+                    setPrevPage(res.hasPrevPage);
+                    setNextPage(res.hasNextPage);
+                    setPage(res.page);
+                    setRecipes(res.docs);
+                }
+
+            } catch (e) {
+                setError('Service is currently unavailable, please try again later');
+            }
+        }
     }
 
-    const goNext = () => {
-        console.log('next');
+    const goNext = async () => {
+        if (nextPage) {
+            const newPage = page + 1;
+            try {
+
+                if (!searchTerm || !searchWithInventory) {
+                    const res = await fetchAll(newPage, limit, token);
+                    setTotalPages(res.totalPages);
+                    setPrevPage(res.hasPrevPage);
+                    setNextPage(res.hasNextPage);
+                    setPage(res.page);
+                    setRecipes(res.docs);
+                }
+
+                if (searchTerm && !searchWithInventory) {
+                    const res = await fetchByKeyword(searchTerm, page, limit, token);
+                    setTotalPages(res.totalPages);
+                    setPrevPage(res.hasPrevPage);
+                    setNextPage(res.hasNextPage);
+                    setPage(res.page);
+                    setRecipes(res.docs);
+                }
+
+                if (searchWithInventory) {
+                    const res = await fetchByInventory(page, limit, token);
+                    setTotalPages(res.totalPages);
+                    setPrevPage(res.hasPrevPage);
+                    setNextPage(res.hasNextPage);
+                    setPage(res.page);
+                    setRecipes(res.docs);
+                }
+
+            } catch (e) {
+                setError('Service is currently unavailable, please try again later');
+            }
+        }
     }
 
     const goToRecipe = () => {
