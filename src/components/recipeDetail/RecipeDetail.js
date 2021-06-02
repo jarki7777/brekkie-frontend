@@ -37,6 +37,7 @@ export const RecipeDetail = (props) => {
                 </div>
             </div>
 
+            <div className='section-border'></div>
             <div className='recipe-description'>{props.description}</div>
 
             <div className='sub-title'>
@@ -63,7 +64,7 @@ export const RecipeDetail = (props) => {
                 </li>)}
             </ol>
 
-            {notes &&
+            {notes.length > 0 &&
                 <div className='sub-title'>
                     <span>Notes:</span>
                 </div>}
@@ -82,13 +83,48 @@ export const RecipeDetail = (props) => {
 
             <div className='nutritional-info'>
                 <ul>
-                    <li className='recipe-list'> Fat: {props.fat}</li>
-                    <li className='recipe-list'>Saturated fat: {props.saturatedFat}</li>
-                    <li className='recipe-list'>Sodium: {props.sodium}</li>
-                    <li className='recipe-list'>Carbs: {props.carbs}</li>
-                    <li className='recipe-list'>Fiber: {props.fiber}</li>
-                    <li className='recipe-list'>Sugar: {props.sugar}</li>
-                    <li className='recipe-list'>Protein: {props.protein}</li>
+                    <li className='recipe-list'>
+                        <div className='recipe-nutrient'>
+                            <span>Fat:</span>
+                            <span>{props.fat}</span>
+                        </div>
+                    </li>
+                    <li className='recipe-list'>
+                        <div className='recipe-nutrient'>
+                            <span>Saturated fat:</span>
+                            <span>{props.saturatedFat}</span>
+                        </div>
+                    </li>
+                    <li className='recipe-list'>
+                        <div className='recipe-nutrient'>
+                            <span>Sodium:</span>
+                            <span>{props.sodium}</span>
+                        </div>
+                    </li>
+                    <li className='recipe-list'>
+                        <div className='recipe-nutrient'>
+                            <span>Carbs:</span>
+                            <span>{props.carbs}</span>
+                        </div>
+                    </li>
+                    <li className='recipe-list'>
+                        <div className='recipe-nutrient'>
+                            <span>Fiber:</span>
+                            <span>{props.fiber}</span>
+                        </div>
+                    </li>
+                    <li className='recipe-list'>
+                        <div className='recipe-nutrient'>
+                            <span>Sugar:</span>
+                            <span>{props.sugar}</span>
+                        </div>
+                    </li>
+                    <li className='recipe-list'>
+                        <div className='recipe-nutrient'>
+                            <span>Protein:</span>
+                            <span>{props.protein}</span>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div >

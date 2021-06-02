@@ -1,5 +1,7 @@
 @import '../../util/_querymixings'
 
+$section-border: 1px solid #00000026
+
 .recipe-container
     display: flex
     flex-direction: column
@@ -75,6 +77,7 @@
     justify-content: space-around
     align-items: center
     height: 2em
+    margin: 1em 0 1em 0
 
 .likes-element, .favs-element
     width: 6em
@@ -113,6 +116,7 @@
     margin: 1em
     margin-bottom: 0
     font-weight: 700
+    font-size: 1.5em
 
     @include breakpoint($size: medium)
         width: 90%
@@ -127,3 +131,9 @@
 .nutritional-title
     font-weight: 700
     margin-top: 1.5em
+
+.recipe-nutrient
+    width: 12em
+    display: flex
+    justify-content: space-between
+    border-bottom: $section-border
