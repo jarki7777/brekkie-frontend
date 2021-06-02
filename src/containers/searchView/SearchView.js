@@ -124,7 +124,7 @@ const SearchView = () => {
                 }
 
                 if (searchTerm && !searchWithInventory) {
-                    const res = await fetchByKeyword(searchTerm, page, limit, token);
+                    const res = await fetchByKeyword(searchTerm, newPage, limit, token);
                     setTotalPages(res.totalPages);
                     setPrevPage(res.hasPrevPage);
                     setNextPage(res.hasNextPage);
@@ -133,7 +133,7 @@ const SearchView = () => {
                 }
 
                 if (searchWithInventory) {
-                    const res = await fetchByInventory(page, limit, token);
+                    const res = await fetchByInventory(newPage, limit, token);
                     setTotalPages(res.totalPages);
                     setPrevPage(res.hasPrevPage);
                     setNextPage(res.hasNextPage);
