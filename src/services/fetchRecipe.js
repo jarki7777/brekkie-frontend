@@ -19,8 +19,26 @@ export const fetchAll = async (page, limit, token) => {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }
             });
+            const status = res.status;
             res = await res.json();
-        return res.docs;
+            res = { ...res, status }
+            return res;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export const fetchByKeyword = async (keyword, page, limit, token) => {
+    try {
+        let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_RECIPE_BY_KEYWORD}?page=${page}&limit=${limit}&keyword=${keyword}`,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }
+            });
+            const status = res.status;
+            res = await res.json();
+            res = { ...res, status }
+            return res;
     } catch (e) {
         console.log(e);
     }

@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react';
 import Pagination from '../../components/pagination/Pagination';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchAll } from '../../services/fetchRecipe';
+import { fetchAll, fetchByKeyword } from '../../services/fetchRecipe';
+import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 
 const SearchView = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
+    const [error, setError] = useState(null);
     const [recipes, setRecipes] = useState(null);
     const [totalPages, setTotalPages] = useState(null);
     const [page, setPage] = useState(1);
@@ -18,17 +20,28 @@ const SearchView = () => {
         if (!token) history.push('/');
     }, [token]);
 
-    const search = (event) => {
+    const search = async (event) => {
         event.preventDefault();
-        const keyword = event.target[0].value;
-        const withInventory = event.target[2].checked;
+        try {
+            const keyword = event.target[0].value;
+            const withInventory = event.target[2].checked;
 
-        if (!keyword || !withInventory) {
-            let res = fetchAll(page, limit, token);
-            setRecipes(res);
+            if (!keyword || !withInventory) {
+                const res = await fetchAll(page, limit, token);
+                setTotalPages(res.totalPages);
+                setRecipes(res.docs);
+            }
+
+            if (keyword && !withInventory) {
+                const res = await fetchByKeyword(keyword, page, limit, token);
+                setTotalPages(res.totalPages);
+                setRecipes(res.docs);
+                console.log(recipes)
+            }
+
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
         }
-
-
     }
 
     const goPrevious = () => {
@@ -45,6 +58,8 @@ const SearchView = () => {
 
     return (
         <div className='search-view-container'>
+
+            {error && <ErrorMsg>{error}</ErrorMsg>}
 
             <form className='search-form' onSubmit={(event) => search(event)}>
                 <div className='search-bar'>

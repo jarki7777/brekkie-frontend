@@ -33,7 +33,7 @@ const Login = (props) => {
             if (res.status === 404) setError('Please verify that the email and password are correct');
             return props.setOpenLogin(false);
         } catch (e) {
-            setError(e.message);
+            setError('Service is currently unavailable, please try again later');
         }
     }
 
