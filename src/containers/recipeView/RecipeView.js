@@ -1,25 +1,26 @@
 import { useEffect, useState } from 'react';
-import { /*useDispatch,*/ useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import RecipeDetail from '../../components/recipeDetail/RecipeDetail';
 import { fetchById } from '../../services/fetchRecipe';
+import { UNSET_RECIPE } from '../../store/actions/actionTypes';
 import './RecipeView.sass';
 
 const RecipeView = () => {
-    // const recipeId = useSelector(state => state.recipeState.id);
+    const recipeId = useSelector(state => state.recipeState.id);
     const token = useSelector(state => state.loginState.token);
     const [recipe, setRecipe] = useState(null);
     const [error, setError] = useState(null);
     const history = useHistory();
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-    /*the id will come from a global state dispatched from the other containers */
     useEffect(() => {
-        getRecipe('60b224dfbb62861c678a6f71', token);
-        if (!token /*|| !recipeId*/) history.push('/');
-        // return dispatch(UNSET_RECIPE)
-    }, [/*recipeId,*/ history, token ]);
+        console.log(recipeId);
+        getRecipe(recipeId, token);
+        if (!token || !recipeId) history.push('/');
+        // return dispatch(UNSET_RECIPE);
+    }, [recipeId, history, token ]);
 
     const getRecipe = async (id, token) => {
         try {
