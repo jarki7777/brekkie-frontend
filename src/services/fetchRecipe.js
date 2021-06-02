@@ -19,10 +19,8 @@ export const fetchAll = async (page, limit, token) => {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }
             });
-            const status = res.status;
-            res = await res.json();
-            res = { ...res, status }
-            return res;
+        res = await res.json();
+        return res;
     } catch (e) {
         console.log(e);
     }
@@ -35,10 +33,8 @@ export const fetchByKeyword = async (keyword, page, limit, token) => {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }
             });
-            const status = res.status;
-            res = await res.json();
-            res = { ...res, status }
-            return res;
+        res = await res.json();
+        return res;
     } catch (e) {
         console.log(e);
     }
