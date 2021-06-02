@@ -1,12 +1,23 @@
 import './SearchView.sass';
 import RecipeCard from '../../components/recipeCard/RecipeCard';
 import { useState } from 'react';
+import Pagination from '../../components/pagination/Pagination';
 
 const SearchView = () => {
     const [recipes, setRecipes] = useState(null);
+    const [page, setPage] = useState(null);
+    const [totalPages, setTotalPages] = useState(null);
 
     const search = (event) => {
 
+    }
+
+    const goPrevious = () => {
+        console.log('prev');
+    }
+
+    const goNext = () => {
+        console.log('next');
     }
 
     return (
@@ -30,6 +41,12 @@ const SearchView = () => {
                 totalVotes='3135'
             />
 
+            <Pagination
+                actualPage={page}
+                totalPages={totalPages}
+                goPrevious={goPrevious}
+                goNext={goNext}
+            />
 
         </div>
     );
