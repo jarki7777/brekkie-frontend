@@ -11,7 +11,7 @@ const SearchView = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
     const [error, setError] = useState(null);
-    const [recipes, setRecipes] = useState(null);
+    const [recipes, setRecipes] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
@@ -100,7 +100,7 @@ const SearchView = () => {
                     setPage(res.page);
                     setRecipes(res.docs);
                 }
-
+                window.scrollTo(0, 0)
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
             }
@@ -138,7 +138,7 @@ const SearchView = () => {
                     setPage(res.page);
                     setRecipes(res.docs);
                 }
-
+                window.scrollTo(0, 0)
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
             }
@@ -164,17 +164,19 @@ const SearchView = () => {
                     <input className='input-check' type="checkbox" name='search by inventory' id='search-inventory'></input>
                 </div>
             </form>
-
-            {recipes && recipes.map(recipe => <RecipeCard
-                key={recipes.indexOf(recipe)}
-                goToRecipe={goToRecipe(recipe._id)}
-                img={recipe.img}
-                title={recipe.title}
-                calories={recipe.caloriesPerServe}
-                likes={recipe.timesFavorite}
-                calification={recipe.calification}
-                totalVotes={recipe.totalVotes}
-            />)}
+            <div className='results-container'>
+                {recipes.length === 0 && !error && <span>Use the search tools above to find your next favorite recipe</span>}
+                {recipes.map(recipe => <RecipeCard
+                    key={recipes.indexOf(recipe)}
+                    goToRecipe={goToRecipe(recipe._id)}
+                    img={recipe.img}
+                    title={recipe.title}
+                    calories={recipe.caloriesPerServe}
+                    likes={recipe.timesFavorite}
+                    calification={recipe.calification}
+                    totalVotes={recipe.totalVotes}
+                />)}
+            </div>
 
             <Pagination
                 actualPage={page}
