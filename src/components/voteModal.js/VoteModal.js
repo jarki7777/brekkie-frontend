@@ -64,6 +64,38 @@ const VoteModal = (props) => {
         }
     }
 
+    const voteTwoStar = async () => {
+        try {
+            await fetchVotes(token, props.id, 2);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const voteThreeStar = async () => {
+        try {
+            await fetchVotes(token, props.id, 3);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const voteFourStar = async () => {
+        try {
+            await fetchVotes(token, props.id, 4);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const voteFiveStar = async () => {
+        try {
+            await fetchVotes(token, props.id, 5);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
     return reactDom.createPortal(
         <>
             <div className='modal-overlay'></div>
@@ -80,15 +112,19 @@ const VoteModal = (props) => {
                     ></i>
                     <i className={FillTwoStar}
                         onMouseOver={() => hoverTwoStar()}
+                        onClick={() => voteTwoStar()}
                     ></i>
                     <i className={FillThreeStar}
                         onMouseOver={() => hoverThreeStar()}
+                        onClick={() => voteThreeStar()}
                     ></i>
                     <i className={FillFourStar}
                         onMouseOver={() => hoverFourStar()}
+                        onClick={() => voteFourStar()}
                     ></i>
                     <i className={FillFiveStar}
                         onMouseOver={() => hoverFiveStar()}
+                        onClick={() => voteFiveStar()}
                     ></i>
                 </div>
             </div>
