@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import RecipeDetail from '../../components/recipeDetail/RecipeDetail';
-import { fetchAddFavorite, fetchUserFavorites } from '../../services/fetchFavorites';
+import { fetchAddFavorite, fetchRemoveFavorite, fetchUserFavorites } from '../../services/fetchFavorites';
 import { fetchById } from '../../services/fetchRecipe';
 import { UNSET_RECIPE } from '../../store/actions/actionTypes';
 import './RecipeView.sass';
@@ -63,6 +63,14 @@ const RecipeView = () => {
         }
     }
 
+    const unlikeRecipe = async () => {
+        try {
+            if (favorites.includes(recipeId)) await fetchRemoveFavorite(token, recipeId);            
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
     const fav = () => {
 
     }
@@ -98,6 +106,7 @@ const RecipeView = () => {
                     totalVotes={recipe.totalVotes}
                     isFavorite={isFavorite}
                     likeRecipe={likeRecipe}
+                    unlikeRecipe={unlikeRecipe}
                 // switchFav={setSwitchFav()}
                 />
                 }

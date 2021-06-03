@@ -29,7 +29,7 @@ export const RecipeDetail = (props) => {
 
             <div className='social-interaction'>
                 <div className='likes-element' >
-                    {props.isFavorite && <Liked />}
+                    {props.isFavorite && <Liked onClick={props.unlikeRecipe}/>}
                     {!props.isFavorite && <NotLiked onClick={props.likeRecipe}/>}
                     {props.likes}
                 </div>
