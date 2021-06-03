@@ -10,24 +10,26 @@ import './RecipeView.sass';
 const RecipeView = () => {
     const recipeId = useSelector(state => state.recipeState.id);
     const token = useSelector(state => state.loginState.token);
-    const [recipe, setRecipe] = useState(null);
-    const [error, setError] = useState(null);
     const history = useHistory();
     const dispatch = useDispatch();
+    const [recipe, setRecipe] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        console.log(recipeId);
-        getRecipe(recipeId, token);
         if (!token || !recipeId) history.push('/');
-        // return dispatch(UNSET_RECIPE);
-    }, [recipeId, history, token ]);
+        getRecipe(recipeId, token);
+    }, [history, recipeId, token]);
+
+    useEffect(() => {
+        return dispatch({ type: UNSET_RECIPE });
+    }, [dispatch]);
 
     const getRecipe = async (id, token) => {
         try {
             let res = await fetchById(id, token);
             setRecipe(res);
         } catch (e) {
-            setError(e.message)
+            setError('Service is currently unavailable, please try again later');
         }
     }
 
@@ -36,6 +38,7 @@ const RecipeView = () => {
             <div className='recipe-view'>
                 {error && <ErrorMsg>{error}</ErrorMsg>}
                 {recipe && <RecipeDetail
+                    id={recipe._id}
                     title={recipe.title}
                     img={recipe.img}
                     prepTime={recipe.prepTime}

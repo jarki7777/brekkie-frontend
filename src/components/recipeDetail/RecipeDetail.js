@@ -1,14 +1,90 @@
 import './RecipeDetail.sass'
 import { ReactComponent as Liked } from '../../icons/heart-solid.svg';
+import { ReactComponent as NotLiked } from '../../icons/heart-regular.svg';
 import { ReactComponent as Calification } from '../../icons/star-solid.svg';
 import NutritionalInfo from '../nutritionalInfo/NutritionalInfo';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { fetchUserFavorites } from '../../services/fetchFavorites';
+import { fetchAddFavorite, fetchRemoveFavorite } from '../../services/fetchFavorites';
+import ErrorMsg from '../errorMsg/ErrorMsg';
+import { fetchById } from '../../services/fetchRecipe';
+import VoteModal from '../voteModal.js/VoteModal';
 
 export const RecipeDetail = (props) => {
     const ingredients = props.ingredients;
     const instructions = props.instructions;
     const notes = props.notes;
+    const token = useSelector(state => state.loginState.token);
+    const [error, setError] = useState(null);
+    const [liked, setLiked] = useState(false);
+    const [likesCount, setLikesCount] = useState(props.likes);
+    const [calificationCount, setVotesCount] = useState(props.calification);
+    const [totalVotesCount, setTotalVotes] = useState(props.totalVotes);
+    const [openVotes, setOpenVotes] = useState(false);
+
+    useEffect(() => {
+        checkIfFavorite();
+        checkCounters();
+    });
+
+    const checkCounters = async () => {
+        try {
+            let res = await fetchById(props.id, token);
+            setLikesCount(res.timesFavorite);
+            setVotesCount(res.totalVotes);
+            setTotalVotes(res.calification);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const checkIfFavorite = async () => {
+        try {
+            const res = await fetchUserFavorites(token);
+            let recipesId = [];
+            for (const recipe of res) {
+                recipesId.push(recipe._id);
+            }
+            if (recipesId.includes(props.id)) setLiked(true);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const switchLike = async () => {
+        if (liked) {
+            await unlikeRecipe();
+            setLiked(false);
+        }
+
+        if (!liked) {
+            await likeRecipe();
+            setLiked(true);
+        }
+    }
+
+    const likeRecipe = async () => {
+        try {
+            await fetchAddFavorite(token, props.id);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const unlikeRecipe = async () => {
+        try {
+            await fetchRemoveFavorite(token, props.id);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+
     return (
         <div className='recipe-container'>
+            {error && <ErrorMsg>{error}</ErrorMsg>}
+
             <div className='recipe-cover'>
                 <img className='recipe-img' src={process.env.PUBLIC_URL + "/img/" + props.img} alt='recipe final result'></img>
                 <h1 className='recipe-title'>{props.title}</h1>
@@ -27,15 +103,24 @@ export const RecipeDetail = (props) => {
 
             <div className='social-interaction'>
                 <div className='likes-element'>
-                    <Liked />{/* call like endpoint */}
-                    {props.likes}
+                    {liked && <Liked onClick={() => switchLike()} />}
+                    {!liked && <NotLiked onClick={() => switchLike()} />}
+                    {likesCount}
                 </div>
                 <div className='favs-element'>
-                    <Calification />{/* pop vote system */}
-                    {props.calification}
-                    ({props.totalVotes})
+                    <Calification onClick={() => setOpenVotes(true)} />
+                    {calificationCount}
+                    ({totalVotesCount})
                 </div>
             </div>
+
+            {openVotes &&
+                <VoteModal setOpenVotes={setOpenVotes}
+                    open={openVotes}
+                    onClose={() => setOpenVotes(false)}
+                    id={props.id}
+                />
+            }
 
             <div className='recipe-description'>{props.description}</div>
 

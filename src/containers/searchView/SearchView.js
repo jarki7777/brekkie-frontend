@@ -37,33 +37,25 @@ const SearchView = () => {
         setError(null);
 
         try {
+            let res = null
 
             if (!keyword && !withInventory) {
-                const res = await fetchAll(page, limit, token);
-                setTotalPages(res.totalPages);
-                setPrevPage(res.hasPrevPage);
-                setNextPage(res.hasNextPage);
-                setRecipes(res.docs);
-                if (res.docs.length === 0) setError('Sorry, no recipes were found');
+                res = await fetchAll(page, limit, token);
             }
 
             if (keyword && !withInventory) {
-                const res = await fetchByKeyword(keyword, page, limit, token);
-                setTotalPages(res.totalPages);
-                setPrevPage(res.hasPrevPage);
-                setNextPage(res.hasNextPage);
-                setRecipes(res.docs);
-                if (res.docs.length === 0) setError('Sorry, no recipes were found');
+                 res = await fetchByKeyword(keyword, page, limit, token);
             }
 
             if (withInventory) {
-                const res = await fetchByInventory(page, limit, token);
-                setTotalPages(res.totalPages);
-                setPrevPage(res.hasPrevPage);
-                setNextPage(res.hasNextPage);
-                setRecipes(res.docs);
-                if (res.docs.length === 0) setError('Sorry, no recipes were found');
+                 res = await fetchByInventory(page, limit, token);
             }
+
+            setTotalPages(res.totalPages);
+            setPrevPage(res.hasPrevPage);
+            setNextPage(res.hasNextPage);
+            setRecipes(res.docs);
+            if (res.docs.length === 0) setError('Sorry, no recipes were found');
 
 
         } catch (e) {
@@ -74,34 +66,27 @@ const SearchView = () => {
     const goPrevious = async () => {
         if (prevPage) {
             const newPage = page - 1;
+            let res
+            
             try {
 
                 if (!searchTerm && !searchWithInventory) {
-                    const res = await fetchAll(newPage, limit, token);
-                    setTotalPages(res.totalPages);
-                    setPrevPage(res.hasPrevPage);
-                    setNextPage(res.hasNextPage);
-                    setPage(res.page);
-                    setRecipes(res.docs);
+                    res = await fetchAll(newPage, limit, token);
                 }
 
                 if (searchTerm && !searchWithInventory) {
-                    const res = await fetchByKeyword(searchTerm, page, limit, token);
-                    setTotalPages(res.totalPages);
-                    setPrevPage(res.hasPrevPage);
-                    setNextPage(res.hasNextPage);
-                    setPage(res.page);
-                    setRecipes(res.docs);
+                    res = await fetchByKeyword(searchTerm, page, limit, token);
                 }
 
                 if (searchWithInventory) {
-                    const res = await fetchByInventory(page, limit, token);
-                    setTotalPages(res.totalPages);
-                    setPrevPage(res.hasPrevPage);
-                    setNextPage(res.hasNextPage);
-                    setPage(res.page);
-                    setRecipes(res.docs);
+                    res = await fetchByInventory(page, limit, token);
                 }
+
+                setTotalPages(res.totalPages);
+                setPrevPage(res.hasPrevPage);
+                setNextPage(res.hasNextPage);
+                setPage(res.page);
+                setRecipes(res.docs);
                 window.scrollTo(0, 0)
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
@@ -114,32 +99,25 @@ const SearchView = () => {
             const newPage = page + 1;
             try {
 
+                let res = null;
+
                 if (!searchTerm && !searchWithInventory) {
-                    const res = await fetchAll(newPage, limit, token);
-                    setTotalPages(res.totalPages);
-                    setPrevPage(res.hasPrevPage);
-                    setNextPage(res.hasNextPage);
-                    setPage(res.page);
-                    setRecipes(res.docs);
+                    res = await fetchAll(newPage, limit, token);
                 }
 
                 if (searchTerm && !searchWithInventory) {
-                    const res = await fetchByKeyword(searchTerm, newPage, limit, token);
-                    setTotalPages(res.totalPages);
-                    setPrevPage(res.hasPrevPage);
-                    setNextPage(res.hasNextPage);
-                    setPage(res.page);
-                    setRecipes(res.docs);
+                    res = await fetchByKeyword(searchTerm, newPage, limit, token);
                 }
 
                 if (searchWithInventory) {
-                    const res = await fetchByInventory(newPage, limit, token);
-                    setTotalPages(res.totalPages);
-                    setPrevPage(res.hasPrevPage);
-                    setNextPage(res.hasNextPage);
-                    setPage(res.page);
-                    setRecipes(res.docs);
+                    res = await fetchByInventory(newPage, limit, token);
                 }
+
+                setTotalPages(res.totalPages);
+                setPrevPage(res.hasPrevPage);
+                setNextPage(res.hasNextPage);
+                setPage(res.page);
+                setRecipes(res.docs);
                 window.scrollTo(0, 0);
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
