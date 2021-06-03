@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import RecipeDetail from '../../components/recipeDetail/RecipeDetail';
-import { fetchUserFavorites } from '../../services/fetchFavorites';
+import { fetchAddFavorite, fetchUserFavorites } from '../../services/fetchFavorites';
 import { fetchById } from '../../services/fetchRecipe';
 import { UNSET_RECIPE } from '../../store/actions/actionTypes';
 import './RecipeView.sass';
@@ -18,7 +18,7 @@ const RecipeView = () => {
     const [favorites, setFavorites] = useState([]);
     const [isFavorite, setIsFavorite] = useState(false);
     const [switchFav, setSwitchFav] = useState(false);
-    
+
     useEffect(() => {
         if (!token || !recipeId) history.push('/');
         getRecipe(recipeId, token);
@@ -38,7 +38,7 @@ const RecipeView = () => {
             let res = await fetchById(id, token);
             setRecipe(res);
         } catch (e) {
-            setError(e.message)
+            setError('Service is currently unavailable, please try again later');
         }
     }
 
@@ -51,7 +51,15 @@ const RecipeView = () => {
             }
             setFavorites(recipesId);
         } catch (e) {
-            
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const likeRecipe = async () => {
+        try {
+            if (!favorites.includes(recipeId)) await fetchAddFavorite(token, recipeId);            
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
         }
     }
 
@@ -89,7 +97,8 @@ const RecipeView = () => {
                     calification={recipe.calification}
                     totalVotes={recipe.totalVotes}
                     isFavorite={isFavorite}
-                    // switchFav={setSwitchFav()}
+                    likeRecipe={likeRecipe}
+                // switchFav={setSwitchFav()}
                 />
                 }
             </div>
