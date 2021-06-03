@@ -9,6 +9,7 @@ import { fetchUserFavorites } from '../../services/fetchFavorites';
 import { fetchAddFavorite, fetchRemoveFavorite } from '../../services/fetchFavorites';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import { fetchById } from '../../services/fetchRecipe';
+import VoteModal from '../voteModal.js/VoteModal';
 
 export const RecipeDetail = (props) => {
     const ingredients = props.ingredients;
@@ -18,6 +19,7 @@ export const RecipeDetail = (props) => {
     const [error, setError] = useState(null);
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(props.likes);
+    const [openVotes, setOpenVotes] = useState(false);
 
     useEffect(() => {
         checkIfFavorite();
@@ -102,11 +104,18 @@ export const RecipeDetail = (props) => {
                     {likesCount}
                 </div>
                 <div className='favs-element'>
-                    <Calification />
+                    <Calification onClick={() => setOpenVotes(true)} />
                     {props.calification}
                     ({props.totalVotes})
                 </div>
             </div>
+
+            {openVotes &&
+                <VoteModal setOpenVotes={setOpenVotes}
+                    open={openVotes}
+                    onClose={() => setOpenVotes(false)}
+                />
+            }
 
             <div className='recipe-description'>{props.description}</div>
 
