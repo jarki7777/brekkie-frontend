@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import RecipeDetail from '../../components/recipeDetail/RecipeDetail';
-import { fetchAddFavorite, fetchRemoveFavorite, fetchUserFavorites } from '../../services/fetchFavorites';
 import { fetchById } from '../../services/fetchRecipe';
 import { UNSET_RECIPE } from '../../store/actions/actionTypes';
 import './RecipeView.sass';
@@ -15,19 +14,11 @@ const RecipeView = () => {
     const dispatch = useDispatch();
     const [recipe, setRecipe] = useState(null);
     const [error, setError] = useState(null);
-    const [favorites, setFavorites] = useState([]);
-    const [isFavorite, setIsFavorite] = useState(false);
-    const [switchFav, setSwitchFav] = useState(false);
 
     useEffect(() => {
         if (!token || !recipeId) history.push('/');
         getRecipe(recipeId, token);
-        getUserFavorites(token);
     }, [history, recipeId, token]);
-
-    useEffect(() => {
-        if (favorites.includes(recipeId)) setIsFavorite(true);
-    }, [favorites, recipeId]);
 
     useEffect(() => {
         return dispatch({ type: UNSET_RECIPE });
@@ -42,44 +33,12 @@ const RecipeView = () => {
         }
     }
 
-    const getUserFavorites = async (token) => {
-        try {
-            const res = await fetchUserFavorites(token);
-            let recipesId = [];
-            for (const recipe of res) {
-                recipesId.push(recipe._id);
-            }
-            setFavorites(recipesId);
-        } catch (e) {
-            setError('Service is currently unavailable, please try again later');
-        }
-    }
-
-    const likeRecipe = async () => {
-        try {
-            if (!favorites.includes(recipeId)) await fetchAddFavorite(token, recipeId);            
-        } catch (e) {
-            setError('Service is currently unavailable, please try again later');
-        }
-    }
-
-    const unlikeRecipe = async () => {
-        try {
-            if (favorites.includes(recipeId)) await fetchRemoveFavorite(token, recipeId);            
-        } catch (e) {
-            setError('Service is currently unavailable, please try again later');
-        }
-    }
-
-    const fav = () => {
-
-    }
-
     return (
         <>
             <div className='recipe-view'>
                 {error && <ErrorMsg>{error}</ErrorMsg>}
                 {recipe && <RecipeDetail
+                    id={recipe._id}
                     title={recipe.title}
                     img={recipe.img}
                     prepTime={recipe.prepTime}
@@ -104,10 +63,6 @@ const RecipeView = () => {
                     likes={recipe.timesFavorite}
                     calification={recipe.calification}
                     totalVotes={recipe.totalVotes}
-                    isFavorite={isFavorite}
-                    likeRecipe={likeRecipe}
-                    unlikeRecipe={unlikeRecipe}
-                // switchFav={setSwitchFav()}
                 />
                 }
             </div>

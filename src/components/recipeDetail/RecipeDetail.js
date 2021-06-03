@@ -3,14 +3,71 @@ import { ReactComponent as Liked } from '../../icons/heart-solid.svg';
 import { ReactComponent as NotLiked } from '../../icons/heart-regular.svg';
 import { ReactComponent as Calification } from '../../icons/star-solid.svg';
 import NutritionalInfo from '../nutritionalInfo/NutritionalInfo';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { fetchUserFavorites } from '../../services/fetchFavorites';
+import { fetchAddFavorite, fetchRemoveFavorite } from '../../services/fetchFavorites';
+import ErrorMsg from '../errorMsg/ErrorMsg';
 
 export const RecipeDetail = (props) => {
     const ingredients = props.ingredients;
     const instructions = props.instructions;
     const notes = props.notes;
+    const token = useSelector(state => state.loginState.token);
+    const [error, setError] = useState(null);
+    const [liked, setLiked] = useState(false);
+    const [likesCount, setLikesCount] = useState(props.likes);
+
+    useEffect(() => {
+        checkIfFavorite(token);
+    }, [liked]);
+
+    const checkIfFavorite = async (token) => {
+        try {
+            const res = await fetchUserFavorites(token);
+            let recipesId = [];
+            for (const recipe of res) {
+                recipesId.push(recipe._id);
+            }
+            if (recipesId.includes(props.id)) setLiked(true);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const switchLike = async () => {
+        if (liked) {
+            await unlikeRecipe();
+            setLiked(false);
+        }
+
+        if (!liked) {
+            await likeRecipe();
+            setLiked(true);
+        }
+    }
+
+    const likeRecipe = async () => {
+        try {
+            await fetchAddFavorite(token, props.id);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const unlikeRecipe = async () => {
+        try {
+            await fetchRemoveFavorite(token, props.id);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
 
     return (
         <div className='recipe-container'>
+            {error && <ErrorMsg>{error}</ErrorMsg>}
+
             <div className='recipe-cover'>
                 <img className='recipe-img' src={process.env.PUBLIC_URL + "/img/" + props.img} alt='recipe final result'></img>
                 <h1 className='recipe-title'>{props.title}</h1>
@@ -28,10 +85,10 @@ export const RecipeDetail = (props) => {
             </div>
 
             <div className='social-interaction'>
-                <div className='likes-element' >
-                    {props.isFavorite && <Liked onClick={props.unlikeRecipe}/>}
-                    {!props.isFavorite && <NotLiked onClick={props.likeRecipe}/>}
-                    {props.likes}
+                <div className='likes-element'>
+                    {liked && <Liked onClick={() => switchLike()} />}
+                    {!liked && <NotLiked onClick={() => switchLike()} />}
+                    {likesCount}
                 </div>
                 <div className='favs-element'>
                     <Calification />
