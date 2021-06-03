@@ -19,17 +19,21 @@ export const RecipeDetail = (props) => {
     const [error, setError] = useState(null);
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(props.likes);
+    const [calificationCount, setVotesCount] = useState(props.calification);
+    const [totalVotesCount, setTotalVotes] = useState(props.totalVotes);
     const [openVotes, setOpenVotes] = useState(false);
 
     useEffect(() => {
         checkIfFavorite();
-        checkLikesCount();
+        checkCounters();
     });
 
-    const checkLikesCount = async () => {
+    const checkCounters = async () => {
         try {
             let res = await fetchById(props.id, token);
             setLikesCount(res.timesFavorite);
+            setVotesCount(res.totalVotes);
+            setTotalVotes(res.calification);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
@@ -105,8 +109,8 @@ export const RecipeDetail = (props) => {
                 </div>
                 <div className='favs-element'>
                     <Calification onClick={() => setOpenVotes(true)} />
-                    {props.calification}
-                    ({props.totalVotes})
+                    {calificationCount}
+                    ({totalVotesCount})
                 </div>
             </div>
 
