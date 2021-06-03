@@ -1,5 +1,6 @@
 import './RecipeDetail.sass'
 import { ReactComponent as Liked } from '../../icons/heart-solid.svg';
+import { ReactComponent as NotLiked } from '../../icons/heart-regular.svg';
 import { ReactComponent as Calification } from '../../icons/star-solid.svg';
 import NutritionalInfo from '../nutritionalInfo/NutritionalInfo';
 
@@ -7,6 +8,7 @@ export const RecipeDetail = (props) => {
     const ingredients = props.ingredients;
     const instructions = props.instructions;
     const notes = props.notes;
+
     return (
         <div className='recipe-container'>
             <div className='recipe-cover'>
@@ -26,12 +28,13 @@ export const RecipeDetail = (props) => {
             </div>
 
             <div className='social-interaction'>
-                <div className='likes-element'>
-                    <Liked />{/* call like endpoint */}
+                <div className='likes-element' >
+                    {props.isFavorite && <Liked />}
+                    {!props.isFavorite && <NotLiked />}
                     {props.likes}
                 </div>
                 <div className='favs-element'>
-                    <Calification />{/* pop vote system */}
+                    <Calification />
                     {props.calification}
                     ({props.totalVotes})
                 </div>

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import RecipeDetail from '../../components/recipeDetail/RecipeDetail';
+import { fetchUserFavorites } from '../../services/fetchFavorites';
 import { fetchById } from '../../services/fetchRecipe';
 import { UNSET_RECIPE } from '../../store/actions/actionTypes';
 import './RecipeView.sass';
@@ -10,17 +11,27 @@ import './RecipeView.sass';
 const RecipeView = () => {
     const recipeId = useSelector(state => state.recipeState.id);
     const token = useSelector(state => state.loginState.token);
-    const [recipe, setRecipe] = useState(null);
-    const [error, setError] = useState(null);
     const history = useHistory();
     const dispatch = useDispatch();
+    const [recipe, setRecipe] = useState(null);
+    const [error, setError] = useState(null);
+    const [favorites, setFavorites] = useState([]);
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [switchFav, setSwitchFav] = useState(false);
+    
+    useEffect(() => {
+        if (!token || !recipeId) history.push('/');
+        getRecipe(recipeId, token);
+        getUserFavorites(token);
+    }, [history, recipeId, token]);
 
     useEffect(() => {
-        console.log(recipeId);
-        getRecipe(recipeId, token);
-        if (!token || !recipeId) history.push('/');
-        // return dispatch(UNSET_RECIPE);
-    }, [recipeId, history, token ]);
+        if (favorites.includes(recipeId)) setIsFavorite(true);
+    }, [favorites, recipeId]);
+
+    useEffect(() => {
+        return dispatch({ type: UNSET_RECIPE });
+    }, [dispatch]);
 
     const getRecipe = async (id, token) => {
         try {
@@ -29,6 +40,23 @@ const RecipeView = () => {
         } catch (e) {
             setError(e.message)
         }
+    }
+
+    const getUserFavorites = async (token) => {
+        try {
+            const res = await fetchUserFavorites(token);
+            let recipesId = [];
+            for (const recipe of res) {
+                recipesId.push(recipe._id);
+            }
+            setFavorites(recipesId);
+        } catch (e) {
+            
+        }
+    }
+
+    const fav = () => {
+
     }
 
     return (
@@ -60,6 +88,8 @@ const RecipeView = () => {
                     likes={recipe.timesFavorite}
                     calification={recipe.calification}
                     totalVotes={recipe.totalVotes}
+                    isFavorite={isFavorite}
+                    // switchFav={setSwitchFav()}
                 />
                 }
             </div>
