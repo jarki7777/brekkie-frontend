@@ -114,6 +114,7 @@ export const RecipeDetail = (props) => {
                 <VoteModal setOpenVotes={setOpenVotes}
                     open={openVotes}
                     onClose={() => setOpenVotes(false)}
+                    id={props.id}
                 />
             }
 

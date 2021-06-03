@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import reactDom from 'react-dom';
+import { useSelector } from 'react-redux';
 import { ReactComponent as Close } from '../../icons/times-solid.svg';
+import { fetchVoteOneStar, fetchVotes } from '../../services/fetchVotes';
+import ErrorMsg from '../errorMsg/ErrorMsg';
 import './VoteModal.sass';
 
 const VoteModal = (props) => {
+    const token = useSelector(state => state.loginState.token);
+    const [error, setError] = useState(null);
     const [FillOneStar, setFillOneStar] = useState('far fa-star star-vote');
     const [FillTwoStar, setFillTwoStar] = useState('far fa-star star-vote');
     const [FillThreeStar, setFillThreeStar] = useState('far fa-star star-vote');
@@ -51,27 +56,40 @@ const VoteModal = (props) => {
         setFillFiveStar('fas fa-star star-vote');
     }
 
-
+    const voteOneStar = async () => {
+        try {
+            await fetchVotes(token, props.id, 1);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
 
     return reactDom.createPortal(
         <>
             <div className='modal-overlay'></div>
             <div className='vote-modal-container'>
+
+                {error && <ErrorMsg>{error}</ErrorMsg>}
+
                 <div className='icon-button close-icon' onClick={props.onClose}><Close /></div>
                 <span>Rate this recipe</span>
                 <div className='stars-bar' onMouseLeave={() => resetFill()}>
                     <i className={FillOneStar}
                         onMouseOver={() => hoverOneStar()}
-                        >                            
-                        </i>
+                        onClick={() => voteOneStar()}
+                    ></i>
                     <i className={FillTwoStar}
-                        onMouseOver={() => hoverTwoStar()}></i>
+                        onMouseOver={() => hoverTwoStar()}
+                    ></i>
                     <i className={FillThreeStar}
-                        onMouseOver={() => hoverThreeStar()}></i>
+                        onMouseOver={() => hoverThreeStar()}
+                    ></i>
                     <i className={FillFourStar}
-                        onMouseOver={() => hoverFourStar()}></i>
+                        onMouseOver={() => hoverFourStar()}
+                    ></i>
                     <i className={FillFiveStar}
-                        onMouseOver={() => hoverFiveStar()}></i>
+                        onMouseOver={() => hoverFiveStar()}
+                    ></i>
                 </div>
             </div>
         </>,
