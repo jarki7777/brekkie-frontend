@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { fetchUserFavorites } from '../../services/fetchFavorites';
 import { fetchAddFavorite, fetchRemoveFavorite } from '../../services/fetchFavorites';
 import ErrorMsg from '../errorMsg/ErrorMsg';
+import { fetchById } from '../../services/fetchRecipe';
 
 export const RecipeDetail = (props) => {
     const ingredients = props.ingredients;
@@ -19,10 +20,20 @@ export const RecipeDetail = (props) => {
     const [likesCount, setLikesCount] = useState(props.likes);
 
     useEffect(() => {
-        checkIfFavorite(token);
+        checkIfFavorite();
+        checkLikesCount();
     }, [liked]);
 
-    const checkIfFavorite = async (token) => {
+    const checkLikesCount = async () => {
+        try {
+            let res = await fetchById(props.id, token);
+            setLikesCount(res.timesFavorite);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const checkIfFavorite = async () => {
         try {
             const res = await fetchUserFavorites(token);
             let recipesId = [];
