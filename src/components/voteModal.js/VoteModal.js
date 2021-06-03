@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import reactDom from 'react-dom';
 import { useSelector } from 'react-redux';
 import { ReactComponent as Close } from '../../icons/times-solid.svg';
-import { fetchVoteOneStar, fetchVotes } from '../../services/fetchVotes';
+import { fetchVotes } from '../../services/fetchVotes';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './VoteModal.sass';
 
@@ -14,6 +14,7 @@ const VoteModal = (props) => {
     const [FillThreeStar, setFillThreeStar] = useState('far fa-star star-vote');
     const [FillFourStar, setFillFourStar] = useState('far fa-star star-vote');
     const [FillFiveStar, setFillFiveStar] = useState('far fa-star star-vote');
+    const [closeModal, setCloseModal] = useState(null);
 
     useEffect(() => {
         if (!props.open) return null;
@@ -57,40 +58,50 @@ const VoteModal = (props) => {
     }
 
     const voteOneStar = async () => {
+        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 1);
+            return closeModal;
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
 
     const voteTwoStar = async () => {
+        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 2);
+            return closeModal;
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
 
     const voteThreeStar = async () => {
+        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 3);
+            return closeModal;
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
 
     const voteFourStar = async () => {
+        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 4);
+            return closeModal;
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
 
     const voteFiveStar = async () => {
+        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 5);
+            return closeModal;
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
@@ -124,7 +135,7 @@ const VoteModal = (props) => {
                     ></i>
                     <i className={FillFiveStar}
                         onMouseOver={() => hoverFiveStar()}
-                        onClick={() => voteFiveStar()}
+                        onClick={() => { voteFiveStar() }}
                     ></i>
                 </div>
             </div>

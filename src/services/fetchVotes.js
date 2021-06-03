@@ -6,7 +6,6 @@ export const fetchVotes = async (token, id, starQtty) => {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }
             });
-            console.log(res.status);
         return res.status;
         }
         switch (starQtty) {

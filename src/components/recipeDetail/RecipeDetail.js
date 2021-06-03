@@ -24,7 +24,7 @@ export const RecipeDetail = (props) => {
     useEffect(() => {
         checkIfFavorite();
         checkLikesCount();
-    }, [liked]);
+    });
 
     const checkLikesCount = async () => {
         try {
