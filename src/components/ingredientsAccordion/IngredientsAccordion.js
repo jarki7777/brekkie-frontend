@@ -1,9 +1,7 @@
 import './IngredientsAccordion.sass';
-import { ReactComponent as Plus } from '../../icons/plus-solid.svg';
-import { ReactComponent as Minus } from '../../icons/minus-solid.svg';
 import { useState } from 'react';
-
-
+import INGREDIENTS from './ingredientsList';
+import AccordionDropDown from '../accordionDropDown/AccordionDropDown';
 
 const IngredientsAccordion = () => {
     const [deploy, setDeploy] = useState(false);
@@ -13,66 +11,97 @@ const IngredientsAccordion = () => {
         else setDeploy(bool);
     }
 
-    const data = [
-        "quinoa",
-        "edamame",
-        "kidney beans",
-        "chickpeas",
-        "red onion",
-        "yellow bell pepper",
-        "red bell pepper",
-        "celery",
-        "green onions",
-        "cilantro",
-        "parsley",
-        "red wine",
-        "olive oil",
-        "salt",
-        "butter",
-        "light brown sugar",
-        "granulated sugar",
-        "white whole wheat flour",
-        "baking soda",
-        "cinnamon",
-        "vanilla extract",
-        "large egg",
-        "small apples",
-        "kale",
-        "blackberries",
-        "raspberries",
-        "blueberries",
-        "strawberries",
-        "avocado",
-        "feta cheese",
-        "balsamic vinaigrette",
-        "lime",
-        "tomato",
-        "coarse sea salt",
-        "garlic powder",
-        "jalapeño"
-    ]
-
     return (
-        <div>
-            <div className='category-wrap' onClick={() => toggle(true)}>
-                <span className='categroy-ingredient category-title'>Dairy products
-                <span>{deploy ? <Minus /> : <Plus />}</span>
-                </span>
+        <>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS['Basic Products']}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Basic Products'}
+                />
             </div>
-            {data.map((ingredient) =>
-                <>
-                    {deploy ? (
-                        <div className='ingredient-category-drowdown' key={data.indexOf(ingredient)}>
-                            <div className='categroy-ingredient'>
-                                <span>{ingredient}</span>
-                                <Plus />
-                            </div>
-                        </div>
-                    ) : null}
-
-                </>
-            )}
-        </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS['Dairy Products']}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Dairy Products'}
+                />
+            </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS.Cereals}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Cereals'}
+                />
+            </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS['Fruits & Vegetables']}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Fruits & Vegetables'}
+                />
+            </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS.Greens}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Greens'}
+                />
+            </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS['Pork Meat']}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Pork Meat'}
+                />
+            </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS['Cattle Meat']}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Cattle Meat'}
+                />
+            </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS['Lamb Meat']}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Lamb Meat'}
+                />
+            </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS['Veal Meat']}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Veal Meat'}
+                />
+            </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS.Nuts}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Nuts'}
+                />
+            </div>
+            <div>
+                <AccordionDropDown
+                    ingredients={INGREDIENTS.Seasoning}
+                    deploy={deploy}
+                    toggle={() => toggle(true)}
+                    title={'Seasoning'}
+                />
+            </div>
+        </>
     )
 }
 
