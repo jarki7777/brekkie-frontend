@@ -44,11 +44,11 @@ const SearchView = () => {
             }
 
             if (keyword && !withInventory) {
-                 res = await fetchByKeyword(keyword, page, limit, token);
+                res = await fetchByKeyword(keyword, page, limit, token);
             }
 
             if (withInventory) {
-                 res = await fetchByInventory(page, limit, token);
+                res = await fetchByInventory(page, limit, token);
             }
 
             setTotalPages(res.totalPages);
@@ -67,7 +67,7 @@ const SearchView = () => {
         if (prevPage) {
             const newPage = page - 1;
             let res
-            
+
             try {
 
                 if (!searchTerm && !searchWithInventory) {
@@ -151,16 +151,16 @@ const SearchView = () => {
             </form>
             <div className='results-container'>
                 {recipes.length === 0 && !error && <span>Use the search tools above to find your next favorite recipe!</span>}
-                {recipes.map(recipe => <Link className='recipe-card-link' to='/recipe'><RecipeCard
-                    key={recipes.indexOf(recipe)}
-                    goToRecipe={() => goToRecipe(recipe._id)}
-                    img={recipe.img}
-                    title={recipe.title}
-                    calories={recipe.caloriesPerServe}
-                    likes={recipe.timesFavorite}
-                    calification={recipe.calification}
-                    totalVotes={recipe.totalVotes}
-                /></Link>)}
+                {recipes.map(recipe => <Link className='recipe-card-link' to='/recipe' key={recipes.indexOf(recipe)}>
+                    <RecipeCard
+                        goToRecipe={() => goToRecipe(recipe._id)}
+                        img={recipe.img}
+                        title={recipe.title}
+                        calories={recipe.caloriesPerServe}
+                        likes={recipe.timesFavorite}
+                        calification={recipe.calification}
+                        totalVotes={recipe.totalVotes}
+                    /></Link>)}
             </div>
 
             <Pagination

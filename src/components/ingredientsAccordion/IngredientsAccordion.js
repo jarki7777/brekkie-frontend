@@ -1,9 +1,17 @@
 import './IngredientsAccordion.sass';
-import { ReactComponent as Add } from '../../icons/plus-solid.svg';
+import { ReactComponent as Plus } from '../../icons/plus-solid.svg';
+import { ReactComponent as Minus } from '../../icons/minus-solid.svg';
+import { useState } from 'react';
 
 
 
 const IngredientsAccordion = () => {
+    const [deploy, setDeploy] = useState(false);
+
+    const toggle = (bool) => {
+        if (deploy === true) setDeploy(false);
+        else setDeploy(bool);
+    }
 
     const data = [
         "quinoa",
@@ -46,14 +54,23 @@ const IngredientsAccordion = () => {
 
     return (
         <div>
-            <div className='category-wrap'>
-                <span className='categroy-ingredient category-title'>Dairy products<Add /></span>
+            <div className='category-wrap' onClick={() => toggle(true)}>
+                <span className='categroy-ingredient category-title'>Dairy products
+                <span>{deploy ? <Minus /> : <Plus />}</span>
+                </span>
             </div>
-            {data.map(ingredient =>
-                <div className='categroy-ingredient'>
-                    <span>{ingredient}</span>
-                    <Add />
-                </div>
+            {data.map((ingredient) =>
+                <>
+                    {deploy ? (
+                        <div className='ingredient-category-drowdown' key={data.indexOf(ingredient)}>
+                            <div className='categroy-ingredient'>
+                                <span>{ingredient}</span>
+                                <Plus />
+                            </div>
+                        </div>
+                    ) : null}
+
+                </>
             )}
         </div>
     )
