@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import IngredientsAccordion from '../../components/ingredientsAccordion/IngredientsAccordion';
-import MyIngredients from '../../components/MyIngredients/MyIngredients';
+import MyIngredients from '../../components/myIngredients/MyIngredients';
 import { fetchEmptyInventory, fetchUserInventory, fetchAddToInventory } from '../../services/fetchInventory';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import './Inventory.sass';
 
 const Inventory = () => {
     const token = useSelector(state => state.loginState.token);
+    const history = useHistory();
     const [error, setError] = useState(null);
     const [accordion, setAccordion] = useState(false);
     const [inventory, setInventory] = useState(null);
@@ -15,6 +17,7 @@ const Inventory = () => {
     const [addFromList, setAddFromList] = useState('inactive-inventory');
 
     useEffect(() => {
+        if (!token) history.push('/');
         getInventory();
     }, [inventory]);
 
@@ -82,7 +85,7 @@ const Inventory = () => {
                 {accordion && <IngredientsAccordion />}
                 <div className='empty-inventory'>
                     <button
-                        className='login-btn search-btn empty-btn'
+                        className='login-btn empty-btn'
                         name='empty'
                         type='button'
                         onClick={() => emptyInventory()}

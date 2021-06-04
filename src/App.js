@@ -5,6 +5,7 @@ import Header from './components/header/Header';
 import RecipeView from './containers/recipeView/RecipeView';
 import SearchView from './containers/searchView/SearchView';
 import Inventory from './containers/inventory/Inventory';
+import ShoppingList from './containers/shoppingList/ShoppingList';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path='/recipe' component={RecipeView} exact />
           <Route path='/search' component={SearchView} exact />
           <Route path='/inventory' component={Inventory} exact />
+          <Route path='/shopping' component={ShoppingList} exact />
           <Redirect to='/' />
         </Switch>
       </BrowserRouter>
