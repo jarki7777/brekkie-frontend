@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import IngredientsAccordion from '../ingredientsAccordion/IngredientsAccordion';
-import OwnedIngredients from '../ownedIngredients/OwnedIngredients';
-import { fetchUserInventory } from '../../services/fetchInventory';
+import MyIngredients from '../MyIngredients/MyIngredients';
+import { fetchEmptyInventory, fetchUserInventory } from '../../services/fetchInventory';
 import { useSelector } from 'react-redux';
 import './Inventory.sass';
 
@@ -16,7 +16,7 @@ const Inventory = () => {
 
     useEffect(() => {
         getInventory();
-    }, []);
+    }, [inventory]);
 
     const getInventory = async () => {
         try {
@@ -40,6 +40,14 @@ const Inventory = () => {
         }
     }
 
+    const emptyInventory = async () => {
+        try {
+            await fetchEmptyInventory(token);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
     return (
         <>
             <div className='search-view-container'>
@@ -58,10 +66,10 @@ const Inventory = () => {
                     <div className={addFromList} onClick={() => switchInventory(false, true)}>Add from list</div>
                     <div className='inactive-inventory-border'></div>
                 </div>
-                {!accordion && inventory && inventory.map(ingredient => <OwnedIngredients title={ingredient} />)}
+                {!accordion && inventory && inventory.map(ingredient => <MyIngredients title={ingredient} />)}
                 {accordion && <IngredientsAccordion />}
                 <div className='empty-inventory'>
-                    <button className='login-btn search-btn empty-btn' name='submit' type='submit'>Empty inventory</button>
+                    <button className='login-btn search-btn empty-btn' name='empty' type='button'>Empty inventory</button>
                 </div>
             </div>
         </>

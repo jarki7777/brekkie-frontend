@@ -45,3 +45,16 @@ export const fetchAddToInventory = async (token, ingredient) => {
         console.log(e);
     }
 }
+
+export const fetchEmptyInventory = async (token) => {
+    try {
+        const res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_INVENTORY}`,
+            {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }
+            });
+        return res.status
+    } catch (e) {
+        console.log(e);
+    }
+}

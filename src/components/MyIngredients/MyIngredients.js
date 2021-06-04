@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { ReactComponent as Minus } from '../../icons/minus-solid.svg';
 import { fetchRemoveFromInventory } from '../../services/fetchInventory';
 
-const OwnedIngredients = (props) => {
+const MyIngredients = (props) => {
     const token = useSelector(state => state.loginState.token);
     const [ingredient, setIngredient] = useState(true);
 
@@ -27,4 +27,4 @@ const OwnedIngredients = (props) => {
     )
 }
 
-export default OwnedIngredients
+export default MyIngredients;
