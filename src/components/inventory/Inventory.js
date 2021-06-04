@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import IngredientsAccordion from '../ingredientsAccordion/IngredientsAccordion';
 import MyIngredients from '../MyIngredients/MyIngredients';
-import { fetchEmptyInventory, fetchUserInventory } from '../../services/fetchInventory';
+import { fetchEmptyInventory, fetchUserInventory, fetchAddToInventory } from '../../services/fetchInventory';
 import { useSelector } from 'react-redux';
 import './Inventory.sass';
 
@@ -48,6 +48,17 @@ const Inventory = () => {
         }
     }
 
+    const addFromInput = async (event) => {
+        event.preventDefault();
+        try {
+            const ingredient = event.target[0].value;
+            if (ingredient !== '') await fetchAddToInventory(token, ingredient);
+            getInventory();
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
     return (
         <>
             <div className='search-view-container'>
@@ -55,7 +66,7 @@ const Inventory = () => {
                 <div className='inventory-instructions'>
                     Select ingredients from the list or use the input bar to add ingredients individually
                 </div>
-                <form className='search-form inventory-search' /*onSubmit={(event) => search(event)}*/>
+                <form className='search-form inventory-search' onSubmit={(event) => addFromInput(event)}>
                     <div className='search-bar'>
                         <input className='input-text search-input' type='search' name='search' placeholder='Add your ingredients'></input>
                         <button className='login-btn search-btn' name='submit' type='submit'>Add</button>
