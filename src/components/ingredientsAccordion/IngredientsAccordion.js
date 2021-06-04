@@ -37,7 +37,7 @@ const IngredientsAccordion = () => {
                 if (open !== 'Greens') setOpen('Greens');
                 if (open === 'Greens') setOpen(false);
                 else if (!open) setOpen('Greens');
-                break;            
+                break;
             case 6:
                 if (open !== 'Pork Meat') setOpen('Pork Meat');
                 if (open === 'Pork Meat') setOpen(false);
@@ -63,14 +63,13 @@ const IngredientsAccordion = () => {
                 if (open === 'Nuts') setOpen(false);
                 else if (!open) setOpen('Nuts');
                 break;
-            case 1:
+            case 11:
                 if (open !== 'Seasoning') setOpen('Seasoning');
                 if (open === 'Seasoning') setOpen(false);
                 else if (!open) setOpen('Seasoning');
                 break;
             default:
                 break;
-
 
         }
         setDropDownElement(null);
