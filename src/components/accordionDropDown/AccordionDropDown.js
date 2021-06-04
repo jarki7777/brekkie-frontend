@@ -31,7 +31,7 @@ const AccordionDropDown = (props) => {
                 <div>
                     <div className='ingredient-category-drowdown' key={props.ingredients.indexOf(ingredient)}>
                         <div className='categroy-ingredient' onClick={() => addToInventory(ingredient)}>
-                            <div>
+                            <div className='ingredient-row'>
                             <span>{ingredient}</span>
                             {added === ingredient && <Check className='added-indicator' />}
                             </div>
