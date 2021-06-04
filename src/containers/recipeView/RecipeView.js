@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import RecipeDetail from '../../components/recipeDetail/RecipeDetail';
 import { fetchById } from '../../services/fetchRecipe';
-import { UNSET_RECIPE } from '../../store/actions/actionTypes';
 import './RecipeView.sass';
 
 const RecipeView = () => {
     const recipeId = useSelector(state => state.recipeState.id);
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
-    const dispatch = useDispatch();
     const [recipe, setRecipe] = useState(null);
     const [error, setError] = useState(null);
 
@@ -19,10 +17,6 @@ const RecipeView = () => {
         if (!token || !recipeId) history.push('/');
         getRecipe(recipeId, token);
     }, [history, recipeId, token]);
-
-    useEffect(() => {
-        return dispatch({ type: UNSET_RECIPE });
-    }, [dispatch]);
 
     const getRecipe = async (id, token) => {
         try {
