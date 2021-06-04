@@ -9,8 +9,10 @@ import './Inventory.sass';
 const Inventory = () => {
     const token = useSelector(state => state.loginState.token);
     const [error, setError] = useState(null);
-    const [accordion, setAccordion] = useState(true);
+    const [accordion, setAccordion] = useState(false);
     const [inventory, setInventory] = useState(null);
+    const [myInventory, setMyInventory] = useState('active-inventory');
+    const [addFromList, setAddFromList] = useState('inactive-inventory');
 
     useEffect(() => {
         getInventory();
@@ -22,6 +24,19 @@ const Inventory = () => {
             setInventory(res);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const switchInventory = (myList, addlist) => {
+        if (addlist && !accordion) {
+            setMyInventory('inactive-inventory');
+            setAddFromList('active-inventory');
+            setAccordion(true);
+        }
+        if (myList && accordion) {
+            setMyInventory('active-inventory');
+            setAddFromList('inactive-inventory');
+            setAccordion(false);
         }
     }
 
@@ -39,8 +54,8 @@ const Inventory = () => {
                     </div>
                 </form>
                 <div className='toggle-inventory'>
-                    <div className='active-inventory'>My Inventory</div>
-                    <div className='inactive-inventory'>Add from list</div>
+                    <div className={myInventory} onClick={() => switchInventory(true, false)}>My Inventory</div>
+                    <div className={addFromList} onClick={() => switchInventory(false, true)}>Add from list</div>
                     <div className='inactive-inventory-border'></div>
                 </div>
                 {!accordion && inventory && inventory.map(ingredient => <OwnedIngredients title={ingredient} />)}
