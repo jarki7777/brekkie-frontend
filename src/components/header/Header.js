@@ -8,6 +8,7 @@ import { ReactComponent as Menu } from '../../icons/bars-menu.svg';
 import { useSelector } from "react-redux";
 import './Header.sass';
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
     const loginState = useSelector(state => state.loginState);
@@ -17,7 +18,7 @@ const Header = () => {
     return (
         <>
             <Navbar>
-                <NavItem icon={<Search />} />
+                <NavItem icon={<Link to='/search'><Search /></Link>} />
                 {!loginState.login &&
                     <div className='nav-item-not-logged'>
                         <button className='nav-bar-auth-btn' onClick={() => setOpenLogin(true)}>Log In</button>

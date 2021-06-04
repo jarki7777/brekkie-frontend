@@ -11,6 +11,7 @@ import { CSSTransition } from 'react-transition-group';
 import { useState, useRef, useEffect } from 'react';
 import { LOG_OUT } from '../../store/actions/actionTypes';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 const DropdownMenu = () => {
@@ -30,11 +31,11 @@ const DropdownMenu = () => {
 
     const DropDownItem = (props) => {
         return (
-            <span href='/' className='menu-item' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+            <Link to={props.link} className='menu-item' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
                 <span className='icon-button'>{props.leftIcon}</span>
                 {props.children}
                 <span className='icon-right'>{props.rightIcon}</span>
-            </span>
+            </Link>
         );
     }
     const logOut = { type: LOG_OUT }
@@ -48,7 +49,7 @@ const DropdownMenu = () => {
             >
                 <div className='menu'>
                     <DropDownItem leftIcon={<Profile />} goToMenu='userInfo'>User info</DropDownItem>
-                    <DropDownItem leftIcon={<Food />}>Recipes</DropDownItem>
+                    <DropDownItem link='/search' leftIcon={<Food />}>Recipes</DropDownItem>
                     <span className='sign-out-menu-item' onClick={() => dispatch(logOut)}>
                         <span className='icon-button'></span>
                         SignOut
@@ -65,10 +66,10 @@ const DropdownMenu = () => {
                 onEnter={calcHeight}
             >
                 <div className='menu'>
-                    <DropDownItem leftIcon={<Liked />}>Favorites</DropDownItem>
-                    <DropDownItem leftIcon={<Stats />}>Meal Tracker</DropDownItem>
-                    <DropDownItem leftIcon={<Inventory />}>Pantry</DropDownItem>
-                    <DropDownItem leftIcon={<ShoppingList />}>Shopping List</DropDownItem>
+                    <DropDownItem link='/favorites' leftIcon={<Liked />}>Favorites</DropDownItem>
+                    <DropDownItem link='/tracker' leftIcon={<Stats />}>Meal Tracker</DropDownItem>
+                    <DropDownItem link='/inventory' leftIcon={<Inventory />}>Pantry</DropDownItem>
+                    <DropDownItem link='/shopping' leftIcon={<ShoppingList />}>Shopping List</DropDownItem>
                     <DropDownItem rightIcon={<Right />} goToMenu='main'>Back</DropDownItem>
                 </div>
 
