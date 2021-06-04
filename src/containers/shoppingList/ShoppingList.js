@@ -11,20 +11,36 @@ const ShoppingList = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
     const [error, setError] = useState(null);
-    const [check, setCheck] = useState(false);
+    const [check, setCheck] = useState([]);
     const [ingredients, setIngredients] = useState(null);
+    const [checkList, setCheckList] = useState([]);
 
     useEffect(() => {
         if (!token) history.push('/');
-        getShoppingLits();
+        getShoppingList();
     }, []);
 
-    const getShoppingLits = async () => {
+    useEffect(() => {
+        console.log(checkList);
+    }, [checkList]);
+
+    const getShoppingList = async () => {
         try {
             const res = await fetchShoppingList(token);
             setIngredients(res);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const switchCheck = (ingredient) => {
+        if (checkList.includes(ingredient)) {
+            let newList = [...checkList];
+            newList.splice(checkList.indexOf(ingredient), 1);
+            setCheckList(newList);
+        }
+        if (!checkList.includes(ingredient)) {
+            setCheckList([...checkList, ingredient]);
         }
     }
 
@@ -48,10 +64,14 @@ const ShoppingList = () => {
                 </div>
 
                 {ingredients && ingredients.map(ingredient =>
-                    <div className='shopping-list-row'>
+                    <div className='shopping-list-row' key={ingredients.indexOf(ingredient)}>
                         <div>{ingredient}</div>
-                        {check ? <SquareCheck className='check-box'></SquareCheck> :
-                            <Square className='check-box'></Square>}
+                        {checkList && checkList.includes(ingredient) ? <SquareCheck className='check-box'
+                            onClick={() => switchCheck(ingredient)}>
+                        </SquareCheck> :
+                            <Square className='check-box'
+                                onClick={() => switchCheck(ingredient)}>
+                            </Square>}
                     </div>
                 )}
 
