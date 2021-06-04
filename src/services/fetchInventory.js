@@ -11,3 +11,20 @@ export const fetchUserInventory = async (token) => {
         console.log(e);
     }
 }
+
+export const fetchRemoveFromInventory = async (token, ingredient) => {
+    try {
+        const body = {
+            ingredients: [ingredient]
+        }
+        const res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_INVENTORY}`,
+            {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` },
+                body: JSON.stringify(body)
+            });
+        return res.status
+    } catch (e) {
+        console.log(e);
+    }
+}

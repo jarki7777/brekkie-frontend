@@ -8,7 +8,7 @@ import './Inventory.sass';
 
 const Inventory = () => {
     const token = useSelector(state => state.loginState.token);
-    const [error, setError] = useState(`You don't have any ingredients`);
+    const [error, setError] = useState(null);
     const [accordion, setAccordion] = useState(false);
     const [inventory, setInventory] = useState(null);
 
@@ -25,7 +25,6 @@ const Inventory = () => {
         }
     }
 
-
     return (
         <>
             <div className='search-view-container'>
@@ -39,7 +38,7 @@ const Inventory = () => {
                         <button className='login-btn search-btn' name='submit' type='submit'>Add</button>
                     </div>
                 </form>
-                {!accordion && inventory.map(ingredient => <OwnedIngredients title={ingredient}/>)}
+                {!accordion && inventory && inventory.map(ingredient => <OwnedIngredients title={ingredient} />)}
                 {accordion && <IngredientsAccordion />}
                 <div className='empty-inventory'>
                     <button className='login-btn search-btn empty-btn' name='submit' type='submit'>Empty inventory</button>
