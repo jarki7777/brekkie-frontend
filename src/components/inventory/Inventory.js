@@ -67,9 +67,15 @@ const Inventory = () => {
                     <div className='inactive-inventory-border'></div>
                 </div>
                 {!accordion && inventory && inventory.map(ingredient => <MyIngredients title={ingredient} />)}
+                {!accordion && inventory && inventory.length === 0 && <ErrorMsg>You inventory is empty</ErrorMsg>}
                 {accordion && <IngredientsAccordion />}
                 <div className='empty-inventory'>
-                    <button className='login-btn search-btn empty-btn' name='empty' type='button'>Empty inventory</button>
+                    <button
+                        className='login-btn search-btn empty-btn'
+                        name='empty'
+                        type='button'
+                        onClick={() => emptyInventory()}
+                    >Empty inventory</button>
                 </div>
             </div>
         </>
