@@ -3,7 +3,7 @@ import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import { ReactComponent as Square } from '../../icons/square-regular.svg';
 import { ReactComponent as SquareCheck } from '../../icons/check-square-regular.svg';
 import { useSelector } from 'react-redux';
-import { fetchShoppingList } from '../../services/fecthShoppingList';
+import { fetchAddToShoppingList, fetchRemoveFromShoppingList, fetchShoppingList } from '../../services/fetchShoppingList';
 import { useHistory } from 'react-router';
 import './ShoppingList.sass';
 
@@ -19,10 +19,6 @@ const ShoppingList = () => {
         if (!token) history.push('/');
         getShoppingList();
     }, []);
-
-    useEffect(() => {
-        console.log(checkList);
-    }, [checkList]);
 
     const getShoppingList = async () => {
         try {
@@ -55,12 +51,34 @@ const ShoppingList = () => {
         }
     }
 
+    const addFromInput = async (event) => {
+        event.preventDefault();
+        try {
+            const input = event.target[0].value;
+            if (input !== '') await fetchAddToShoppingList(token, input);
+            getShoppingList();
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const removeItems = async () => {
+        try {
+            await fetchRemoveFromShoppingList(token, checkList);
+            getShoppingList();
+            setCheck(false);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+
     return (
         <div className='search-view-container'>
             {error && <ErrorMsg>{error}</ErrorMsg>}
             <div className='shopping-list-title'>Manage your Shopping List</div>
 
-            <form className='search-form inventory-search' /*onSubmit={(event) => addFromInput(event)}*/>
+            <form className='search-form inventory-search' onSubmit={(event) => addFromInput(event)}>
                 <div className='search-bar'>
                     <input className='input-text search-input' type='search' name='search' placeholder='Add to shopping list'></input>
                     <button className='login-btn search-btn' name='submit' type='submit'>Add</button>
@@ -90,13 +108,15 @@ const ShoppingList = () => {
                     </div>
                 )}
 
+                {!ingredients && <ErrorMsg>{`You have no items in your list`}</ErrorMsg>}
+                {ingredients && ingredients.length === 0 && <ErrorMsg>{`You have no items in your list`}</ErrorMsg>}
 
                 <div className='empty-inventory'>
                     <button
                         className='login-btn empty-btn'
                         name='empty'
                         type='button'
-                    // onClick={() => emptyList()}
+                        onClick={() => removeItems()}
                     >Empty selected items</button>
                 </div>
 
