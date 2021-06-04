@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import ErrorMsg from '../errorMsg/ErrorMsg';
-import IngredientsAccordion from '../ingredientsAccordion/IngredientsAccordion';
-import MyIngredients from '../MyIngredients/MyIngredients';
+import ErrorMsg from '../../components/errorMsg/ErrorMsg';
+import IngredientsAccordion from '../../components/ingredientsAccordion/IngredientsAccordion';
+import MyIngredients from '../../components/MyIngredients/MyIngredients';
 import { fetchEmptyInventory, fetchUserInventory, fetchAddToInventory } from '../../services/fetchInventory';
 import { useSelector } from 'react-redux';
 import './Inventory.sass';

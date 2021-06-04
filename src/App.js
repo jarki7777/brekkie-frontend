@@ -4,7 +4,7 @@ import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import RecipeView from './containers/recipeView/RecipeView';
 import SearchView from './containers/searchView/SearchView';
-import Inventory from './components/inventory/Inventory';
+import Inventory from './containers/inventory/Inventory';
 
 const App = () => {
   return (
