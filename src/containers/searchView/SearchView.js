@@ -90,7 +90,7 @@ const SearchView = () => {
                 setNextPage(res.hasNextPage);
                 setPage(res.page);
                 setRecipes(res.docs);
-                window.scrollTo(0, 0)
+                window.scrollTo(0, 0);
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
             }

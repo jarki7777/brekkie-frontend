@@ -1,4 +1,4 @@
-import { SET_RECIPE_ID, UNSET_RECIPE } from '../actions/actionTypes';
+import { SET_RECIPE_ID } from '../actions/actionTypes';
 
 const recipeInitialState = {
     id: null
@@ -11,13 +11,6 @@ const recipeReducer = (recipeState = recipeInitialState, action) => {
                 {
                     ...recipeState,
                     id: action.payload 
-                }
-            );
-        case UNSET_RECIPE:
-            return (
-                {
-                    ...recipeState,
-                    id: null
                 }
             );
         default:
