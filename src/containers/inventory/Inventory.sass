@@ -20,7 +20,7 @@
 .empty-inventory
     width: 95%
     display: flex
-    justify-content: flex-end
+    justify-content: center
     margin-top: 1em
     margin-bottom: 1em
 
@@ -29,7 +29,17 @@
     filter: brightness(1.2)
 
 .empty-btn
+    max-width: 700px
     background-color: #A08E81 !important
+
+    @include breakpoint($size: small)
+        max-width: 310px
+
+    @include breakpoint($size: medium)
+        max-width: 400px
+
+    @include breakpoint($size: large)
+        max-width: 700px
 
 .switch-inventory-list
     width: 700px
