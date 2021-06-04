@@ -9,7 +9,7 @@ import './Inventory.sass';
 const Inventory = () => {
     const token = useSelector(state => state.loginState.token);
     const [error, setError] = useState(null);
-    const [accordion, setAccordion] = useState(false);
+    const [accordion, setAccordion] = useState(true);
     const [inventory, setInventory] = useState(null);
 
     useEffect(() => {

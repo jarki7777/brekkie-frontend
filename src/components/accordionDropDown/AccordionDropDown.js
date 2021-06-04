@@ -1,8 +1,25 @@
 import { ReactComponent as AddBox } from '../../icons/box-open-solid.svg';
 import { ReactComponent as Plus } from '../../icons/plus-solid.svg';
 import { ReactComponent as Minus } from '../../icons/minus-solid.svg';
+import { ReactComponent as Check } from '../../icons/check-solid.svg';
+import { fetchAddToInventory } from '../../services/fetchInventory';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import './AccordionDropDown.sass';
 
 const AccordionDropDown = (props) => {
+    const token = useSelector(state => state.loginState.token);
+    const [added, setAdded] = useState(false);
+
+    const addToInventory = async (ingredient) => {
+        try {
+            await fetchAddToInventory(token, ingredient);
+            setAdded(ingredient);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return (
         <>
             <div className='category-wrap' onClick={props.toggle}>
@@ -13,8 +30,11 @@ const AccordionDropDown = (props) => {
             {props.open === props.title && props.ingredients.map(ingredient =>
                 <div>
                     <div className='ingredient-category-drowdown' key={props.ingredients.indexOf(ingredient)}>
-                        <div className='categroy-ingredient'>
+                        <div className='categroy-ingredient' onClick={() => addToInventory(ingredient)}>
+                            <div>
                             <span>{ingredient}</span>
+                            {added === ingredient && <Check className='added-indicator' />}
+                            </div>
                             <AddBox />
                         </div>
                     </div>
