@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Pagination from '../../components/pagination/Pagination';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import { useSelector, useDispatch } from 'react-redux';
+import { ReactComponent as Square } from '../../icons/square-regular.svg';
+import { ReactComponent as SquareCheck } from '../../icons/check-square-regular.svg';
 import { useHistory, Link } from 'react-router-dom';
 import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetchRecipe';
 import { SET_RECIPE_ID } from '../../store/actions/actionTypes';
@@ -21,6 +23,7 @@ const SearchView = () => {
     const [nextPage, setNextPage] = useState(false);
     const [searchTerm, setSearchTerm] = useState(null);
     const [searchWithInventory, setSearchWithInventory] = useState(null);
+    const [check, setCheck] = useState(false);
 
     useEffect(() => {
         if (!token) history.push('/');
@@ -134,6 +137,11 @@ const SearchView = () => {
         );
     }
 
+    const switchCheck = () => {
+        if (!check) setCheck(true)
+        if (check) setCheck(false)
+    }
+
     return (
         <div className='search-view-container'>
 
@@ -144,8 +152,12 @@ const SearchView = () => {
                     <input className='input-text search-input' type='search' name='search' placeholder='Search by keyword'></input>
                     <button className='login-btn search-btn' name='submit' type='submit'>Find recipes</button>
                 </div>
-                <div>
-                    <label className='input-check' htmlFor='search-inventory'>Use my ingredients inventory</label>
+                <div className='search-with-inventory'>
+                    {check ? <SquareCheck className='check-with-inventory' /> :
+                        <Square className='check-with-inventory' />}
+                    <label className='input-check' htmlFor='search-inventory'
+                        onClick={() => switchCheck()}
+                    >Check this to find recipes only with what you have</label>
                     <input className='input-check' type="checkbox" name='search by inventory' id='search-inventory'></input>
                 </div>
             </form>
