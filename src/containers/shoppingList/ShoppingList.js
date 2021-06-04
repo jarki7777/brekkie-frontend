@@ -11,7 +11,7 @@ const ShoppingList = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
     const [error, setError] = useState(null);
-    const [check, setCheck] = useState([]);
+    const [check, setCheck] = useState();
     const [ingredients, setIngredients] = useState(null);
     const [checkList, setCheckList] = useState([]);
 
@@ -44,6 +44,17 @@ const ShoppingList = () => {
         }
     }
 
+    const switchAll = () => {
+        if (!check) {
+            setCheck(true);
+            setCheckList([...ingredients]);
+        }
+        if (check) {
+            setCheck(false);
+            setCheckList([]);
+        }
+    }
+
     return (
         <div className='search-view-container'>
             {error && <ErrorMsg>{error}</ErrorMsg>}
@@ -59,19 +70,23 @@ const ShoppingList = () => {
             <div className='shopping-list'>
                 <div className='shopping-list-row'>
                     <div className='select-all-row'>Select All</div>
-                    {check ? <SquareCheck className='check-box'></SquareCheck> :
-                        <Square className='check-box'></Square>}
+                    {check ? <SquareCheck className='check-box'
+                        onClick={() => switchAll()}
+                    /> :
+                        <Square className='check-box'
+                            onClick={() => switchAll()}
+                        />}
                 </div>
 
                 {ingredients && ingredients.map(ingredient =>
                     <div className='shopping-list-row' key={ingredients.indexOf(ingredient)}>
                         <div>{ingredient}</div>
-                        {checkList && checkList.includes(ingredient) ? <SquareCheck className='check-box'
+                        {checkList && checkList.includes(ingredient) && <SquareCheck className='check-box'
                             onClick={() => switchCheck(ingredient)}>
-                        </SquareCheck> :
-                            <Square className='check-box'
-                                onClick={() => switchCheck(ingredient)}>
-                            </Square>}
+                        </SquareCheck>}
+                        {checkList && !checkList.includes(ingredient) && <Square className='check-box'
+                            onClick={() => switchCheck(ingredient)}>
+                        </Square>}
                     </div>
                 )}
 
