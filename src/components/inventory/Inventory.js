@@ -1,10 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import IngredientsAccordion from '../ingredientsAccordion/IngredientsAccordion';
+import OwnedIngredients from '../ownedIngredients/OwnedIngredients';
+import { fetchUserInventory } from '../../services/fetchInventory';
+import { useSelector } from 'react-redux';
 import './Inventory.sass';
 
 const Inventory = () => {
+    const token = useSelector(state => state.loginState.token);
     const [error, setError] = useState(`You don't have any ingredients`);
+    const [accordion, setAccordion] = useState(false);
+    const [inventory, setInventory] = useState(null);
+
+    useEffect(() => {
+        getInventory();
+    }, []);
+
+    const getInventory = async () => {
+        try {
+            let res = await fetchUserInventory(token);
+            setInventory(res);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
 
     return (
         <>
@@ -19,7 +39,8 @@ const Inventory = () => {
                         <button className='login-btn search-btn' name='submit' type='submit'>Add</button>
                     </div>
                 </form>
-                <IngredientsAccordion />
+                {!accordion && inventory.map(ingredient => <OwnedIngredients title={ingredient}/>)}
+                {accordion && <IngredientsAccordion />}
                 <div className='empty-inventory'>
                     <button className='login-btn search-btn empty-btn' name='submit' type='submit'>Empty inventory</button>
                 </div>

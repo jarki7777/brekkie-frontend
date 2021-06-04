@@ -21,7 +21,7 @@ const AccordionDropDown = (props) => {
                 </div>
             )}
         </>
-    )
+    );
 }
 
 export default AccordionDropDown;
