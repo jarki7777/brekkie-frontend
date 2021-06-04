@@ -4,15 +4,18 @@ import { ReactComponent as Square } from '../../icons/square-regular.svg';
 import { ReactComponent as SquareCheck } from '../../icons/check-square-regular.svg';
 import { useSelector } from 'react-redux';
 import { fetchShoppingList } from '../../services/fecthShoppingList';
+import { useHistory } from 'react-router';
 import './ShoppingList.sass';
 
 const ShoppingList = () => {
     const token = useSelector(state => state.loginState.token);
+    const history = useHistory();
     const [error, setError] = useState(null);
     const [check, setCheck] = useState(false);
     const [ingredients, setIngredients] = useState(null);
 
     useEffect(() => {
+        if (!token) history.push('/');
         getShoppingLits();
     }, []);
 
@@ -20,7 +23,6 @@ const ShoppingList = () => {
         try {
             const res = await fetchShoppingList(token);
             setIngredients(res);
-            console.log(res);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
@@ -45,11 +47,14 @@ const ShoppingList = () => {
                         <Square className='check-box'></Square>}
                 </div>
 
-                <div className='shopping-list-row'>
-                    <div>Ingredient</div>
-                    {check ? <SquareCheck className='check-box'></SquareCheck> :
-                        <Square className='check-box'></Square>}
-                </div>
+                {ingredients && ingredients.map(ingredient =>
+                    <div className='shopping-list-row'>
+                        <div>{ingredient}</div>
+                        {check ? <SquareCheck className='check-box'></SquareCheck> :
+                            <Square className='check-box'></Square>}
+                    </div>
+                )}
+
 
                 <div className='empty-inventory'>
                     <button
