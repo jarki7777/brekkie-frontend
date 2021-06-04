@@ -4,6 +4,7 @@ import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import RecipeView from './containers/recipeView/RecipeView';
 import SearchView from './containers/searchView/SearchView';
+import Inventory from './components/inventory/Inventory';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path='/' component={Main} exact />
           <Route path='/recipe' component={RecipeView} exact />
           <Route path='/search' component={SearchView} exact />
+          <Route path='/inventory' component={Inventory} exact />
           <Redirect to='/' />
         </Switch>
       </BrowserRouter>

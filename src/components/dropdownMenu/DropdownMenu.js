@@ -1,4 +1,4 @@
-import './DropdownMenu.sass'
+import './DropdownMenu.sass';
 import { ReactComponent as Profile } from '../../icons/user-solid.svg';
 import { ReactComponent as Food } from '../../icons/utensils-solid.svg';
 import { ReactComponent as SignOut } from '../../icons/sign-out-alt-solid.svg';
