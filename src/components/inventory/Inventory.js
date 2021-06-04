@@ -30,7 +30,7 @@ const Inventory = () => {
             <div className='search-view-container'>
                 {error && <ErrorMsg>{error}</ErrorMsg>}
                 <div className='inventory-instructions'>
-                    Select ingredients from the dropdown list or use the input bar to add ingredients individually
+                    Select ingredients from the list or use the input bar to add ingredients individually
                 </div>
                 <form className='search-form inventory-search' /*onSubmit={(event) => search(event)}*/>
                     <div className='search-bar'>
@@ -38,6 +38,11 @@ const Inventory = () => {
                         <button className='login-btn search-btn' name='submit' type='submit'>Add</button>
                     </div>
                 </form>
+                <div className='toggle-inventory'>
+                    <div className='active-inventory'>My Inventory</div>
+                    <div className='inactive-inventory'>Add from list</div>
+                    <div className='inactive-inventory-border'></div>
+                </div>
                 {!accordion && inventory && inventory.map(ingredient => <OwnedIngredients title={ingredient} />)}
                 {accordion && <IngredientsAccordion />}
                 <div className='empty-inventory'>

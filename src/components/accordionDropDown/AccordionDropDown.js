@@ -35,7 +35,7 @@ const AccordionDropDown = (props) => {
                             <span>{ingredient}</span>
                             {added === ingredient && <Check className='added-indicator' />}
                             </div>
-                            <AddBox />
+                            <AddBox className='add-box-svg'/>
                         </div>
                     </div>
                 </div>
