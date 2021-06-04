@@ -49,10 +49,6 @@ const Favorites = () => {
         );
     }
 
-    useEffect(() => {
-        console.log(page, limit, favorites);
-    }, [page]);
-
     const goPrevious = () => {
         if (page > 1) {
             if (page === totalPages) setShowFavorites(favorites.slice((favorites.length - showFavorites.length) - 10, (showFavorites.length) * (-1)));
@@ -65,8 +61,8 @@ const Favorites = () => {
 
     const goNext = () => {
         if (page !== totalPages) {
-            if (page === totalPages - 1) setShowFavorites(favorites.slice(page * 10, favorites.length));
-            else setShowFavorites(favorites.slice(page * 10 , limit + 10));
+            if (page === totalPages - 1) setShowFavorites(favorites.slice(limit, favorites.length));
+            else setShowFavorites(favorites.slice(limit , limit + 10));
             setPage(page + 1);
             setLimit(limit + 10);
             window.scrollTo(0, 0);
