@@ -8,10 +8,11 @@ import { ReactComponent as Square } from '../../icons/square-regular.svg';
 import { ReactComponent as SquareCheck } from '../../icons/check-square-regular.svg';
 import { useHistory, Link } from 'react-router-dom';
 import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetchRecipe';
-import { SET_RECIPE_ID } from '../../store/actions/actionTypes';
+import { SET_RECIPE_ID, SET_SEARCH_RESULTS } from '../../store/actions/actionTypes';
 
 const SearchView = () => {
     const token = useSelector(state => state.loginState.token);
+    const searchResluts = useSelector(state => state.recipeState.searchResults);
     const history = useHistory();
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
@@ -58,8 +59,13 @@ const SearchView = () => {
             setPrevPage(res.hasPrevPage);
             setNextPage(res.hasNextPage);
             setRecipes(res.docs);
+            dispatch(
+                {
+                    type: SET_SEARCH_RESULTS,
+                    payload: res.docs
+                }
+            );
             if (res.docs.length === 0) setError('Sorry, no recipes were found');
-
 
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
@@ -173,6 +179,7 @@ const SearchView = () => {
                         calification={recipe.calification}
                         totalVotes={recipe.totalVotes}
                     /></Link>)}
+
             </div>
 
             <Pagination

@@ -1,7 +1,8 @@
-import { SET_RECIPE_ID } from '../actions/actionTypes';
+import { SET_RECIPE_ID, SET_SEARCH_RESULTS } from '../actions/actionTypes';
 
 const recipeInitialState = {
-    id: null
+    id: null,
+    searchResults: []
 }
 
 const recipeReducer = (recipeState = recipeInitialState, action) => {
@@ -11,6 +12,13 @@ const recipeReducer = (recipeState = recipeInitialState, action) => {
                 {
                     ...recipeState,
                     id: action.payload 
+                }
+            );
+        case SET_SEARCH_RESULTS:
+            return (
+                {
+                    ...recipeState,
+                    searchResults: action.payload 
                 }
             );
         default:
