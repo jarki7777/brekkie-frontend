@@ -1,0 +1,7 @@
+$breakpoints: (small: 0px,medium: 425px,large: 1024px,xlarge: 1366px)
+
+@mixin breakpoint($size)
+    @each $device, $sizePx in $breakpoints
+        @if $size == $device
+            @media screen and(min-width: $sizePx)
+                @content

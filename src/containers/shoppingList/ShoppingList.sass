@@ -1,0 +1,43 @@
+@import '../../util/_querymixings'
+
+.shopping-list
+    width: 700px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin-bottom: 1.5em
+
+    @include breakpoint($size: small)
+        max-width: 310px
+
+    @include breakpoint($size: medium)
+        max-width: 400px
+
+    @include breakpoint($size: large)
+        max-width: 700px
+
+.shopping-list-row
+    position: relative
+    width: 100%
+    height: 2.5em
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 0.5em
+    border-bottom: 0.1em solid #00000026
+
+.shopping-list-title
+    font-weight: 900
+    font-size: 1.8em
+    margin-bottom: 1em
+
+.check-box
+    height: 1.5em
+    margin-left: auto
+    cursor: pointer
+
+.select-all-row
+    position: absolute
+    right: 2em
+    font-weight: 700

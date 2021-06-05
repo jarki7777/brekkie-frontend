@@ -1,0 +1,103 @@
+@import '../../util/_querymixings'
+
+.inventory-instructions
+    display: flex
+    width: 80%
+
+.inventory-search
+    height: 6em
+    justify-content: space-evenly
+
+    @include breakpoint($size: small)
+        max-width: 310px
+
+    @include breakpoint($size: medium)
+        max-width: 400px
+
+    @include breakpoint($size: large)
+        max-width: 700px
+
+.empty-inventory
+    width: 95%
+    display: flex
+    justify-content: center
+    margin-top: 1em
+    margin-bottom: 1em
+
+.empty-btn:hover
+    color: black
+    filter: brightness(1.2)
+
+.empty-btn
+    max-width: 700px
+    background-color: #A08E81 !important
+
+    @include breakpoint($size: small)
+        max-width: 310px
+
+    @include breakpoint($size: medium)
+        max-width: 400px
+
+    @include breakpoint($size: large)
+        max-width: 700px
+
+.switch-inventory-list
+    width: 700px
+    height: 2.5em
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 0.5em
+    border-bottom: 0.1em solid #00000026
+
+    @include breakpoint($size: small)
+        max-width: 310px
+
+    @include breakpoint($size: medium)
+        max-width: 400px
+
+    @include breakpoint($size: large)
+        max-width: 700px
+
+.toggle-inventory
+    height: 30px
+    width: 700px
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    margin-bottom: 1.5em
+    border-bottom: 0.1em solid #00000026
+
+    @include breakpoint($size: small)
+        max-width: 310px
+
+    @include breakpoint($size: medium)
+        max-width: 400px
+
+    @include breakpoint($size: large)
+        max-width: 700px
+
+.active-inventory
+    width: 7.5em
+    height: 30px
+    display: flex
+    flex-direction: row
+    font-weight: 900
+    border-bottom: 0.3em solid black
+    cursor: pointer
+
+.inactive-inventory
+    width: 7.5em
+    height: 30px
+    display: flex
+    flex-direction: row
+    color: #00000033
+    padding-bottom: 0.2em
+    padding-left: 1em
+    cursor: pointer
+
+.inactive-inventory-border
+    height: 30px
+    display: flex
+    margin-left: auto

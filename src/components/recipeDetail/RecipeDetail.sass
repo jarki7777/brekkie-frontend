@@ -1,0 +1,126 @@
+@import '../../util/_querymixings'
+
+.recipe-container
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    width: auto
+    border-radius: 1.5em
+    max-width: 95%
+    text-align: justify
+    padding-bottom: 1em
+
+    @include breakpoint($size: large)
+        max-width: 1024px
+        margin-left: 1em
+        margin-right: 1em
+
+.recipe-img
+    max-width: 700px
+    width: 100%
+    height: 30em
+    object-fit: cover
+    border-radius: 1.5em
+
+.recipe-title
+    text-align: left
+    font-weight: 900
+
+.recipe-cover
+    position: relative
+    display: flex
+    flex-direction: column
+    align-items: center
+
+.calories:before
+    content: ""
+    position: absolute
+    top: -40px
+    right: 0
+    height: 40px
+    width: 40px
+    border-bottom-right-radius: 50%
+    box-shadow: 0 20px 0 0 #009f0b
+
+.calories
+    width: 13em
+    height: 3em
+    display: flex
+    justify-content: center
+    align-items: center
+    position: absolute
+    top: 27em
+    right: 0
+    border-radius: 1.5em 0 1.5em 0
+    font-weight: 700
+    background-color: #009f0b
+    color: #ffffff
+
+.recipe-summary
+    display: flex
+    flex-flow: row wrap
+    justify-content: center
+    width: 100%
+    color: #00000080
+
+.summary-element
+    display: flex
+    height: 1.5em
+    margin: 0 1em
+
+.social-interaction
+    width: 300px
+    display: flex
+    justify-content: space-around
+    align-items: center
+    height: 2em
+    margin: 1em 0 1em 0
+
+.likes-element, .favs-element
+    width: 6em
+    max-width: 50%
+    display: flex
+    justify-content: space-evenly
+    align-items: center
+    flex-direction: row
+
+.likes-element svg
+    color: #ff0a38
+    height: 1.5em
+    transition: all 0.3s ease
+
+.likes-element:hover svg
+    transform: scale(1.3)
+    cursor: pointer
+
+.favs-element svg
+    height: 1.5em
+    color: #ffde0a
+    transition: all 0.3s ease
+
+.favs-element:hover svg
+    transform: scale(1.3)
+    cursor: pointer
+
+.recipe-description, .recipe-ingredients, .recipe-instructions
+    margin: 0 2em
+
+.recipe-list
+    margin: 0.5em 0
+
+.sub-title
+    width: 98%
+    margin: 1em
+    margin-bottom: 0
+    font-weight: 700
+    font-size: 1.5em
+
+    @include breakpoint($size: medium)
+        width: 90%
+    @include breakpoint($size: large)
+        width: 75%
+
+.nutritional-title
+    font-weight: 700
+    margin-top: 1.5em

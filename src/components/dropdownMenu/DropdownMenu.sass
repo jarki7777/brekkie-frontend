@@ -1,0 +1,80 @@
+.menu-item svg, .icon-right svg
+    fill: black
+    width: 20px
+    height: 20px
+
+.dropdown
+    position: absolute
+    top: 58px
+    width: 300px
+    transform: translateX(-45%)
+    background-color: #ffffff
+    border: 0.1em solid #e6e6e6
+    padding: 1rem
+    overflow: hidden
+    transition: height 0.5s ease
+    animation-duration: 0.5s
+    animation-name: slidein
+
+    @keyframes slidein
+        from
+            width: 0px
+
+        to
+            width: 300px
+
+.menu-item
+    height: 50px
+    display: flex
+    align-items: center
+    border-radius: 8px
+    transition: background 0.5s
+    padding: 0.5rem
+    text-decoration: none
+    color: black
+
+.sign-out-menu-item:hover
+    background-color: #e6e6e6
+
+.menu-item:hover
+    background-color: #e6e6e6
+
+.icon-right
+    margin-left: auto
+
+.menu
+    width: 100%
+
+.menu-primary-enter
+    position: absolute
+    transform: translateX(-110%)
+
+.menu-primary-enter-active
+    transform: translateX(0%)
+    transition: all 0.5s ease
+
+.menu-primary-exit
+    position: absolute
+
+.menu-primary-exit-active
+    transform: translateX(-110%)
+    transition: all 0.5s ease
+
+.menu-secondary-enter
+    transform: translateX(110%)
+
+.menu-secondary-enter-active
+    transform: translateX(0%)
+    transition: all 0.5s ease
+
+.menu-secondary-exit-active
+    transform: translateX(110%)
+    transition: all 0.5s ease
+
+.sign-out-menu-item
+    height: 50px
+    display: flex
+    align-items: center
+    border-radius: 8px
+    transition: background 0.5s
+    padding: 0.5rem
