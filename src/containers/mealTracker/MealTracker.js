@@ -4,15 +4,27 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import ErrorMsg from "../../components/errorMsg/ErrorMsg";
 import { ReactComponent as User } from '../../icons/user-solid.svg';
+import DateAccordion from '../../components/dateAccordion/DateAccordion';
+import Pagination from '../../components/pagination/Pagination';
 import "react-datepicker/dist/react-datepicker.css";
 import './MealTracker.sass';
-import DateAccordion from '../../components/dateAccordion/DateAccordion';
 
 const MealTracker = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
     const [startDate, setStartDate] = useState(new Date());
     const [error, setError] = useState(null);
+    const [weekDays, setWeekDays] = useState([]);
+
+    useEffect(() => {
+        getWeekDays();
+    }, [startDate]);
+
+    const getWeekDays = () => {
+        const foo = startDate.getMonth() + 1;
+        console.log(foo);
+
+    }
 
     useEffect(() => {
         if (!token) history.push('/');
@@ -33,6 +45,7 @@ const MealTracker = () => {
                     </div>
                 </div>
 
+
                 <div className='tracker-date-picker'>
                     <div className='tracker-calendar-text'>Select the month you want to track</div>
                     <DatePicker
@@ -46,11 +59,15 @@ const MealTracker = () => {
                     />
                 </div>
 
+                <div className='tracker-month'>
+                    {startDate.toLocaleString('default', { month: 'long' })} Week 1
+                    </div>
                 {/* <totalMonth /> */}
 
                 <DateAccordion />
 
             </div>
+            <Pagination />
         </div>
     );
 }
