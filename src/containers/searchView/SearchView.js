@@ -12,11 +12,10 @@ import { SET_RECIPE_ID, SET_SEARCH_RESULTS } from '../../store/actions/actionTyp
 
 const SearchView = () => {
     const token = useSelector(state => state.loginState.token);
-    const searchResluts = useSelector(state => state.recipeState.searchResults);
+    const searchResults = useSelector(state => state.recipeState.searchResults);
     const history = useHistory();
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
-    const [recipes, setRecipes] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
@@ -58,7 +57,6 @@ const SearchView = () => {
             setTotalPages(res.totalPages);
             setPrevPage(res.hasPrevPage);
             setNextPage(res.hasNextPage);
-            setRecipes(res.docs);
             dispatch(
                 {
                     type: SET_SEARCH_RESULTS,
@@ -95,7 +93,12 @@ const SearchView = () => {
                 setPrevPage(res.hasPrevPage);
                 setNextPage(res.hasNextPage);
                 setPage(res.page);
-                setRecipes(res.docs);
+                dispatch(
+                    {
+                        type: SET_SEARCH_RESULTS,
+                        payload: res.docs
+                    }
+                );
                 window.scrollTo(0, 0);
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
@@ -126,7 +129,12 @@ const SearchView = () => {
                 setPrevPage(res.hasPrevPage);
                 setNextPage(res.hasNextPage);
                 setPage(res.page);
-                setRecipes(res.docs);
+                dispatch(
+                    {
+                        type: SET_SEARCH_RESULTS,
+                        payload: res.docs
+                    }
+                );
                 window.scrollTo(0, 0);
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
@@ -168,8 +176,8 @@ const SearchView = () => {
                 </div>
             </form>
             <div className='results-container'>
-                {recipes.length === 0 && !error && <span>Use the search tools above to find your next favorite recipe!</span>}
-                {recipes.map(recipe => <Link className='recipe-card-link' to='/recipe' key={recipes.indexOf(recipe)}>
+                {searchResults.length === 0 && !error && <span>Use the search tools above to find your next favorite recipe!</span>}
+                {searchResults.map(recipe => <Link className='recipe-card-link' to='/recipe' key={searchResults.indexOf(recipe)}>
                     <RecipeCard
                         goToRecipe={() => goToRecipe(recipe._id)}
                         img={recipe.img}
@@ -178,8 +186,7 @@ const SearchView = () => {
                         likes={recipe.timesFavorite}
                         calification={recipe.calification}
                         totalVotes={recipe.totalVotes}
-                    /></Link>)}
-
+                    /></Link>)}                    
             </div>
 
             <Pagination
