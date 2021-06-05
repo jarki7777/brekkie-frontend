@@ -8,19 +8,19 @@ import { ReactComponent as Square } from '../../icons/square-regular.svg';
 import { ReactComponent as SquareCheck } from '../../icons/check-square-regular.svg';
 import { useHistory, Link } from 'react-router-dom';
 import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetchRecipe';
-import { SET_RECIPE_ID } from '../../store/actions/actionTypes';
+import { SET_RECIPE_ID, SET_SEARCH_RESULTS } from '../../store/actions/actionTypes';
 
 const SearchView = () => {
     const token = useSelector(state => state.loginState.token);
+    const searchResults = useSelector(state => state.recipeState.searchResults);
+    const totalPages = useSelector(state => state.recipeState.totalPages);
+    const prevPage = useSelector(state => state.recipeState.prevPage);
+    const nextPage = useSelector(state => state.recipeState.nextPage);
+    const page = useSelector(state => state.recipeState.page);
     const history = useHistory();
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
-    const [recipes, setRecipes] = useState([]);
-    const [totalPages, setTotalPages] = useState(1);
-    const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(10);
-    const [prevPage, setPrevPage] = useState(false);
-    const [nextPage, setNextPage] = useState(false);
     const [searchTerm, setSearchTerm] = useState(null);
     const [searchWithInventory, setSearchWithInventory] = useState(null);
     const [check, setCheck] = useState(false);
@@ -35,8 +35,6 @@ const SearchView = () => {
         const withInventory = event.target[2].checked;
         setSearchTerm(keyword);
         setSearchWithInventory(withInventory);
-        setTotalPages(null);
-        setPage(1);
         setError(null);
 
         try {
@@ -53,13 +51,19 @@ const SearchView = () => {
             if (withInventory) {
                 res = await fetchByInventory(page, limit, token);
             }
-
-            setTotalPages(res.totalPages);
-            setPrevPage(res.hasPrevPage);
-            setNextPage(res.hasNextPage);
-            setRecipes(res.docs);
+            dispatch(
+                {
+                    type: SET_SEARCH_RESULTS,
+                    payload: {
+                        searchResults: res.docs,
+                        totalPages: res.totalPages,
+                        prevPage: res.hasPrevPage,
+                        nextPage: res.hasNextPage,
+                        page: res.page
+                    }
+                }
+            );
             if (res.docs.length === 0) setError('Sorry, no recipes were found');
-
 
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
@@ -85,11 +89,18 @@ const SearchView = () => {
                     res = await fetchByInventory(page, limit, token);
                 }
 
-                setTotalPages(res.totalPages);
-                setPrevPage(res.hasPrevPage);
-                setNextPage(res.hasNextPage);
-                setPage(res.page);
-                setRecipes(res.docs);
+                dispatch(
+                    {
+                        type: SET_SEARCH_RESULTS,
+                        payload: {
+                            searchResults: res.docs,
+                            totalPages: res.totalPages,
+                            prevPage: res.hasPrevPage,
+                            nextPage: res.hasNextPage,
+                            page: res.page
+                        }
+                    }
+                );
                 window.scrollTo(0, 0);
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
@@ -116,11 +127,18 @@ const SearchView = () => {
                     res = await fetchByInventory(newPage, limit, token);
                 }
 
-                setTotalPages(res.totalPages);
-                setPrevPage(res.hasPrevPage);
-                setNextPage(res.hasNextPage);
-                setPage(res.page);
-                setRecipes(res.docs);
+                dispatch(
+                    {
+                        type: SET_SEARCH_RESULTS,
+                        payload: {
+                            searchResults: res.docs,
+                            totalPages: res.totalPages,
+                            prevPage: res.hasPrevPage,
+                            nextPage: res.hasNextPage,
+                            page: res.page
+                        }
+                    }
+                );
                 window.scrollTo(0, 0);
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
@@ -162,8 +180,8 @@ const SearchView = () => {
                 </div>
             </form>
             <div className='results-container'>
-                {recipes.length === 0 && !error && <span>Use the search tools above to find your next favorite recipe!</span>}
-                {recipes.map(recipe => <Link className='recipe-card-link' to='/recipe' key={recipes.indexOf(recipe)}>
+                {searchResults && searchResults.length === 0 && !error && <span>Use the search tools above to find your next favorite recipe!</span>}
+                {searchResults && searchResults.length !== 0 && searchResults.map(recipe => <Link className='recipe-card-link' to='/recipe' key={searchResults.indexOf(recipe)}>
                     <RecipeCard
                         goToRecipe={() => goToRecipe(recipe._id)}
                         img={recipe.img}
@@ -172,7 +190,7 @@ const SearchView = () => {
                         likes={recipe.timesFavorite}
                         calification={recipe.calification}
                         totalVotes={recipe.totalVotes}
-                    /></Link>)}
+                    /></Link>)}                    
             </div>
 
             <Pagination
