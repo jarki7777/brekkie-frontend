@@ -5,9 +5,9 @@ import { ReactComponent as Check } from '../../icons/check-solid.svg';
 import { fetchAddToInventory } from '../../services/fetchInventory';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import './AccordionDropDown.sass';
+import './InventoryAccordion.sass';
 
-const AccordionDropDown = (props) => {
+const InventoryAccordion = (props) => {
     const token = useSelector(state => state.loginState.token);
     const [added, setAdded] = useState(false);
 
@@ -44,4 +44,4 @@ const AccordionDropDown = (props) => {
     );
 }
 
-export default AccordionDropDown;
+export default InventoryAccordion;

@@ -7,6 +7,7 @@ import SearchView from './containers/searchView/SearchView';
 import Inventory from './containers/inventory/Inventory';
 import ShoppingList from './containers/shoppingList/ShoppingList';
 import Favorites from './containers/favorites/Favorites';
+import MealTracker from './containers/mealTracker/MealTracker';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path='/inventory' component={Inventory} exact />
           <Route path='/shopping' component={ShoppingList} exact />
           <Route path='/favorites' component={Favorites} exact />
+          <Route path='/tracker' component={MealTracker} exact />
           <Redirect to='/' />
         </Switch>
       </BrowserRouter>
