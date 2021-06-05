@@ -33,7 +33,12 @@ const Comments = (props) => {
         event.preventDefault();
         try {
             const text = event.target.childNodes[0].textContent;
-            if (text.length > 2) fetchNewComment(recipeId, user.token, text);
+            if (text.length > 2) {
+                setError(null);
+                fetchNewComment(recipeId, user.token, text);
+                getComments();
+            }
+            if (text.length <= 2) setError('The comment is too short');
 
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
@@ -58,6 +63,7 @@ const Comments = (props) => {
             </form>
 
             {comments.length === 0 && <ErrorMsg>There are no comments yet, be the first!</ErrorMsg>}
+            {error && <ErrorMsg>{error}</ErrorMsg>}
 
             {comments.length !== 0 && comments.map(comment =>
                 <UserComment
