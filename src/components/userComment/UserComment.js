@@ -8,7 +8,7 @@ const UserComment = (props) => {
             <div className='comment-info'>
                 <div className='username-comment'>
                     <User />
-                    <div>{props.user}</div>
+                    <div className='username-text'>{props.user}</div>
                 </div>
                 <div>{date}</div>
             </div>

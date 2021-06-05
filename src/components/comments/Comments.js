@@ -34,7 +34,12 @@ const Comments = (props) => {
             </div>
             <form className='comment-form' /*onSubmit={(event) => postComment(event)}*/>
                 <div className='comment-input'>
-                    <input className='input-text' type='search' name='search' placeholder='Add a public comment'></input>
+                    <div className='comment-input-text'
+                    role='textbox'
+                    name='search'
+                    maxlength='255'
+                    contentEditable
+                    ></div>
                 </div>
                 <button className='login-btn search-btn post-btn' name='submit' type='submit'>Post</button>
             </form>
@@ -42,7 +47,7 @@ const Comments = (props) => {
                 <div className='comment-info'>
                     <div className='username-comment'>
                         <User />
-                        <div>user</div>
+                        <div className='username-text'>user</div>
                     </div>
                     <div>06-05-2021</div>
                 </div>
