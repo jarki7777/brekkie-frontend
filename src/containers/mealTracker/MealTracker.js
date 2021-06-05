@@ -6,7 +6,7 @@ import ErrorMsg from "../../components/errorMsg/ErrorMsg";
 import { ReactComponent as User } from '../../icons/user-solid.svg';
 import "react-datepicker/dist/react-datepicker.css";
 import './MealTracker.sass';
-
+import DateAccordion from '../../components/dateAccordion/DateAccordion';
 
 const MealTracker = () => {
     const token = useSelector(state => state.loginState.token);
@@ -46,7 +46,9 @@ const MealTracker = () => {
                     />
                 </div>
 
-                {/* <trackerAccordion /> */}
+                {/* <totalMonth /> */}
+
+                <DateAccordion />
 
             </div>
         </div>
