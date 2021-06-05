@@ -13,7 +13,7 @@ const Favorites = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
     const dispatch = useDispatch();
-    const [error, setError] = useState(null)
+    const [error, setError] = useState(null);
     const [favorites, setFavorites] = useState(null);
     const [showFavorites, setShowFavorites] = useState([]);
     const [page, setPage] = useState(1);

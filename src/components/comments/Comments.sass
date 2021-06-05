@@ -1,0 +1,119 @@
+@import '../../util/_querymixings'
+
+.comments-container
+    width: 700px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin-top: 0.5em
+    margin-bottom: 2em
+    padding-top: 1em
+    border-top: 1px solid #00000026
+
+    @include breakpoint($size: small)
+        max-width: 310px
+
+    @include breakpoint($size: medium)
+        max-width: 400px
+
+    @include breakpoint($size: large)
+        max-width: 700px
+
+.comment-form
+    height: auto
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+    max-width: 700px
+    margin-bottom: 1em
+
+.comment-input
+    width: 100%
+    display: flex
+    justify-content: center
+    margin-bottom: 1em
+
+.post-btn
+    margin-top: 1em
+    margin-right: 2.5%
+
+.user-comment
+    position: relative
+    width: 95%
+    display: flex
+    flex-direction: column
+    margin-top: 1.5em
+    margin-bottom: 2em
+    padding-bottom: 1em
+    border-bottom: 1px solid #00000026
+
+
+.comment-info
+    display: flex
+    justify-content: space-between
+    margin-bottom: 0.5em
+
+.username-comment
+    display: flex
+
+.username-comment svg
+    width: 1em
+    margin-right: 0.5em
+
+.comment-text
+    padding: 0.5em
+    font-weight: 400
+    word-wrap: break-word
+    text-align: justify
+
+.username-text
+    font-weight: 700
+
+.comments-count
+    width: 95%
+    padding-top: 0.5em
+    padding-bottom: 0.5em
+    font-weight: 700
+    font-size: 1.1em
+
+.comment-input-text
+    width: 100%
+    display: block
+    overflow: hidden
+    resize: both
+    min-height: 1.8em
+    max-height: 13em
+    line-height: 1.2em
+    background-color: #e6e6e6
+    border-radius: 0.2em
+    transition: all 0.3s ease
+    padding: 0.5em
+    font-weight: 400
+    text-align: justify
+    cursor: text
+
+.comment-input-text:focus
+    background-color: #00000026
+
+.comment-input-text:hover
+    box-shadow: inset 1.5px 1.5px #00000033, inset -1.5px -1.5px #00000033
+
+.comment-input-text:focus:hover
+    box-shadow: 0px 0px 5px #00000033
+
+.comment-input-text[contenteditable]:empty::before
+    content: "Add a public comment"
+    color: gray
+
+.delete-icon
+    position: absolute
+    width: 1em
+    right: 0
+    top: -1.5em
+    cursor: pointer
+    transition: all 0.1s ease
+
+.delete-icon:hover
+    transform: scale(1.2)
