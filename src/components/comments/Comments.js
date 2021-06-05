@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ReactComponent as User } from '../../icons/user-solid.svg';
 import { fetchRecipeComments } from '../../services/fetchComments';
+import UserComment from '../userComment/UserComment';
 import './Comments.sass';
 
 const Comments = (props) => {
@@ -47,6 +48,16 @@ const Comments = (props) => {
                 </div>
                 <div className='comment-text'>this is a comment</div>
             </div>
+
+            {comments.length !== 0 && comments.map(comment =>
+                <UserComment
+                    key={comments.indexOf(comment)}
+                    user={comment.user.username}
+                    date={comment.date}
+                    comment={comment.comment}
+                />
+            )}
+
         </div>
     );
 }
