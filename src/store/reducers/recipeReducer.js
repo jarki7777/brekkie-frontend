@@ -2,7 +2,11 @@ import { SET_RECIPE_ID, SET_SEARCH_RESULTS } from '../actions/actionTypes';
 
 const recipeInitialState = {
     id: null,
-    searchResults: []
+    searchResults: [],
+    totalPages: 1,
+    prevPage: false,
+    nextPage: false,
+    page: 1
 }
 
 const recipeReducer = (recipeState = recipeInitialState, action) => {
@@ -11,18 +15,22 @@ const recipeReducer = (recipeState = recipeInitialState, action) => {
             return (
                 {
                     ...recipeState,
-                    id: action.payload 
+                    id: action.payload
                 }
             );
-        case SET_SEARCH_RESULTS:
+            case SET_SEARCH_RESULTS:
             return (
                 {
                     ...recipeState,
-                    searchResults: action.payload 
+                    searchResults: action.payload.searchResults,
+                    totalPages: action.payload.totalPages,
+                    prevPage: action.payload.prevPage,
+                    nextPage: action.payload.nextPage,
+                    page: action.payload.page
                 }
-            );
-        default:
-            return recipeState
+                );
+                default:
+                    return recipeState
     }
 }
 
