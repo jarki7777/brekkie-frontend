@@ -1,0 +1,62 @@
+@import '../../util/_querymixings'
+
+.comments-container
+    width: 700px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin-top: 0.5em
+    margin-bottom: 2em
+    padding-top: 1em
+    border-top: 1px solid #00000026
+
+    @include breakpoint($size: small)
+        max-width: 310px
+
+    @include breakpoint($size: medium)
+        max-width: 400px
+
+    @include breakpoint($size: large)
+        max-width: 700px
+
+.comment-form
+    height: auto
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+    max-width: 700px
+    margin-bottom: 1em
+
+.comment-input
+    width: 100%
+    display: flex
+    justify-content: center
+    margin-bottom: 1em
+
+.post-btn
+    margin-top: 1em
+    margin-right: 2.5%
+
+.user-comment
+    width: 95%
+    display: flex
+    flex-direction: column
+    margin-bottom: 1em
+    border-bottom: 1px solid #00000026
+
+.comment-info
+    display: flex
+    justify-content: space-between
+    margin-bottom: 0.5em
+
+.username-comment
+    display: flex
+
+.username-comment svg
+    width: 1em
+    margin-right: 0.5em
+
+.comment-text
+    padding: 0.5em

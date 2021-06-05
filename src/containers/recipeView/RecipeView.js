@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import Comments from '../../components/comments/Comments';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import RecipeDetail from '../../components/recipeDetail/RecipeDetail';
 import { fetchById } from '../../services/fetchRecipe';
@@ -28,39 +29,38 @@ const RecipeView = () => {
     }
 
     return (
-        <>
-            <div className='recipe-view'>
-                {error && <ErrorMsg>{error}</ErrorMsg>}
-                {recipe && <RecipeDetail
-                    id={recipe._id}
-                    title={recipe.title}
-                    img={recipe.img}
-                    prepTime={recipe.prepTime}
-                    cookTime={recipe.cookTime}
-                    totalTime={recipe.totalTime}
-                    category={recipe.category}
-                    method={recipe.method}
-                    cuisine={recipe.cuisine}
-                    description={recipe.description}
-                    ingredients={recipe.ingredients}
-                    instructions={recipe.instructions}
-                    notes={recipe.notes}
-                    serves={recipe.serves}
-                    calories={recipe.caloriesPerServe}
-                    fat={recipe.nutritionalInfo.fat}
-                    saturatedFat={recipe.nutritionalInfo.saturatedFat}
-                    sodium={recipe.nutritionalInfo.sodium}
-                    carbs={recipe.nutritionalInfo.carbs}
-                    fiber={recipe.nutritionalInfo.fiber}
-                    sugar={recipe.nutritionalInfo.sugar}
-                    protein={recipe.nutritionalInfo.protein}
-                    likes={recipe.timesFavorite}
-                    calification={recipe.calification}
-                    totalVotes={recipe.totalVotes}
-                />
-                }
-            </div>
-        </>
+        <div className='recipe-view'>
+            {error && <ErrorMsg>{error}</ErrorMsg>}
+            {recipe && <RecipeDetail
+                id={recipe._id}
+                title={recipe.title}
+                img={recipe.img}
+                prepTime={recipe.prepTime}
+                cookTime={recipe.cookTime}
+                totalTime={recipe.totalTime}
+                category={recipe.category}
+                method={recipe.method}
+                cuisine={recipe.cuisine}
+                description={recipe.description}
+                ingredients={recipe.ingredients}
+                instructions={recipe.instructions}
+                notes={recipe.notes}
+                serves={recipe.serves}
+                calories={recipe.caloriesPerServe}
+                fat={recipe.nutritionalInfo.fat}
+                saturatedFat={recipe.nutritionalInfo.saturatedFat}
+                sodium={recipe.nutritionalInfo.sodium}
+                carbs={recipe.nutritionalInfo.carbs}
+                fiber={recipe.nutritionalInfo.fiber}
+                sugar={recipe.nutritionalInfo.sugar}
+                protein={recipe.nutritionalInfo.protein}
+                likes={recipe.timesFavorite}
+                calification={recipe.calification}
+                totalVotes={recipe.totalVotes}
+            />
+            }
+            <Comments />
+        </div>
     );
 }
 
