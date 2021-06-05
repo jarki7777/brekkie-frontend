@@ -8,22 +8,28 @@ import DateAccordion from '../../components/dateAccordion/DateAccordion';
 import Pagination from '../../components/pagination/Pagination';
 import "react-datepicker/dist/react-datepicker.css";
 import './MealTracker.sass';
+import dayjs from "dayjs";
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 
 const MealTracker = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
     const [startDate, setStartDate] = useState(new Date());
     const [error, setError] = useState(null);
-    const [weekDays, setWeekDays] = useState([]);
+    const [year, setYear] = useState(null);
+    const [week, setWeek] = useState(null);
+    const [weekStart, setWeekStart] = useState(null);
 
     useEffect(() => {
-        getWeekDays();
+        dayjs.extend(weekOfYear);
+        setYear(dayjs().year());
+        setWeek(dayjs(startDate).week());
     }, [startDate]);
 
-    const getWeekDays = () => {
-        const foo = startDate.getMonth() + 1;
-        console.log(foo);
-
+    const getWeekDays = (date) => {
+        const current = date;
+        const firstDay = current.getDate() - current.getDay();
+        setWeekStart(firstDay);
     }
 
     useEffect(() => {
@@ -54,17 +60,17 @@ const MealTracker = () => {
                         showMonthYearPicker
                         onChange={(date) => {
                             setStartDate(date);
-                            /*fetchMonth*/
+                            getWeekDays(date);
                         }}
                     />
                 </div>
 
                 <div className='tracker-month'>
-                    {startDate.toLocaleString('default', { month: 'long' })} Week 1
-                    </div>
-                {/* <totalMonth /> */}
+                    {year}, Week {week}
+                </div>
+                {/* <MonthTrack /> */}
 
-                <DateAccordion />
+                <DateAccordion weekStart={weekStart} />
 
             </div>
             <Pagination />
