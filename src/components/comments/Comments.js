@@ -11,8 +11,6 @@ const Comments = (props) => {
     const [error, setError] = useState(null);
     const [comments, setComments] = useState([]);
     const [limit, setLimit] = useState(10);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
     const [userRole, setUserRole] = useState('client');
 
     useEffect(() => {
@@ -22,9 +20,19 @@ const Comments = (props) => {
 
     const getComments = async () => {
         try {
-            const res = await fetchRecipeComments(recipeId, page, limit, user.token);
+            const res = await fetchRecipeComments(recipeId, 1, limit, user.token);
             setComments(res.docs);
-            setTotalPages(res.totalPages);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const loadMoreComments = async () => {
+        try {
+
+            const res = await fetchRecipeComments(recipeId, 1, limit + 10, user.token);
+            setComments(res.docs);
+            setLimit(limit + 10);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
@@ -83,10 +91,17 @@ const Comments = (props) => {
                     user={comment.user.username}
                     date={comment.date}
                     comment={comment.comment}
-                    userRole={userRole} 
-                    deleteComment={(event) => deleteComment(event, comment._id)}     
+                    userRole={userRole}
+                    deleteComment={(event) => deleteComment(event, comment._id)}
                 />
             )}
+
+            <button
+                className='login-btn search-btn post-btn'
+                name='load-more'
+                type='button'
+                onClick={() => loadMoreComments()}
+            >More...</button>
 
         </div>
     );
