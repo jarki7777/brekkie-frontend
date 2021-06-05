@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { ReactComponent as User } from '../../icons/user-solid.svg';
-import { fetchRecipeComments, fetchNewComment } from '../../services/fetchComments';
+import { fetchRecipeComments, fetchNewComment, fetchDeleteComment } from '../../services/fetchComments';
 import UserComment from '../userComment/UserComment';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './Comments.sass';
@@ -14,9 +13,11 @@ const Comments = (props) => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [userRole, setUserRole] = useState('client');
 
     useEffect(() => {
         getComments();
+        setUserRole(user.role);
     }, []);
 
     const getComments = async () => {
@@ -39,7 +40,18 @@ const Comments = (props) => {
                 getComments();
             }
             if (text.length <= 2) setError('The comment is too short');
+            if (text.length > 255) setError('Comments should not exceed 255 characters');
 
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const deleteComment = async (event, commentId) => {
+        event.preventDefault();
+        try {
+            await fetchDeleteComment(commentId, user.token);
+            getComments();
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
@@ -71,6 +83,8 @@ const Comments = (props) => {
                     user={comment.user.username}
                     date={comment.date}
                     comment={comment.comment}
+                    userRole={userRole} 
+                    deleteComment={(event) => deleteComment(event, comment._id)}     
                 />
             )}
 

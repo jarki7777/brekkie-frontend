@@ -28,3 +28,16 @@ export const fetchNewComment = async (recipeId, token, comment) => {
         console.log(e);
     }
 }
+
+export const fetchDeleteComment = async (commentId, token) => {
+    try {
+        let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_COMMENTS}${commentId}`,
+            {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` },
+            });
+        return res.status;
+    } catch (e) {
+        console.log(e);
+    }
+}

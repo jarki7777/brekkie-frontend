@@ -1,4 +1,5 @@
 import { ReactComponent as User } from '../../icons/user-solid.svg';
+import { ReactComponent as Delete } from '../../icons/trash-alt-solid.svg';
 import { dateFormatter } from '../../util/dateFormatter';
 
 const UserComment = (props) => {
@@ -13,6 +14,8 @@ const UserComment = (props) => {
                 <div>{date}</div>
             </div>
             <div className='comment-text'>{props.comment}</div>
+            {props.userRole === 'admin' && <Delete className='delete-icon' onClick={props.deleteComment}/>}
+            {props.userRole === 'mod' && <Delete className='delete-icon'onClick={props.deleteComment} />}
         </div>
     );
 }
