@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import ErrorMsg from "../../components/errorMsg/ErrorMsg";
 import RecipeCard from '../../components/recipeCard/RecipeCard'
@@ -9,26 +9,16 @@ import { ReactComponent as User } from '../../icons/user-solid.svg';
 import "react-datepicker/dist/react-datepicker.css";
 import './MealTracker.sass';
 import NutritionalInfo from "../../components/nutritionalInfo/NutritionalInfo";
-
-
+import { Link } from "react-router-dom";
+import { SET_RECIPE_ID } from "../../store/actions/actionTypes";
 
 const MealTracker = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
+    const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(new Date());
     const [error, setError] = useState();
     const [logs, setLogs] = useState(null);
-    // const [page, setPage] = useState(1);
-    // const [limit, setLimit] = useState(10);
-
-    // const getLogs = async () => {
-    //     try {
-    //         let res = await fetchFoodLog(page, limit, token);
-    //         setLogs(res);
-    //     } catch (e) {
-    //         setError('Service is currently unavailable, please try again later');
-    //     }
-    // }
 
     const getLogsByDay = async (date) => {
         try {
@@ -36,7 +26,6 @@ const MealTracker = () => {
             if (res) {
                 setLogs(res);
                 setError(null);
-                console.log(res);
             }
             if (!res) {
                 setError('There are no records of this day');
@@ -45,6 +34,15 @@ const MealTracker = () => {
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
+    }
+
+    const goToRecipe = (id) => {
+        dispatch(
+            {
+                type: SET_RECIPE_ID,
+                payload: id
+            }
+        );
     }
 
     return (
@@ -93,8 +91,10 @@ const MealTracker = () => {
                             </div>
                     </div>
                     {logs && logs.recipes.map(recipe =>
+                        <Link to='/recipe'>
                         <RecipeCard
-                            // goToRecipe={ }
+                            key={logs.recipes.indexOf(recipe)}
+                            goToRecipe={goToRecipe(recipe._id)}
                             img={recipe.img}
                             title={recipe.title}
                             likes={recipe.timesFavorite}
@@ -102,6 +102,7 @@ const MealTracker = () => {
                             totalVotes={recipe.totalVotes}
                             calories={recipe.caloriesPerServe}
                         />
+                        </Link>
                     )}
                 </div>
             </div>
