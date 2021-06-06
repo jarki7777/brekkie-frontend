@@ -14,3 +14,17 @@ export const fetchUpdateUserCalories = async (token, calories) => {
         console.log(e);
     }
 }
+
+export const fetchUserProfile= async (token) => {
+    try {
+        let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_USER_PROFILE}`,
+            {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }
+            });
+        res = await res.json();
+        return res;
+    } catch (e) {
+        console.log(e);
+    }
+}

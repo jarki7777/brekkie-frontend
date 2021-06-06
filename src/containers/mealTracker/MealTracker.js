@@ -12,6 +12,7 @@ import NutritionalInfo from "../../components/nutritionalInfo/NutritionalInfo";
 import { Link } from "react-router-dom";
 import { SET_RECIPE_ID } from "../../store/actions/actionTypes";
 import SetCaloriesModal from "../../components/setCaloriesModal/SetCaloriesModal";
+import { fetchUserProfile } from "../../services/fetchUser";
 
 const MealTracker = () => {
     const token = useSelector(state => state.loginState.token);
@@ -22,10 +23,17 @@ const MealTracker = () => {
     const [error, setError] = useState();
     const [logs, setLogs] = useState(null);
     const [openCalories, setOpenCalories] = useState(false);
+    const [caloriesGoal, setCaloriesGoal] = useState(null);
+    const [userName, setuserName] = useState(null);
 
     useEffect(() => {
         getLogsByDay(startDate);
+        getUser();
     }, []);
+
+    useEffect(() => {
+        getUser();
+    }, [openCalories]);
 
     useEffect(() => {
         if (!token) history.push('/');
@@ -66,6 +74,16 @@ const MealTracker = () => {
         );
     }
 
+    const getUser = async () => {
+        try {
+            const res = await fetchUserProfile(token);
+            setCaloriesGoal(res.caloriesGoal);
+            setuserName(res.username);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
     return (
         <div className='meal-tracker-view'>
             <h1 className='tracker-title'>Meal Tracker</h1>
@@ -73,10 +91,10 @@ const MealTracker = () => {
             {error && <ErrorMsg>{error}</ErrorMsg>}
 
             <div className='user-tracker-info'>
-                <div className='tracker-username'><User />User</div>
+                <div className='tracker-username'><User />{userName}</div>
                 <div className='calories-goal' onClick={() => setOpenCalories(true)}>
                     <div>Calories Goal</div>
-                    <div>1500</div>
+                    <div>{caloriesGoal}</div>
                 </div>
             </div>
 
@@ -85,6 +103,7 @@ const MealTracker = () => {
                     open={openCalories}
                     onClose={() => setOpenCalories(false)}
                     id={userId}
+                    getUser={() => getUser()}
                 />
             }
 
