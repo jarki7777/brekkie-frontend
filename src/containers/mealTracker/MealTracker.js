@@ -13,6 +13,9 @@ import { Link } from "react-router-dom";
 import { SET_RECIPE_ID } from "../../store/actions/actionTypes";
 import SetCaloriesModal from "../../components/setCaloriesModal/SetCaloriesModal";
 import { fetchUserProfile } from "../../services/fetchUser";
+import { formarChartInfo } from '../../util/formatChartInfo';
+import NutrientsPieChart from "../../components/nutrientsPieChart/NutrientsPieChart";
+
 
 const MealTracker = () => {
     const token = useSelector(state => state.loginState.token);
@@ -25,7 +28,8 @@ const MealTracker = () => {
     const [openCalories, setOpenCalories] = useState(false);
     const [caloriesGoal, setCaloriesGoal] = useState(null);
     const [userName, setuserName] = useState(null);
-    const [caloriesColor, setCaloriesColor] = useState('tracker-total-calories-green')
+    const [caloriesColor, setCaloriesColor] = useState('tracker-total-calories-green');
+    const [chartInfo, setChartInfo] = useState([]);
 
     useEffect(() => {
         getLogsByDay(startDate);
@@ -51,6 +55,7 @@ const MealTracker = () => {
             if (res) {
                 setLogs(res);
                 setError(null);
+                setChartInfo(formarChartInfo(res));
             }
             if (!res) {
                 setError('There are no records for this day');
@@ -136,21 +141,23 @@ const MealTracker = () => {
                         Total calories in the day: {logs && logs.totalCalories}
                     </div>}
 
-                <div className='tracker-nutritional-facts'>
-                    <div className='tracker-nutritional-table'>
-                        {logs &&
-                            < NutritionalInfo
-                                fat={logs.totalNutrients.totalFat}
-                                saturatedFat={logs.totalNutrients.totalSaturatedFat}
-                                sodium={logs.totalNutrients.totalSodium}
-                                carbs={logs.totalNutrients.totalCarbs}
-                                fiber={logs.totalNutrients.totalFiber}
-                                sugar={logs.totalNutrients.totalSugar}
-                                protein={logs.totalNutrients.totalProteins}
-                            />}
-                    </div>
-                    <div className='tracker-pie-graph'>GRAPH</div>
+                <div className='tracker-nutritional-table'>
+                    {logs &&
+                        < NutritionalInfo
+                            fat={logs.totalNutrients.totalFat}
+                            saturatedFat={logs.totalNutrients.totalSaturatedFat}
+                            sodium={logs.totalNutrients.totalSodium}
+                            carbs={logs.totalNutrients.totalCarbs}
+                            fiber={logs.totalNutrients.totalFiber}
+                            sugar={logs.totalNutrients.totalSugar}
+                            protein={logs.totalNutrients.totalProteins}
+                        />}
                 </div>
+
+                <div className='tracker-pie-graph'>
+                    <NutrientsPieChart data={chartInfo} />
+                </div>
+                
                 {logs && logs.recipes.map(recipe =>
                     <div className='results-container'>
                         <Link to='/recipe' className='recipe-card-link'>
