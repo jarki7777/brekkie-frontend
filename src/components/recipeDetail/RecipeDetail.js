@@ -10,7 +10,7 @@ import { fetchAddFavorite, fetchRemoveFavorite } from '../../services/fetchFavor
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import { fetchById } from '../../services/fetchRecipe';
 import VoteModal from '../voteModal.js/VoteModal';
-import { fetchFoodLogAddServing } from '../../services/fetchFoodLog';
+import { fetchAddRecipeToFoodLog, fetchFoodLogAddServing } from '../../services/fetchFoodLog';
 import { dateFormatter } from '../../util/dateFormatter';
 
 export const RecipeDetail = (props) => {
@@ -86,6 +86,7 @@ export const RecipeDetail = (props) => {
         try {
             const date = dateFormatter(Date.now());
             await fetchFoodLogAddServing(props.id, date, token);
+            await fetchAddRecipeToFoodLog(props.id, token);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
