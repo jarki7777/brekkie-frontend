@@ -15,7 +15,12 @@ const SetCaloriesModal = (props) => {
             <div className='set-calories-container'>
                 <div className='icon-button close-icon' onClick={props.onClose}><Close /></div>
 
-
+                <form className='set-calories-form'>
+                    <div className='calories-input'>
+                        <input className='input-text' type='number' name='calories' id='set-calories'></input>
+                    </div>
+                    <button className='set-calories-btn' type='submit'>Set your daily goal (Kcal)</button>
+                </form>
 
 
             </div>

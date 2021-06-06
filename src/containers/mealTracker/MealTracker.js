@@ -29,7 +29,7 @@ const MealTracker = () => {
 
     useEffect(() => {
         if (!token) history.push('/');
-    }, [logs]);
+    }, [token]);
 
     const getLogsByDay = async (date) => {
         try {
