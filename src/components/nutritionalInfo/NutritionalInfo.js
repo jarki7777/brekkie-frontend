@@ -1,49 +1,52 @@
+import { useEffect } from 'react';
+import { formatNutririonalInfo } from '../../util/formatNutritionalinfo';
 import './NutritionalInfo.sass'
 
 const NutritionalInfo = (props) => {
+
     return (
         <div className='nutritional-info'>
             <ul>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Fat:</span>
-                        <span>{props.fat}</span>
+                        <span>{formatNutririonalInfo(props.fat)}g</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Saturated fat:</span>
-                        <span>{props.saturatedFat}</span>
+                        <span>{formatNutririonalInfo(props.saturatedFat)}g</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Sodium:</span>
-                        <span>{props.sodium}</span>
+                        <span>{formatNutririonalInfo(props.sodium)}mg</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Carbs:</span>
-                        <span>{props.carbs}</span>
+                        <span>{formatNutririonalInfo(props.carbs)}g</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Fiber:</span>
-                        <span>{props.fiber}</span>
+                        <span>{formatNutririonalInfo(props.fiber)}g</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Sugar:</span>
-                        <span>{props.sugar}</span>
+                        <span>{formatNutririonalInfo(props.sugar)}g</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Protein:</span>
-                        <span>{props.protein}</span>
+                        <span>{formatNutririonalInfo(props.protein)}g</span>
                     </div>
                 </li>
             </ul>

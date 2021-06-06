@@ -1,0 +1,177 @@
+@import '../../util/_querymixings'
+
+.meal-tracker-view
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+.tracker-title
+    width: 100%
+    display: flex
+    justify-content: center
+    align-items: center
+    font-weight: 900
+
+.user-tracker-info
+    width: 95%
+    max-width: 700px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    margin-bottom: 1em
+
+.tracker-username
+    height: 100%
+    display: flex
+    align-items: center
+
+.tracker-username svg
+    width: 1.5em
+    margin-right: 0.5em
+
+.tracker-date-picker
+    position: relative
+    height: 4em
+    width: 95%
+    max-width: 700px
+    margin-top: 1em
+    display: flex
+    align-items: center
+    justify-content: center
+
+.tracker-date-picker input
+    width: 5em
+    height: 1em
+    background-color: #e6e6e6
+    border: none
+    border-radius: 0.2em
+    transition: all 0.3s ease
+    padding: 0.5em
+    font-weight: 400
+    cursor: pointer
+
+.tracker-date-picker input:focus
+    background-color: #00000026
+
+.tracker-date-picker input:hover
+    box-shadow: inset 1.5px 1.5px #00000033, inset -1.5px -1.5px #00000033
+
+.tracker-date-picker input:focus:hover
+    box-shadow: 0px 0px 5px #00000033
+
+.tracker-calendar-text
+    display: flex
+    margin-right: 1em
+    font-weight: 700
+
+.tracker-log
+    width: 95%
+    max-width: 700px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+
+.tracker-nutritional-facts
+    width: 100%
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+
+.results-container
+    min-height: 15em
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+.recipe-card-link
+    display: flex
+    justify-content: center
+
+.add-serving-btn
+    width: 95%
+    height: 1.8em
+    margin-bottom: 2em
+    background-color: black
+    border: none
+    text-align: center
+    text-decoration: none
+    display: flex
+    align-items: center
+    justify-content: center
+    font-size: 16px
+    font-family: 'SF-Pro'
+    font-weight: 700
+    border-radius: 0.2em
+    cursor: pointer
+    color: white
+    transition: 0.3s
+
+.add-serving-btn:hover
+    background-color: #000000B3
+
+.calories-goal
+    height: 100%
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+    justify-content: space-evenly
+
+.calories-goal
+    background-color: #009f0b
+    border: none
+    color: white
+    padding: 5px 15px
+    text-align: center
+    text-decoration: none
+    display: inline-block
+    font-size: 1em
+    font-family: 'SF-Pro'
+    font-weight: 700
+    border-radius: 1.5em
+    cursor: pointer
+    transition: 0.3s
+
+.calories-goal:hover
+    color: black
+    filter: brightness(1.2)
+
+.tracker-total-calories-green
+    max-width: 500px
+    width: 95%
+    padding: 0.5em
+    margin-top: 1em
+    margin-bottom: 1em
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 0.2em
+    background-color: #009f0b
+    color: white
+    transition: all 0.3s ease
+
+.tracker-total-calories-red
+    max-width: 500px
+    width: 95%
+    padding: 0.5em
+    margin-top: 1em
+    margin-bottom: 1em
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 0.2em
+    background-color: #ff0a38
+    color: white
+    transition: all 0.3s ease
+
+.tracker-pie-graph
+    width: 95%
+    display: flex
+    justify-content: center
+    align-items: center
+
+.tracker-pie-graph svg
+    width: 100%
+    height: 100%
