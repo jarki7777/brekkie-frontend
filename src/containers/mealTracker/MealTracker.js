@@ -10,6 +10,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import './MealTracker.sass';
 import dayjs from "dayjs";
 import weekOfYear from 'dayjs/plugin/weekOfYear';
+import MONTHS from './monthsName';
+
 
 const MealTracker = () => {
     const token = useSelector(state => state.loginState.token);
@@ -17,24 +19,97 @@ const MealTracker = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [error, setError] = useState(null);
     const [year, setYear] = useState(null);
+    const [month, setMonth] = useState(null);
     const [week, setWeek] = useState(null);
     const [weekStart, setWeekStart] = useState(null);
+    const [weekDays, setWeekDays] = useState([]);
 
     useEffect(() => {
         dayjs.extend(weekOfYear);
-        setYear(dayjs().year());
+        setYear(dayjs(startDate).year());
         setWeek(dayjs(startDate).week());
-    }, [startDate]);
+    }, []);
 
-    const getWeekDays = (date) => {
-        const current = date;
-        const firstDay = current.getDate() - current.getDay();
-        setWeekStart(firstDay);
-    }
+    useEffect(() => {
+        setYear(dayjs(startDate).year());
+        setWeek(dayjs(startDate).week());
+        setWeekStart(startDate.getDay());
+        const monthNUmber = dayjs(startDate).month();
+        setMonth(MONTHS[monthNUmber]);
+    }, [startDate]);
 
     useEffect(() => {
         if (!token) history.push('/');
     }, [token]);
+
+    /////////////////////////////////////////////////////////////////////////
+    useEffect(() => {
+        let currentDate = startDate
+        let endOfWeekDate = (dayjs(currentDate).endOf('week')).$d.getDate();
+        let endOfWeekDay = (dayjs(currentDate).endOf('week')).$d.getDay();
+        let endOfMonthDate = (dayjs(currentDate).endOf('month')).$d.getDate();
+        let endOfMonthDay = (dayjs(currentDate).endOf('month')).$d.getDay();
+        console.log(`current date: ${currentDate.getDate()}`);
+        console.log(`fecha fin semana: ${endOfWeekDate}`);
+        console.log(`día fin semana: ${endOfWeekDay}`);
+        console.log(`fecha fin de mes: ${endOfMonthDate}`);
+        console.log(`día fin de mes: ${endOfMonthDay}`);
+        console.log('_____________________');
+    }, [startDate, week, month]);
+    //////////////////////////////////////////////////////////////////////////
+
+    const goNext = () => {
+        let currentDate = startDate
+        let dayOfTheWeek = currentDate.getDay();
+        let endOfWeekDate = (dayjs(currentDate).endOf('week')).$d.getDate();
+        let endOfWeekDay = (dayjs(currentDate).endOf('week')).$d.getDay();
+        let endOfMonthDate = (dayjs(currentDate).endOf('month')).$d.getDate();
+        let endOfMonthDay = (dayjs(currentDate).endOf('month')).$d.getDay();
+
+        switch (dayOfTheWeek) {
+            case 0:
+                currentDate.setDate(currentDate.getDate() + 7);
+                break;
+            case 1:
+                currentDate.setDate(currentDate.getDate() + 6);
+                break;
+            case 2:
+                currentDate.setDate(currentDate.getDate() + 5);
+                break;
+            case 3:
+                currentDate.setDate(currentDate.getDate() + 4);
+                break;
+            case 4:
+                currentDate.setDate(currentDate.getDate() + 3);
+                break;
+            case 5:
+                currentDate.setDate(currentDate.getDate() + 2);
+                break;
+            case 6:
+                currentDate.setDate(currentDate.getDate() + 1);
+                break;
+            default:
+                break;
+        }
+
+        if (endOfMonthDate - currentDate.getDate() < 7) {
+            console.log('ultima semana');
+            setWeekStart(endOfMonthDay + 1);
+        }
+        else setWeekStart(0);
+
+
+        const monthNumber = dayjs(startDate).month();
+        setMonth(MONTHS[monthNumber]);
+        setYear(dayjs(currentDate).year());
+        setWeek(dayjs(currentDate).week());
+        setStartDate(currentDate);
+    }
+
+    const goPrevious = () => {
+
+    }
+
 
     return (
         <div className='meal-tracker-view'>
@@ -60,20 +135,21 @@ const MealTracker = () => {
                         showMonthYearPicker
                         onChange={(date) => {
                             setStartDate(date);
-                            getWeekDays(date);
                         }}
                     />
                 </div>
 
                 <div className='tracker-month'>
-                    {year}, Week {week}
+                    {year} Week {week}, {month}
                 </div>
                 {/* <MonthTrack /> */}
 
-                <DateAccordion weekStart={weekStart} />
+                <DateAccordion
+                    weekStart={weekStart}
+                />
 
             </div>
-            <Pagination />
+            <Pagination goNext={goNext} goPrevious={goPrevious} document={'Week'} />
         </div>
     );
 }

@@ -56,49 +56,49 @@ const DateAccordion = (props) => {
 
     return (
         <>
-            {props.weekStart <= 1 && <div>
+            {props.weekStart <= 0 && <div>
                 <DateDropdown
                     weekDay={'Sunday'}
                     open={open}
                     toggle={() => setDropDownElement(1)}
                 />
             </div>}
-            {props.weekStart <= 0 && <div>
+            {props.weekStart <= 1 && <div>
                 <DateDropdown
                     weekDay={'Monday'}
                     open={open}
                     toggle={() => setDropDownElement(2)}
                 />
             </div>}
-            {props.weekStart <= -1 && <div>
+            {props.weekStart <= 2 && <div>
                 <DateDropdown
                     weekDay={'Tuesday'}
                     open={open}
                     toggle={() => setDropDownElement(3)}
                 />
             </div>}
-            {props.weekStart <= -2 && <div>
+            {props.weekStart <= 3 && <div>
                 <DateDropdown
                     weekDay={'Wednesday'}
                     open={open}
                     toggle={() => setDropDownElement(4)}
                 />
             </div>}
-            {props.weekStart <= -3 && <div>
+            {props.weekStart <= 4 && <div>
                 <DateDropdown
                     weekDay={'Thursday'}
                     open={open}
                     toggle={() => setDropDownElement(5)}
                 />
             </div>}
-            {props.weekStart <= -4 && <div>
+            {props.weekStart <= 5 && <div>
                 <DateDropdown
                     weekDay={'Friday'}
                     open={open}
                     toggle={() => setDropDownElement(6)}
                 />
             </div>}
-            {props.weekStart <= -5 && <div>
+            {props.weekStart <= 6 && <div>
                 <DateDropdown
                     weekDay={'Saturday'}
                     open={open}
