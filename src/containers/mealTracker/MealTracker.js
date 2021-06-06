@@ -78,7 +78,7 @@ const MealTracker = () => {
 
 
             <div className='tracker-date-picker'>
-                <div className='tracker-calendar-text'>Select the day you want to track</div>
+                <div className='tracker-calendar-text'>Select the day you want to track:</div>
                 <DatePicker
                     selected={startDate}
                     dateFormat='MM/dd/yyyy'
