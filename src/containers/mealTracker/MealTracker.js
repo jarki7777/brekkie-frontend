@@ -25,6 +25,7 @@ const MealTracker = () => {
     const [openCalories, setOpenCalories] = useState(false);
     const [caloriesGoal, setCaloriesGoal] = useState(null);
     const [userName, setuserName] = useState(null);
+    const [caloriesColor, setCaloriesColor] = useState('tracker-total-calories-green')
 
     useEffect(() => {
         getLogsByDay(startDate);
@@ -38,6 +39,11 @@ const MealTracker = () => {
     useEffect(() => {
         if (!token) history.push('/');
     }, [token]);
+
+    useEffect(() => {
+        if (logs && logs.totalCalories > caloriesGoal) setCaloriesColor('tracker-total-calories-red');
+        if (logs && logs.totalCalories <= caloriesGoal) setCaloriesColor('tracker-total-calories-green');
+    }, [logs, caloriesGoal])
 
     const getLogsByDay = async (date) => {
         try {
@@ -54,7 +60,7 @@ const MealTracker = () => {
             setError('Service is currently unavailable, please try again later');
         }
     }
-    
+
     const addServing = async (recipe) => {
         try {
             await fetchFoodLogAddServing(recipe._id, startDate, token);
@@ -64,7 +70,7 @@ const MealTracker = () => {
             setError('Service is currently unavailable, please try again later');
         }
     }
-    
+
     const goToRecipe = (id) => {
         dispatch(
             {
@@ -77,10 +83,12 @@ const MealTracker = () => {
     const getUser = async () => {
         try {
             const res = await fetchUserProfile(token);
-            setCaloriesGoal(res.caloriesGoal);
             setuserName(res.username);
+            if (res.caloriesGoal) setCaloriesGoal(res.caloriesGoal);
+            setError(null);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
+            console.log(e);
         }
     }
 
@@ -91,10 +99,10 @@ const MealTracker = () => {
             {error && <ErrorMsg>{error}</ErrorMsg>}
 
             <div className='user-tracker-info'>
-                <div className='tracker-username'><User />{userName}</div>
+                <div className='tracker-username'><User />{userName && userName}</div>
                 <div className='calories-goal' onClick={() => setOpenCalories(true)}>
                     <div>Calories Goal</div>
-                    <div>{caloriesGoal}</div>
+                    <div>{caloriesGoal && caloriesGoal}</div>
                 </div>
             </div>
 
@@ -122,6 +130,12 @@ const MealTracker = () => {
             </div>
 
             <div className='tracker-log'>
+
+                {logs && logs.totalCalories &&
+                    <div className={caloriesColor}>
+                        Total calories in the day: {logs && logs.totalCalories}
+                    </div>}
+
                 <div className='tracker-nutritional-facts'>
                     <div className='tracker-nutritional-table'>
                         {logs &&
