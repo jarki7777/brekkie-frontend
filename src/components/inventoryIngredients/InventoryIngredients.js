@@ -1,9 +1,9 @@
-import './IngredientsAccordion.sass';
+import './InventoryIngredients.sass';
 import { useEffect, useState } from 'react';
 import INGREDIENTS from './ingredientsList';
-import AccordionDropDown from '../accordionDropDown/AccordionDropDown';
+import InventoryAccordion from '../inventoryAccordion/InventoryAccordion';
 
-const IngredientsAccordion = () => {
+const InventoryIngredients = () => {
     const [dropDownElement, setDropDownElement] = useState(null);
     const [open, setOpen] = useState(false);
 
@@ -78,7 +78,7 @@ const IngredientsAccordion = () => {
     return (
         <>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS['Basic Products']}
                     open={open}
                     toggle={() => setDropDownElement(1)}
@@ -86,7 +86,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS['Dairy Products']}
                     open={open}
                     toggle={() => setDropDownElement(2)}
@@ -94,7 +94,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS.Cereals}
                     open={open}
                     toggle={() => setDropDownElement(3)}
@@ -102,7 +102,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS['Fruits & Vegetables']}
                     open={open}
                     toggle={() => setDropDownElement(4)}
@@ -110,7 +110,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS.Greens}
                     open={open}
                     toggle={() => setDropDownElement(5)}
@@ -118,7 +118,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS['Pork Meat']}
                     open={open}
                     toggle={() => setDropDownElement(6)}
@@ -126,7 +126,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS['Cattle Meat']}
                     open={open}
                     toggle={() => setDropDownElement(7)}
@@ -134,7 +134,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS['Lamb Meat']}
                     open={open}
                     toggle={() => setDropDownElement(8)}
@@ -142,7 +142,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS['Veal Meat']}
                     open={open}
                     toggle={() => setDropDownElement(9)}
@@ -150,7 +150,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS.Nuts}
                     open={open}
                     toggle={() => setDropDownElement(10)}
@@ -158,7 +158,7 @@ const IngredientsAccordion = () => {
                 />
             </div>
             <div>
-                <AccordionDropDown
+                <InventoryAccordion
                     ingredients={INGREDIENTS.Seasoning}
                     open={open}
                     toggle={() => setDropDownElement(11)}
@@ -169,4 +169,4 @@ const IngredientsAccordion = () => {
     )
 }
 
-export default IngredientsAccordion;
+export default InventoryIngredients;

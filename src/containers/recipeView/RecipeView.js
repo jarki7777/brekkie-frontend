@@ -57,8 +57,7 @@ const RecipeView = () => {
                 likes={recipe.timesFavorite}
                 calification={recipe.calification}
                 totalVotes={recipe.totalVotes}
-            />
-            }
+            />}
             <Comments />
         </div>
     );

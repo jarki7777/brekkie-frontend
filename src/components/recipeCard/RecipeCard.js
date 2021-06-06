@@ -2,7 +2,6 @@ import './RecipeCard.sass'
 import { ReactComponent as Liked } from '../../icons/heart-solid.svg';
 import { ReactComponent as Calification } from '../../icons/star-solid.svg';
 
-
 export const RecipeCard = (props) => {
 
     return (

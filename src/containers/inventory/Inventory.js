@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
-import IngredientsAccordion from '../../components/ingredientsAccordion/IngredientsAccordion';
+import InventoryIngredients from '../../components/inventoryIngredients/InventoryIngredients';
 import MyIngredients from '../../components/myIngredients/MyIngredients';
 import { fetchEmptyInventory, fetchUserInventory, fetchAddToInventory } from '../../services/fetchInventory';
 import { useSelector } from 'react-redux';
@@ -82,7 +82,7 @@ const Inventory = () => {
                 </div>
                 {!accordion && inventory && inventory.map(ingredient => <MyIngredients title={ingredient} />)}
                 {!accordion && inventory && inventory.length === 0 && <ErrorMsg>You inventory is empty</ErrorMsg>}
-                {accordion && <IngredientsAccordion />}
+                {accordion && <InventoryIngredients />}
                 <div className='empty-inventory'>
                     <button
                         className='login-btn empty-btn'

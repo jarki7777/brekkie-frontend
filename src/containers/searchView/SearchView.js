@@ -198,6 +198,7 @@ const SearchView = () => {
                 totalPages={totalPages}
                 goPrevious={() => goPrevious()}
                 goNext={() => goNext()}
+                document={'Page'}
             />
 
         </div>

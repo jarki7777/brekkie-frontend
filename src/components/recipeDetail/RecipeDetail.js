@@ -10,12 +10,16 @@ import { fetchAddFavorite, fetchRemoveFavorite } from '../../services/fetchFavor
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import { fetchById } from '../../services/fetchRecipe';
 import VoteModal from '../voteModal.js/VoteModal';
+import { fetchAddRecipeToFoodLog, fetchFoodLogAddServing } from '../../services/fetchFoodLog';
+import { dateFormatter } from '../../util/dateFormatter';
+import { useHistory } from 'react-router';
 
 export const RecipeDetail = (props) => {
     const ingredients = props.ingredients;
     const instructions = props.instructions;
     const notes = props.notes;
     const token = useSelector(state => state.loginState.token);
+    const history = useHistory();
     const [error, setError] = useState(null);
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(props.likes);
@@ -80,6 +84,16 @@ export const RecipeDetail = (props) => {
         }
     }
 
+    const addServing = async () => {
+        try {
+            const date = dateFormatter(Date.now());
+            await fetchFoodLogAddServing(props.id, date, token);
+            await fetchAddRecipeToFoodLog(props.id, token);
+            history.push('/tracker');
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
 
     return (
         <div className='recipe-container'>
@@ -90,6 +104,8 @@ export const RecipeDetail = (props) => {
                 <h1 className='recipe-title'>{props.title}</h1>
                 <div className='calories'>{props.calories} Calories per serve</div>
             </div>
+
+            <div className='add-serving-btn add-serving-recipe-detail' onClick={() => addServing()}>Add a serving to the day</div>
 
             <div className='recipe-summary'>
                 <span className='summary-element'>Serves {props.serves}</span>

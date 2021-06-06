@@ -6,7 +6,7 @@ const Pagination = (props) => {
     return (
         <div className='pagination'>
             <div className='arrow-icon' onClick={props.goPrevious}><Previous /></div>
-            <div>Page {props.actualPage} of {props.totalPages}</div>
+            <div>{props.document} {props.actualPage} of {props.totalPages}</div>
             <div className='arrow-icon' onClick={props.goNext}><Next /></div>
         </div>
     );
