@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import ErrorMsg from "../../components/errorMsg/ErrorMsg";
 import RecipeCard from '../../components/recipeCard/RecipeCard'
-import { fetchFoodLog, fetchFoodLogByDay } from '../../services/fetchFoodLog';
+import { fetchFoodLogByDay } from '../../services/fetchFoodLog';
 import { ReactComponent as User } from '../../icons/user-solid.svg';
 import "react-datepicker/dist/react-datepicker.css";
 import './MealTracker.sass';
@@ -47,35 +47,35 @@ const MealTracker = () => {
 
     return (
         <div className='meal-tracker-view'>
-            <div className='meal-tracker-container'>
-                <h1 className='tracker-title'>Meal Tracker</h1>
+            <h1 className='tracker-title'>Meal Tracker</h1>
 
-                {error && <ErrorMsg>{error}</ErrorMsg>}
+            {error && <ErrorMsg>{error}</ErrorMsg>}
 
-                <div className='user-tracker-info'>
-                    <div className='tracker-username'><User />User</div>
-                    <div className='calories-goal'>
-                        <div>Calories Goal</div>
-                        <div>1500</div>
-                    </div>
+            <div className='user-tracker-info'>
+                <div className='tracker-username'><User />User</div>
+                <div className='calories-goal'>
+                    <div>Calories Goal</div>
+                    <div>1500</div>
                 </div>
+            </div>
 
 
-                <div className='tracker-date-picker'>
-                    <div className='tracker-calendar-text'>Select the day you want to track</div>
-                    <DatePicker
-                        selected={startDate}
-                        dateFormat='MM/dd/yyyy'
-                        popperPlacement='bottom-end'
-                        onChange={(date) => {
-                            setStartDate(date);
-                            getLogsByDay(date);
-                        }}
-                    />
-                </div>
+            <div className='tracker-date-picker'>
+                <div className='tracker-calendar-text'>Select the day you want to track</div>
+                <DatePicker
+                    selected={startDate}
+                    dateFormat='MM/dd/yyyy'
+                    popperPlacement='bottom-end'
+                    onChange={(date) => {
+                        setStartDate(date);
+                        getLogsByDay(date);
+                    }}
+                />
+            </div>
 
-                <div className='tracker-log'>
-                    <div className='tracker-nutritional-facts'>
+            <div className='tracker-log'>
+                <div className='tracker-nutritional-facts'>
+                    <div className='tracker-nutritional-table'>
                         {logs &&
                             < NutritionalInfo
                                 fat={logs.totalNutrients.totalFat}
@@ -86,25 +86,26 @@ const MealTracker = () => {
                                 sugar={logs.totalNutrients.totalSugar}
                                 protein={logs.totalNutrients.totalProteins}
                             />}
-                        <div className='tracker-pie-graph'>
-                            GRAPH
-                            </div>
                     </div>
-                    {logs && logs.recipes.map(recipe =>
-                        <Link to='/recipe'>
-                        <RecipeCard
-                            key={logs.recipes.indexOf(recipe)}
-                            goToRecipe={goToRecipe(recipe._id)}
-                            img={recipe.img}
-                            title={recipe.title}
-                            likes={recipe.timesFavorite}
-                            calification={recipe.calification}
-                            totalVotes={recipe.totalVotes}
-                            calories={recipe.caloriesPerServe}
-                        />
-                        </Link>
-                    )}
+                    <div className='tracker-pie-graph'>GRAPH</div>
                 </div>
+                {logs && logs.recipes.map(recipe =>
+                    <div className='results-container'>
+                        <Link to='/recipe' className='recipe-card-link'>
+                            <RecipeCard
+                                key={logs.recipes.indexOf(recipe)}
+                                goToRecipe={goToRecipe(recipe._id)}
+                                img={recipe.img}
+                                title={recipe.title}
+                                likes={recipe.timesFavorite}
+                                calification={recipe.calification}
+                                totalVotes={recipe.totalVotes}
+                                calories={recipe.caloriesPerServe}
+                            />
+                        </Link>
+                        <div className='add-serving-btn'>Add a serving to the day</div>
+                    </div>
+                )}
             </div>
         </div>
     );
