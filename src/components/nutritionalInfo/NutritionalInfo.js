@@ -7,43 +7,43 @@ const NutritionalInfo = (props) => {
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Fat:</span>
-                        <span>{props.fat}</span>
+                        <span>{Math.round((props.fat) * 10) / 10}</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Saturated fat:</span>
-                        <span>{props.saturatedFat}</span>
+                        <span>{Math.round((props.saturatedFat) * 10) / 10}</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Sodium:</span>
-                        <span>{props.sodium}</span>
+                        <span>{Math.round((props.sodium) * 10) / 10}</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Carbs:</span>
-                        <span>{props.carbs}</span>
+                        <span>{Math.round((props.carbs) * 10) / 10}</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Fiber:</span>
-                        <span>{props.fiber}</span>
+                        <span>{Math.round((props.fiber) * 10) / 10}</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Sugar:</span>
-                        <span>{props.sugar}</span>
+                        <span>{Math.round((props.sugar) * 10) / 10}</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Protein:</span>
-                        <span>{props.protein}</span>
+                        <span>{Math.round((props.protein) * 10) / 10}</span>
                     </div>
                 </li>
             </ul>
