@@ -10,6 +10,8 @@ import { fetchAddFavorite, fetchRemoveFavorite } from '../../services/fetchFavor
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import { fetchById } from '../../services/fetchRecipe';
 import VoteModal from '../voteModal.js/VoteModal';
+import { fetchFoodLogAddServing } from '../../services/fetchFoodLog';
+import { dateFormatter } from '../../util/dateFormatter';
 
 export const RecipeDetail = (props) => {
     const ingredients = props.ingredients;
@@ -80,6 +82,14 @@ export const RecipeDetail = (props) => {
         }
     }
 
+    const addServing = async () => {
+        try {
+            const date = dateFormatter(Date.now());
+            await fetchFoodLogAddServing(props.id, date, token);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
 
     return (
         <div className='recipe-container'>
@@ -90,6 +100,8 @@ export const RecipeDetail = (props) => {
                 <h1 className='recipe-title'>{props.title}</h1>
                 <div className='calories'>{props.calories} Calories per serve</div>
             </div>
+
+            <div className='add-serving-btn add-serving-recipe-detail' onClick={() => addServing()}>Add a serving to the day</div>
 
             <div className='recipe-summary'>
                 <span className='summary-element'>Serves {props.serves}</span>
