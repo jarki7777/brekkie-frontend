@@ -3,113 +3,49 @@ import DatePicker from "react-datepicker";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import ErrorMsg from "../../components/errorMsg/ErrorMsg";
+import RecipeCard from '../../components/recipeCard/RecipeCard'
+import { fetchFoodLog, fetchFoodLogByDay } from '../../services/fetchFoodLog';
 import { ReactComponent as User } from '../../icons/user-solid.svg';
-import DateAccordion from '../../components/dateAccordion/DateAccordion';
-import Pagination from '../../components/pagination/Pagination';
 import "react-datepicker/dist/react-datepicker.css";
 import './MealTracker.sass';
-import dayjs from "dayjs";
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import MONTHS from './monthsName';
+import NutritionalInfo from "../../components/nutritionalInfo/NutritionalInfo";
+
 
 
 const MealTracker = () => {
     const token = useSelector(state => state.loginState.token);
     const history = useHistory();
     const [startDate, setStartDate] = useState(new Date());
-    const [error, setError] = useState(null);
-    const [year, setYear] = useState(null);
-    const [month, setMonth] = useState(null);
-    const [week, setWeek] = useState(null);
-    const [weekStart, setWeekStart] = useState(null);
-    const [weekDays, setWeekDays] = useState([]);
+    const [error, setError] = useState();
+    const [logs, setLogs] = useState(null);
+    // const [page, setPage] = useState(1);
+    // const [limit, setLimit] = useState(10);
 
-    useEffect(() => {
-        dayjs.extend(weekOfYear);
-        setYear(dayjs(startDate).year());
-        setWeek(dayjs(startDate).week());
-    }, []);
+    // const getLogs = async () => {
+    //     try {
+    //         let res = await fetchFoodLog(page, limit, token);
+    //         setLogs(res);
+    //     } catch (e) {
+    //         setError('Service is currently unavailable, please try again later');
+    //     }
+    // }
 
-    useEffect(() => {
-        setYear(dayjs(startDate).year());
-        setWeek(dayjs(startDate).week());
-        setWeekStart(startDate.getDay());
-        const monthNUmber = dayjs(startDate).month();
-        setMonth(MONTHS[monthNUmber]);
-    }, [startDate]);
-
-    useEffect(() => {
-        if (!token) history.push('/');
-    }, [token]);
-
-    /////////////////////////////////////////////////////////////////////////
-    useEffect(() => {
-        let currentDate = startDate
-        let endOfWeekDate = (dayjs(currentDate).endOf('week')).$d.getDate();
-        let endOfWeekDay = (dayjs(currentDate).endOf('week')).$d.getDay();
-        let endOfMonthDate = (dayjs(currentDate).endOf('month')).$d.getDate();
-        let endOfMonthDay = (dayjs(currentDate).endOf('month')).$d.getDay();
-        console.log(`current date: ${currentDate.getDate()}`);
-        console.log(`fecha fin semana: ${endOfWeekDate}`);
-        console.log(`día fin semana: ${endOfWeekDay}`);
-        console.log(`fecha fin de mes: ${endOfMonthDate}`);
-        console.log(`día fin de mes: ${endOfMonthDay}`);
-        console.log('_____________________');
-    }, [startDate, week, month]);
-    //////////////////////////////////////////////////////////////////////////
-
-    const goNext = () => {
-        let currentDate = startDate
-        let dayOfTheWeek = currentDate.getDay();
-        let endOfWeekDate = (dayjs(currentDate).endOf('week')).$d.getDate();
-        let endOfWeekDay = (dayjs(currentDate).endOf('week')).$d.getDay();
-        let endOfMonthDate = (dayjs(currentDate).endOf('month')).$d.getDate();
-        let endOfMonthDay = (dayjs(currentDate).endOf('month')).$d.getDay();
-
-        switch (dayOfTheWeek) {
-            case 0:
-                currentDate.setDate(currentDate.getDate() + 7);
-                break;
-            case 1:
-                currentDate.setDate(currentDate.getDate() + 6);
-                break;
-            case 2:
-                currentDate.setDate(currentDate.getDate() + 5);
-                break;
-            case 3:
-                currentDate.setDate(currentDate.getDate() + 4);
-                break;
-            case 4:
-                currentDate.setDate(currentDate.getDate() + 3);
-                break;
-            case 5:
-                currentDate.setDate(currentDate.getDate() + 2);
-                break;
-            case 6:
-                currentDate.setDate(currentDate.getDate() + 1);
-                break;
-            default:
-                break;
+    const getLogsByDay = async (date) => {
+        try {
+            let res = await fetchFoodLogByDay(date, token);
+            if (res) {
+                setLogs(res);
+                setError(null);
+                console.log(res);
+            }
+            if (!res) {
+                setError('There are no records of this day');
+                setLogs(null)
+            }
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
         }
-
-        if (endOfMonthDate - currentDate.getDate() < 7) {
-            console.log('ultima semana');
-            setWeekStart(endOfMonthDay + 1);
-        }
-        else setWeekStart(0);
-
-
-        const monthNumber = dayjs(startDate).month();
-        setMonth(MONTHS[monthNumber]);
-        setYear(dayjs(currentDate).year());
-        setWeek(dayjs(currentDate).week());
-        setStartDate(currentDate);
     }
-
-    const goPrevious = () => {
-
-    }
-
 
     return (
         <div className='meal-tracker-view'>
@@ -128,28 +64,47 @@ const MealTracker = () => {
 
 
                 <div className='tracker-date-picker'>
-                    <div className='tracker-calendar-text'>Select the month you want to track</div>
+                    <div className='tracker-calendar-text'>Select the day you want to track</div>
                     <DatePicker
                         selected={startDate}
-                        dateFormat="MM/yyyy"
-                        showMonthYearPicker
+                        dateFormat='MM/dd/yyyy'
+                        popperPlacement='bottom-end'
                         onChange={(date) => {
                             setStartDate(date);
+                            getLogsByDay(date);
                         }}
                     />
                 </div>
 
-                <div className='tracker-month'>
-                    {year} Week {week}, {month}
+                <div className='tracker-log'>
+                    <div className='tracker-nutritional-facts'>
+                        {logs &&
+                            < NutritionalInfo
+                                fat={logs.totalNutrients.totalFat}
+                                saturatedFat={logs.totalNutrients.totalSaturatedFat}
+                                sodium={logs.totalNutrients.totalSodium}
+                                carbs={logs.totalNutrients.totalCarbs}
+                                fiber={logs.totalNutrients.totalFiber}
+                                sugar={logs.totalNutrients.totalSugar}
+                                protein={logs.totalNutrients.totalProteins}
+                            />}
+                        <div className='tracker-pie-graph'>
+                            GRAPH
+                            </div>
+                    </div>
+                    {logs && logs.recipes.map(recipe =>
+                        <RecipeCard
+                            // goToRecipe={ }
+                            img={recipe.img}
+                            title={recipe.title}
+                            likes={recipe.timesFavorite}
+                            calification={recipe.calification}
+                            totalVotes={recipe.totalVotes}
+                            calories={recipe.caloriesPerServe}
+                        />
+                    )}
                 </div>
-                {/* <MonthTrack /> */}
-
-                <DateAccordion
-                    weekStart={weekStart}
-                />
-
             </div>
-            <Pagination goNext={goNext} goPrevious={goPrevious} document={'Week'} />
         </div>
     );
 }
