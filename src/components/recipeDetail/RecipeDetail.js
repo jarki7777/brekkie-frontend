@@ -12,12 +12,14 @@ import { fetchById } from '../../services/fetchRecipe';
 import VoteModal from '../voteModal.js/VoteModal';
 import { fetchAddRecipeToFoodLog, fetchFoodLogAddServing } from '../../services/fetchFoodLog';
 import { dateFormatter } from '../../util/dateFormatter';
+import { useHistory } from 'react-router';
 
 export const RecipeDetail = (props) => {
     const ingredients = props.ingredients;
     const instructions = props.instructions;
     const notes = props.notes;
     const token = useSelector(state => state.loginState.token);
+    const history = useHistory();
     const [error, setError] = useState(null);
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(props.likes);
@@ -87,6 +89,7 @@ export const RecipeDetail = (props) => {
             const date = dateFormatter(Date.now());
             await fetchFoodLogAddServing(props.id, date, token);
             await fetchAddRecipeToFoodLog(props.id, token);
+            history.push('/tracker');
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }

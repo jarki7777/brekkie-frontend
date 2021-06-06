@@ -11,14 +11,17 @@ import './MealTracker.sass';
 import NutritionalInfo from "../../components/nutritionalInfo/NutritionalInfo";
 import { Link } from "react-router-dom";
 import { SET_RECIPE_ID } from "../../store/actions/actionTypes";
+import SetCaloriesModal from "../../components/setCaloriesModal/SetCaloriesModal";
 
 const MealTracker = () => {
     const token = useSelector(state => state.loginState.token);
+    const userId = useSelector(state => state.loginState.id);
     const history = useHistory();
     const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(new Date());
     const [error, setError] = useState();
     const [logs, setLogs] = useState(null);
+    const [openCalories, setOpenCalories] = useState(false);
 
     useEffect(() => {
         getLogsByDay(startDate);
@@ -48,6 +51,7 @@ const MealTracker = () => {
         try {
             await fetchFoodLogAddServing(recipe._id, startDate, token);
             getLogsByDay(startDate);
+            window.scrollTo(0, 0);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
@@ -70,11 +74,19 @@ const MealTracker = () => {
 
             <div className='user-tracker-info'>
                 <div className='tracker-username'><User />User</div>
-                <div className='calories-goal'>
+                <div className='calories-goal' onClick={() => setOpenCalories(true)}>
                     <div>Calories Goal</div>
                     <div>1500</div>
                 </div>
             </div>
+
+            {openCalories &&
+                <SetCaloriesModal setOpenCalories={setOpenCalories}
+                    open={openCalories}
+                    onClose={() => setOpenCalories(false)}
+                    id={userId}
+                />
+            }
 
 
             <div className='tracker-date-picker'>

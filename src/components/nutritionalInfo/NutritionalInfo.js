@@ -22,13 +22,13 @@ const NutritionalInfo = (props) => {
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Sodium:</span>
-                        <span>{formatNutririonalInfo(props.sodium)}g</span>
+                        <span>{formatNutririonalInfo(props.sodium)}mg</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
                     <div className='recipe-nutrient'>
                         <span>Carbs:</span>
-                        <span>{formatNutririonalInfo(props.carbs)}mg</span>
+                        <span>{formatNutririonalInfo(props.carbs)}g</span>
                     </div>
                 </li>
                 <li className='nutrient-list'>
