@@ -28,3 +28,16 @@ export const fetchFoodLogByDay = async (date, token) => {
         console.log(e);
     }
 }
+
+export const fetchFoodLogAddServing = async (recipeId, date, token) => {
+    try {
+        const res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_FOOD_LOGS}/${recipeId}/${date}`,
+            {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` },
+            });
+        return res.status
+    } catch (e) {
+        console.log(e);
+    }
+}

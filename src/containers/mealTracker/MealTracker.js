@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import ErrorMsg from "../../components/errorMsg/ErrorMsg";
 import RecipeCard from '../../components/recipeCard/RecipeCard'
-import { fetchFoodLogByDay } from '../../services/fetchFoodLog';
+import { fetchFoodLogByDay, fetchFoodLogAddServing } from '../../services/fetchFoodLog';
 import { ReactComponent as User } from '../../icons/user-solid.svg';
 import "react-datepicker/dist/react-datepicker.css";
 import './MealTracker.sass';
@@ -20,6 +20,14 @@ const MealTracker = () => {
     const [error, setError] = useState();
     const [logs, setLogs] = useState(null);
 
+    useEffect(() => {
+        getLogsByDay(startDate);
+    }, []);
+
+    useEffect(() => {
+        if (!token) history.push('/');
+    }, [logs]);
+
     const getLogsByDay = async (date) => {
         try {
             let res = await fetchFoodLogByDay(date, token);
@@ -28,14 +36,23 @@ const MealTracker = () => {
                 setError(null);
             }
             if (!res) {
-                setError('There are no records of this day');
+                setError('There are no records for this day');
                 setLogs(null)
             }
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
-
+    
+    const addServing = async (recipe) => {
+        try {
+            await fetchFoodLogAddServing(recipe._id, startDate, token);
+            getLogsByDay(startDate);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+    
     const goToRecipe = (id) => {
         dispatch(
             {
@@ -103,7 +120,7 @@ const MealTracker = () => {
                                 calories={recipe.caloriesPerServe}
                             />
                         </Link>
-                        <div className='add-serving-btn'>Add a serving to the day</div>
+                        <div className='add-serving-btn' onClick={() => addServing(recipe)}>Add a serving to the day</div>
                     </div>
                 )}
             </div>
