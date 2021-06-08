@@ -15,6 +15,7 @@ import SetCaloriesModal from "../../components/setCaloriesModal/SetCaloriesModal
 import { fetchUserProfile } from "../../services/fetchUser";
 import { formarChartInfo } from '../../util/formatChartInfo';
 import NutrientsPieChart from "../../components/nutrientsPieChart/NutrientsPieChart";
+import { formatBarChartData } from "../../util/formatBarChartData";
 
 
 const MealTracker = () => {
@@ -109,7 +110,8 @@ const MealTracker = () => {
 
     const getRange = async () => {
         try {
-            const res = await fetchByRange(startRange, endDate, token);
+            let res = await fetchByRange(startRange, endDate, token);
+            res = formatBarChartData(res);
             console.log(res);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');

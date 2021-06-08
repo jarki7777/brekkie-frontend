@@ -63,7 +63,7 @@ export const fetchByRange = async (from, to, token) => {
                 headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` },
             });
         res = await res.json();
-        return {...res}
+        return res
     } catch (e) {
         console.log(e);
     }
