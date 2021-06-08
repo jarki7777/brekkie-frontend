@@ -7,7 +7,6 @@ import { ReactComponent as Search } from '../../icons/search-solid.svg';
 import { ReactComponent as Menu } from '../../icons/bars-menu.svg';
 import { useDispatch, useSelector } from "react-redux";
 import './Header.sass';
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { OPEN_SIGNUP_PORTAL, OPEN_LOGIN_PORTAL } from "../../store/actions/actionTypes";
 
@@ -16,13 +15,11 @@ const Header = () => {
     const isLoginPortalOpen = useSelector(state => state.loginState.loginPortal);
     const isSignUpPortal = useSelector(state => state.loginState.signUpPortal);
     const dispatch = useDispatch();
-    const [openLogin, setOpenLogin] = useState(false);
-    const [openSignUp, setOpenSignUp] = useState(false);
 
     return (
         <>
             <Navbar>
-                <NavItem icon={<Link to='/search'><Search /></Link>} />
+                {loginState.login && <NavItem icon={<Link to='/search'><Search /></Link>} />}
                 {!loginState.login &&
                     <div className='nav-item-not-logged'>
                         <button
