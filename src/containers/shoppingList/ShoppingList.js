@@ -18,7 +18,7 @@ const ShoppingList = () => {
     useEffect(() => {
         if (!token) history.push('/');
         getShoppingList();
-    }, []);
+    }, [token]);
 
     const getShoppingList = async () => {
         try {
