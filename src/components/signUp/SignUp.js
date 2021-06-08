@@ -37,8 +37,11 @@ const SignUp = () => {
             const username = event.target[0].value;
             const email = event.target[1].value;
             const password = event.target[2].value;
+            const passwordConfirm = event.target[3].value;
 
             if (!email || !password || !username) throw new Error('All fields are required');
+
+            if (password !== passwordConfirm) throw new Error (`Passwords don't match`);
 
             const res = await fetchSignUp(username, email, password);
             if (res.status === 201) {
@@ -48,7 +51,7 @@ const SignUp = () => {
             if (res.status === 409) setError(res.message);
 
         } catch (e) {
-            setError('Service is currently unavailable, please try again later');
+            setError(e.message);
         }
     }
 
@@ -85,17 +88,22 @@ const SignUp = () => {
                     </div>
 
                     <div className='input-field'>
-                        <label htmlFor='login-email'>E-mail</label>
+                        <label htmlFor='signup-email'>E-mail</label>
                         <input className='input-text' type="email" name="email" id='signup-email'
                             onInput={event => checkUserEmail(event)}
                         ></input>
                     </div>
 
                     <div className='input-field'>
-                        <label htmlFor='login-pw'>Password</label>
+                        <label htmlFor='signup-pw'>Password</label>
                         <input className='input-text' type="password" name="email" id='signup-pw'
                             onInput={event => checkUPassword(event)}
                         ></input>
+                    </div>
+
+                    <div className='input-field'>
+                        <label htmlFor='confirm-pw'>Confirm Password</label>
+                        <input className='input-text' type="password" name="email" id='confirm-pw'></input>
                     </div>
 
                     <button className="login-btn" name="submit" type="submit">Sign Up</button>
