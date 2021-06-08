@@ -16,6 +16,7 @@ import { fetchUserProfile } from "../../services/fetchUser";
 import { formarChartInfo } from '../../util/formatChartInfo';
 import NutrientsPieChart from "../../components/nutrientsPieChart/NutrientsPieChart";
 import { formatBarChartData } from "../../util/formatBarChartData";
+import RangeBarChart from "../../components/rangeBarChart/RangeBarChart";
 
 
 const MealTracker = () => {
@@ -35,6 +36,7 @@ const MealTracker = () => {
     const [chartInfo, setChartInfo] = useState([]);
     const [dailyTracker, setDailyTracker] = useState('active-tracker');
     const [rangeTracker, setRangeTracker] = useState('inactive-tracker');
+    const [barChartData, setBarChartData] = useState([]);
 
 
     useEffect(() => {
@@ -112,7 +114,6 @@ const MealTracker = () => {
         try {
             let res = await fetchByRange(startRange, endDate, token);
             res = formatBarChartData(res);
-            console.log(res);
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
@@ -198,7 +199,9 @@ const MealTracker = () => {
                 </div>}
 
             {rangeTracker === 'active-tracker' &&
-                <div>Bar chart</div>
+                <div className='tracker-pie-graph'>
+                    <RangeBarChart data ={barChartData}/>
+                </div>
             }
 
             {dailyTracker === 'active-tracker' &&
