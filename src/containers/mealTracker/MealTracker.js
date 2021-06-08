@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import ErrorMsg from "../../components/errorMsg/ErrorMsg";
 import RecipeCard from '../../components/recipeCard/RecipeCard'
-import { fetchFoodLogByDay, fetchFoodLogAddServing } from '../../services/fetchFoodLog';
+import { fetchFoodLogByDay, fetchFoodLogAddServing, fetchByRange } from '../../services/fetchFoodLog';
 import { ReactComponent as User } from '../../icons/user-solid.svg';
 import "react-datepicker/dist/react-datepicker.css";
 import './MealTracker.sass';
@@ -23,8 +23,8 @@ const MealTracker = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(new Date());
-    const [dateRange, setDateRange] = useState([null, null]);
-    const [startRange, endRange] = dateRange;
+    const [startRange, setStartRange] = useState(new Date());
+    const [endDate, setEndDate] = useState(null);
     const [error, setError] = useState();
     const [logs, setLogs] = useState(null);
     const [openCalories, setOpenCalories] = useState(false);
@@ -53,6 +53,10 @@ const MealTracker = () => {
         if (logs && logs.totalCalories > caloriesGoal) setCaloriesColor('tracker-total-calories-red');
         if (logs && logs.totalCalories <= caloriesGoal) setCaloriesColor('tracker-total-calories-green');
     }, [logs, caloriesGoal])
+
+    useEffect(() => {
+        getRange();
+    }, [endDate]);
 
     const getLogsByDay = async (date) => {
         try {
@@ -101,6 +105,22 @@ const MealTracker = () => {
             console.log(e);
         }
     }
+
+
+    const getRange = async () => {
+        try {
+            const res = await fetchByRange(startRange, endDate, token);
+            console.log(res);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const onChange = (dates) => {
+        const [start, end] = dates;
+        setStartRange(start);
+        setEndDate(end);
+    };
 
     return (
         <div className='meal-tracker-view'>
@@ -151,6 +171,7 @@ const MealTracker = () => {
                         selected={startDate}
                         dateFormat='MM/dd/yyyy'
                         popperPlacement='bottom-end'
+                        maxDate={Date.now()}
                         onChange={(date) => {
                             setStartDate(date);
                             getLogsByDay(date);
@@ -163,13 +184,14 @@ const MealTracker = () => {
                 <div className='tracker-date-picker'>
                     <div className='tracker-calendar-text'>Select a range of dates:</div>
                     <DatePicker
-                        selectsRange={true}
+                        className='range-input'
+                        selected={endDate}
+                        onChange={onChange}
                         startDate={startRange}
-                        endDate={endRange}
-                        onChange={(update) => {
-                            setDateRange(update);
-                        }}
+                        endDate={endDate}
+                        selectsRange
                         withPortal
+                        shouldCloseOnSelect={false}
                     />
                 </div>}
 
