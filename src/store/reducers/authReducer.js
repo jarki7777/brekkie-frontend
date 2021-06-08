@@ -1,9 +1,11 @@
-import { SET_LOGIN_STATE, LOG_OUT } from '../actions/actionTypes';
+import { SET_LOGIN_STATE, LOG_OUT, OPEN_LOGIN_PORTAL, CLOSE_LOGIN_PORTAL, OPEN_SIGNUP_PORTAL, CLOSE_SIGNUP_PORTAL } from '../actions/actionTypes';
 
 const authInitialState = {
     login: false,
     role: 'client',
-    token: null
+    token: null,
+    loginPortal: false,
+    signUpPortal: false
 }
 
 const authReducer = (authState = authInitialState, action) => {
@@ -24,6 +26,36 @@ const authReducer = (authState = authInitialState, action) => {
                     login: false,
                     role: 'client',
                     token: null
+                }
+            );
+        case OPEN_LOGIN_PORTAL:
+            return (
+                {
+                    ...authState,
+                    loginPortal: true,
+                    signUpPortal: false
+                }
+            );
+        case CLOSE_LOGIN_PORTAL:
+            return (
+                {
+                    ...authState,
+                    loginPortal: false
+                }
+            );
+        case OPEN_SIGNUP_PORTAL:
+            return (
+                {
+                    ...authState,
+                    signUpPortal: true,
+                    loginPortal: false
+                }
+            );
+        case CLOSE_SIGNUP_PORTAL:
+            return (
+                {
+                    ...authState,
+                    signUpPortal: false,
                 }
             );
         default:

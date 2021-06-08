@@ -6,13 +6,12 @@ import { ReactComponent as Logo } from '../../logo.svg';
 import ReactDom from 'react-dom';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './SignUp.sass';
+import { CLOSE_SIGNUP_PORTAL, OPEN_LOGIN_PORTAL } from '../../store/actions/actionTypes';
+import { useDispatch } from 'react-redux';
 
-const SignUp = (props) => {
+const SignUp = () => {
+    const dispatch = useDispatch();
     const [error, setError] = useState(null);
-
-    useEffect(() => {
-        if (!props.open) return null;
-    }, [props.open]);
 
     const checkUserName = (event) => {
         event.preventDefault();
@@ -43,8 +42,8 @@ const SignUp = (props) => {
 
             const res = await fetchSignUp(username, email, password);
             if (res.status === 201) {
-                props.setOpenLogin(true);
-                props.setOpenSignUp(false);
+                dispatch({ type: OPEN_LOGIN_PORTAL });
+                dispatch({ type: CLOSE_SIGNUP_PORTAL });
             }
             if (res.status === 409) setError(res.message);
 
@@ -57,13 +56,19 @@ const SignUp = (props) => {
         <>
             <div className='modal-overlay'></div>
             <div className='login-container'>
-                <div className='icon-button close-icon' onClick={props.onClose}><Close /></div>
+                <div
+                    className='icon-button close-icon'
+                    onClick={() => dispatch({ type: CLOSE_SIGNUP_PORTAL })}>
+                    <Close /></div>
                 <span className='auth-logo'>
                     <span className='small-logo'><Logo /></span>
                 </span>
 
                 <div className='toggle-auth'>
-                    <div className='inactive-login' onClick={props.showLogin}>Log In</div>
+                    <div
+                        className='inactive-login'
+                        onClick={() => dispatch({ type: OPEN_LOGIN_PORTAL })}
+                    >Log In</div>
                     <div className='active-signup'>Sign Up</div>
                     <div className='inactive-border'></div>
                 </div>

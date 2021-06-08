@@ -7,16 +7,11 @@ import { ReactComponent as Logo } from '../../logo.svg';
 import ReactDom from 'react-dom';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import './Login.sass';
-import { useEffect } from 'react';
+import { OPEN_SIGNUP_PORTAL, CLOSE_LOGIN_PORTAL } from '../../store/actions/actionTypes';
 
-const Login = (props) => {
+const Login = () => {
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        if (!props.open) return null;
-    }, [props.open]);
-
 
     const validateLogin = async (event) => {
         event.preventDefault();
@@ -29,7 +24,7 @@ const Login = (props) => {
             if (res.status === 200) {
                 dispatch(setLogin(res));
                 setError(null);
-                return props.setOpenLogin(false);
+                dispatch({ type: CLOSE_LOGIN_PORTAL });
             }
             if (res.status === 404) setError('Please verify that the email and password are correct');
         } catch (e) {
@@ -41,14 +36,21 @@ const Login = (props) => {
         <>
             <div className='modal-overlay'></div>
             <div className='login-container'>
-                <div className='icon-button close-icon' onClick={props.onClose}><Close /></div>
+                <div
+                    className='icon-button close-icon'
+                    onClick={() => dispatch({ type: CLOSE_LOGIN_PORTAL })}>
+                    <Close />
+                </div>
                 <span className='auth-logo'>
                     <span className='small-logo'><Logo /></span>
                 </span>
 
                 <div className='toggle-auth'>
                     <div className='active-auth'>Log In</div>
-                    <div className='inactive-auth' onClick={props.showSignUp}>Sign Up</div>
+                    <div
+                        className='inactive-auth'
+                        onClick={() => dispatch({ type: OPEN_SIGNUP_PORTAL })}
+                    >Sign Up</div>
                 </div>
 
                 {error && <ErrorMsg>{error}</ErrorMsg>}
