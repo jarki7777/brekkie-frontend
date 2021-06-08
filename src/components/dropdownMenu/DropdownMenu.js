@@ -7,6 +7,7 @@ import { ReactComponent as Liked } from '../../icons/heart-solid.svg';
 import { ReactComponent as Stats } from '../../icons/chart-bar-solid.svg';
 import { ReactComponent as Inventory } from '../../icons/list-ul-solid.svg';
 import { ReactComponent as ShoppingList } from '../../icons/shopping-cart-solid.svg';
+import { ReactComponent as Home } from '../../icons/home-solid.svg';
 import { CSSTransition } from 'react-transition-group';
 import { useState, useRef, useEffect } from 'react';
 import { LOG_OUT } from '../../store/actions/actionTypes';
@@ -48,6 +49,7 @@ const DropdownMenu = () => {
                 onEnter={calcHeight}
             >
                 <div className='menu'>
+                    <DropDownItem link='/' leftIcon={<Home />}>Home</DropDownItem>
                     <DropDownItem leftIcon={<Profile />} goToMenu='userInfo'>User info</DropDownItem>
                     <DropDownItem link='/search' leftIcon={<Food />}>Recipes</DropDownItem>
                     <span className='sign-out-menu-item' onClick={() => dispatch(logOut)}>
