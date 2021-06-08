@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchLogin } from '../../services/fetchLogin';
 import { setLogin } from '../../store/actions/authActionCreator';
@@ -10,8 +10,13 @@ import './Login.sass';
 import { OPEN_SIGNUP_PORTAL, CLOSE_LOGIN_PORTAL } from '../../store/actions/actionTypes';
 
 const Login = () => {
+    const email = useRef();
     const [error, setError] = useState(null);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        email.current.focus();
+    }, []);
 
     const validateLogin = async (event) => {
         event.preventDefault();
@@ -59,7 +64,7 @@ const Login = () => {
 
                     <div className='input-field'>
                         <label htmlFor='login-email'>E-mail</label>
-                        <input className='input-text' type='email' name='email' id='login-email'></input>
+                        <input className='input-text' type='email' name='email' id='login-email' ref={email}></input>
                     </div>
 
                     <div className='input-field'>

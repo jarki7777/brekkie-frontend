@@ -1,6 +1,6 @@
 import './SearchView.sass';
 import RecipeCard from '../../components/recipeCard/RecipeCard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Pagination from '../../components/pagination/Pagination';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,6 +11,7 @@ import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetch
 import { SET_RECIPE_ID, SET_SEARCH_RESULTS } from '../../store/actions/actionTypes';
 
 const SearchView = () => {
+    const searchInput = useRef();
     const token = useSelector(state => state.loginState.token);
     const searchResults = useSelector(state => state.recipeState.searchResults);
     const totalPages = useSelector(state => state.recipeState.totalPages);
@@ -27,6 +28,7 @@ const SearchView = () => {
 
     useEffect(() => {
         if (!token) history.push('/');
+        searchInput.current.focus();
     }, [token, history]);
 
     const search = async (event) => {
@@ -167,7 +169,7 @@ const SearchView = () => {
 
             <form className='search-form' onSubmit={(event) => search(event)}>
                 <div className='search-bar'>
-                    <input className='input-text search-input' type='search' name='search' placeholder='Search by keyword'></input>
+                    <input className='input-text search-input' type='search' name='search' placeholder='Search by keyword' ref={searchInput}></input>
                     <button className='login-btn search-btn' name='submit' type='submit'>Find recipes</button>
                 </div>
                 <div className='search-with-inventory'>
