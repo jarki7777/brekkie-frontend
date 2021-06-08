@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { fetchSignUp } from '../../services/fetchSignUp';
 import { validateUsername, validateEmail, validatePassword } from '../../util/validateInput';
 import { ReactComponent as Close } from '../../icons/times-solid.svg';
@@ -10,8 +10,13 @@ import { CLOSE_SIGNUP_PORTAL, OPEN_LOGIN_PORTAL } from '../../store/actions/acti
 import { useDispatch } from 'react-redux';
 
 const SignUp = () => {
+    const usernameInput = useRef();
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        usernameInput.current.focus();
+    }, []);
 
     const checkUserName = (event) => {
         event.preventDefault();
@@ -83,7 +88,7 @@ const SignUp = () => {
                     <div className='input-field'>
                         <label htmlFor='signup-username'>Username</label>
                         <input className='input-text' type="text" name="email" id='signup-username'
-                            onInput={event => checkUserName(event)}
+                            onInput={event => checkUserName(event)} ref={usernameInput}
                         ></input>
                     </div>
 

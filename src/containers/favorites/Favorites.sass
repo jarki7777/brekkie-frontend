@@ -1,4 +1,28 @@
 .favorites-container
+    position: relative
     display: flex
     flex-direction: column
     align-items: center
+    justify-content: space-between
+    min-height: 70vh
+
+.favorites-empty-message
+    width: 95%
+    max-width: 500px
+    height: 9em
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: space-between
+    font-size: 1.6em
+    font-weight: 700
+    text-align: justify
+
+.favorites-empty-message svg
+    color: black
+    width: 5em
+    cursor: pointer
+    transition: all 0.3s ease
+
+.favorites-empty-message:hover svg
+    transform: scale(1.5)

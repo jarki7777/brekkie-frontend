@@ -7,6 +7,7 @@ import RecipeCard from '../../components/recipeCard/RecipeCard';
 import { fetchUserFavorites } from '../../services/fetchFavorites';
 import { SET_RECIPE_ID } from '../../store/actions/actionTypes';
 import Pagination from '../../components/pagination/Pagination';
+import { ReactComponent as Search } from '../../icons/search-solid.svg';
 import './Favorites.sass';
 
 const Favorites = () => {
@@ -31,8 +32,11 @@ const Favorites = () => {
     const getFavorites = async () => {
         try {
             const res = await fetchUserFavorites(token);
-            setFavorites(res);
-            setTotalPages(Math.ceil(res.length / limit));
+            if (res.length !== 0) {
+                setTotalPages(Math.ceil(res.length / limit));
+                setFavorites(res);
+            }
+            if (res.length === 0) setError(`Your favorites are empty`);
             setShowFavorites(res.slice(0, limit));
 
         } catch (e) {
@@ -52,7 +56,7 @@ const Favorites = () => {
     const goPrevious = () => {
         if (page > 1) {
             if (page === totalPages) setShowFavorites(favorites.slice((favorites.length - showFavorites.length) - 10, (showFavorites.length) * (-1)));
-            else setShowFavorites(favorites.slice(limit -20, limit - 10));
+            else setShowFavorites(favorites.slice(limit - 20, limit - 10));
             setPage(page - 1);
             setLimit(limit - 10);
             window.scrollTo(0, 0);
@@ -62,7 +66,7 @@ const Favorites = () => {
     const goNext = () => {
         if (page !== totalPages) {
             if (page === totalPages - 1) setShowFavorites(favorites.slice(limit, favorites.length));
-            else setShowFavorites(favorites.slice(limit , limit + 10));
+            else setShowFavorites(favorites.slice(limit, limit + 10));
             setPage(page + 1);
             setLimit(limit + 10);
             window.scrollTo(0, 0);
@@ -82,6 +86,13 @@ const Favorites = () => {
                     calification={recipe.calification}
                     totalVotes={recipe.totalVotes}
                 /></Link>)}
+
+            {!favorites &&
+                <div className='favorites-empty-message'>
+                    Go to the search page and find your nex favorite recipe
+                    <Link to='/search'><Search /></Link>
+                </div>
+            }
 
             <Pagination
                 actualPage={page}
