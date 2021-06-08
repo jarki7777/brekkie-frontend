@@ -2,11 +2,14 @@ import './RecipeDetail.sass'
 import { ReactComponent as Liked } from '../../icons/heart-solid.svg';
 import { ReactComponent as NotLiked } from '../../icons/heart-regular.svg';
 import { ReactComponent as Calification } from '../../icons/star-solid.svg';
+import { ReactComponent as AddToCart } from '../../icons/cart-plus-solid.svg';
+import { ReactComponent as Check } from '../../icons/check-solid.svg';
 import NutritionalInfo from '../nutritionalInfo/NutritionalInfo';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { fetchUserFavorites } from '../../services/fetchFavorites';
 import { fetchAddFavorite, fetchRemoveFavorite } from '../../services/fetchFavorites';
+import { fetchAddToShoppingList, fetchShoppingList } from '../../services/fetchShoppingList';
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import { fetchById } from '../../services/fetchRecipe';
 import VoteModal from '../voteModal.js/VoteModal';
@@ -26,11 +29,13 @@ export const RecipeDetail = (props) => {
     const [calificationCount, setVotesCount] = useState(props.calification);
     const [totalVotesCount, setTotalVotes] = useState(props.totalVotes);
     const [openVotes, setOpenVotes] = useState(false);
+    const [shoppingList, setShoppingList] = useState([]);
 
     useEffect(() => {
         checkIfFavorite();
         checkCounters();
-    });
+        getShoppingList();
+    }, []);
 
     const checkCounters = async () => {
         try {
@@ -95,6 +100,25 @@ export const RecipeDetail = (props) => {
         }
     }
 
+    const AddToShoppingList = async (ingredient) => {
+        try {
+            await fetchAddToShoppingList(token, ingredient);
+            getShoppingList();
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+        return false
+    }
+
+    const getShoppingList = async () => {
+        try {
+            const res = await fetchShoppingList(token);
+            setShoppingList(res);
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
     return (
         <div className='recipe-container'>
             {error && <ErrorMsg>{error}</ErrorMsg>}
@@ -119,7 +143,7 @@ export const RecipeDetail = (props) => {
 
             <div className='social-interaction'>
                 <div className='likes-element'>
-                    {liked && <Liked onClick={() => switchLike()} />}
+                    {liked && <Liked />}
                     {!liked && <NotLiked onClick={() => switchLike()} />}
                     {likesCount}
                 </div>
@@ -145,11 +169,16 @@ export const RecipeDetail = (props) => {
             </div>
 
             <ul className='recipe-ingredients'>
-                {ingredients && ingredients.map(ingredient => <li
-                    className='recipe-list'
-                    key={ingredients.indexOf(ingredient)}>
-                    {ingredient}
-                </li>)}
+                {ingredients && ingredients.map(ingredient =>
+                    <li
+                        className='recipe-list'
+                        key={ingredients.indexOf(ingredient)}>
+                        {shoppingList.includes(ingredient) ?
+                            <Check /> : <AddToCart onClick={() => AddToShoppingList(ingredient)} />
+                        }
+                        {ingredient}
+                    </li>)
+                }
             </ul>
 
             <div className='sub-title'>
