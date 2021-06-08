@@ -23,6 +23,8 @@ const MealTracker = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const [startDate, setStartDate] = useState(new Date());
+    const [dateRange, setDateRange] = useState([null, null]);
+    const [startRange, endRange] = dateRange;
     const [error, setError] = useState();
     const [logs, setLogs] = useState(null);
     const [openCalories, setOpenCalories] = useState(false);
@@ -30,6 +32,9 @@ const MealTracker = () => {
     const [userName, setuserName] = useState(null);
     const [caloriesColor, setCaloriesColor] = useState('tracker-total-calories-green');
     const [chartInfo, setChartInfo] = useState([]);
+    const [dailyTracker, setDailyTracker] = useState('active-tracker');
+    const [rangeTracker, setRangeTracker] = useState('inactive-tracker');
+
 
     useEffect(() => {
         getLogsByDay(startDate);
@@ -120,62 +125,101 @@ const MealTracker = () => {
                 />
             }
 
-
-            <div className='tracker-date-picker'>
-                <div className='tracker-calendar-text'>Select the day you want to track:</div>
-                <DatePicker
-                    selected={startDate}
-                    dateFormat='MM/dd/yyyy'
-                    popperPlacement='bottom-end'
-                    onChange={(date) => {
-                        setStartDate(date);
-                        getLogsByDay(date);
+            <div className='toggle-tracker'>
+                <div
+                    className={dailyTracker}
+                    onClick={() => {
+                        setDailyTracker('active-tracker');
+                        setRangeTracker('inactive-tracker');
                     }}
-                />
+                >Daily tracker</div>
+                <div
+                    className={rangeTracker}
+                    onClick={() => {
+                        setRangeTracker('active-tracker');
+                        setDailyTracker('inactive-tracker');
+                    }}
+
+                >Range tracker</div>
+                <div className='inactive-tracker-border'></div>
             </div>
 
-            <div className='tracker-log'>
+            {dailyTracker === 'active-tracker' &&
+                <div className='tracker-date-picker'>
+                    <div className='tracker-calendar-text'>Select a day:</div>
+                    <DatePicker
+                        selected={startDate}
+                        dateFormat='MM/dd/yyyy'
+                        popperPlacement='bottom-end'
+                        onChange={(date) => {
+                            setStartDate(date);
+                            getLogsByDay(date);
+                        }}
+                        withPortal
+                    />
+                </div>}
 
-                {logs && logs.totalCalories &&
-                    <div className={caloriesColor}>
-                        Total calories in the day: {logs && logs.totalCalories}
-                    </div>}
+            {rangeTracker === 'active-tracker' &&
+                <div className='tracker-date-picker'>
+                    <div className='tracker-calendar-text'>Select a range of dates:</div>
+                    <DatePicker
+                        selectsRange={true}
+                        startDate={startRange}
+                        endDate={endRange}
+                        onChange={(update) => {
+                            setDateRange(update);
+                        }}
+                        withPortal
+                    />
+                </div>}
 
-                <div className='tracker-nutritional-table'>
-                    {logs &&
-                        < NutritionalInfo
-                            fat={logs.totalNutrients.totalFat}
-                            saturatedFat={logs.totalNutrients.totalSaturatedFat}
-                            sodium={logs.totalNutrients.totalSodium}
-                            carbs={logs.totalNutrients.totalCarbs}
-                            fiber={logs.totalNutrients.totalFiber}
-                            sugar={logs.totalNutrients.totalSugar}
-                            protein={logs.totalNutrients.totalProteins}
-                        />}
-                </div>
+            {rangeTracker === 'active-tracker' &&
+                <div>Bar chart</div>
+            }
 
-                <div className='tracker-pie-graph'>
-                    <NutrientsPieChart data={chartInfo} />
-                </div>
-                
-                {logs && logs.recipes.map(recipe =>
-                    <div className='results-container'>
-                        <Link to='/recipe' className='recipe-card-link'>
-                            <RecipeCard
-                                key={logs.recipes.indexOf(recipe)}
-                                goToRecipe={goToRecipe(recipe._id)}
-                                img={recipe.img}
-                                title={recipe.title}
-                                likes={recipe.timesFavorite}
-                                calification={recipe.calification}
-                                totalVotes={recipe.totalVotes}
-                                calories={recipe.caloriesPerServe}
-                            />
-                        </Link>
-                        <div className='add-serving-btn' onClick={() => addServing(recipe)}>Add a serving to the day</div>
+            {dailyTracker === 'active-tracker' &&
+                <div className='tracker-log'>
+
+                    {logs && logs.totalCalories &&
+                        <div className={caloriesColor}>
+                            Total calories in the day: {logs && logs.totalCalories}
+                        </div>}
+
+                    <div className='tracker-nutritional-table'>
+                        {logs &&
+                            < NutritionalInfo
+                                fat={logs.totalNutrients.totalFat}
+                                saturatedFat={logs.totalNutrients.totalSaturatedFat}
+                                sodium={logs.totalNutrients.totalSodium}
+                                carbs={logs.totalNutrients.totalCarbs}
+                                fiber={logs.totalNutrients.totalFiber}
+                                sugar={logs.totalNutrients.totalSugar}
+                                protein={logs.totalNutrients.totalProteins}
+                            />}
                     </div>
-                )}
-            </div>
+
+                    <div className='tracker-pie-graph'>
+                        <NutrientsPieChart data={chartInfo} />
+                    </div>
+
+                    {logs && logs.recipes.map(recipe =>
+                        <div className='results-container'>
+                            <Link to='/recipe' className='recipe-card-link'>
+                                <RecipeCard
+                                    key={logs.recipes.indexOf(recipe)}
+                                    goToRecipe={goToRecipe(recipe._id)}
+                                    img={recipe.img}
+                                    title={recipe.title}
+                                    likes={recipe.timesFavorite}
+                                    calification={recipe.calification}
+                                    totalVotes={recipe.totalVotes}
+                                    calories={recipe.caloriesPerServe}
+                                />
+                            </Link>
+                            <div className='add-serving-btn' onClick={() => addServing(recipe)}>Add a serving to the day</div>
+                        </div>
+                    )}
+                </div>}
         </div>
     );
 }
