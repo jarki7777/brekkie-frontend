@@ -113,7 +113,7 @@ const MealTracker = () => {
     const getRange = async () => {
         try {
             let res = await fetchByRange(startRange, endDate, token);
-            res = formatBarChartData(res);
+            setBarChartData(formatBarChartData(res));
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }

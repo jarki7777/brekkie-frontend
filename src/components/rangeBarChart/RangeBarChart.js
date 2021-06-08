@@ -54,7 +54,7 @@ export default class RangeBarChart extends PureComponent {
         <BarChart
           width={500}
           height={300}
-          data={data}
+          data={this.props.data}
           margin={{
             top: 20,
             right: 30,
@@ -67,9 +67,16 @@ export default class RangeBarChart extends PureComponent {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-          <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
+          <Bar dataKey="Fat" stackId="a" fill="#0088FE" />
+          <Bar dataKey="Sat. Fat" stackId="a" fill="#00C49F" />
+          <Bar dataKey="Sodium" stackId="a" fill="#FFBB28" />
+          <Bar dataKey="Carbs" stackId="a" fill="#FF8042" />
+          <Bar dataKey="Fiber" stackId="a" fill="#ffcbc4" />
+          <Bar dataKey="Sugar" stackId="a" fill="#ff0a38" />
+          <Bar dataKey="Protein" stackId="a" fill="#ffde0a" />
         </BarChart>
     );
   }
 }
+
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#ffcbc4', '#ff0a38', '#ffde0a'];

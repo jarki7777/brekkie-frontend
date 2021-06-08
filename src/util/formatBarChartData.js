@@ -36,8 +36,5 @@ export const formatBarChartData = (rawData) => {
         formattedData[i].sugar = Math.round(formattedData[i].sugar * 100 / totalGrams[i]) * 10 / 10;
         formattedData[i].protein = Math.round(formattedData[i].protein * 100 / totalGrams[i]) * 10 / 10;
     }
-
-
-    console.log(formattedData);
     return formattedData;
 }
