@@ -9,7 +9,7 @@ const AdminView = () => {
     const token = useSelector(state => state.loginState.token);
     const email = useRef();
     const [page, setPage] = useState(1);
-    const limit = 20
+    const limit = 10
     const [totalPages, setTotalPages] = useState(1);
     const [error, setError] = useState(null);
     const [users, setUsers] = useState([]);
@@ -48,7 +48,14 @@ const AdminView = () => {
                 <button className='admin-btn' name='submit' type='submit'>Search</button>
             </form>
 
+            {users.length > 0 &&
 
+                users.map(user =>
+                    <div className='users-search-results'>
+                        <div className='search-result' key={users.indexOf(user)}>{user.email}</div>
+                        <button className='admin-btn users-btn' name='select' type='button'>select</button>
+                    </div>)
+            }
 
             <Pagination
                 actualPage={page}
