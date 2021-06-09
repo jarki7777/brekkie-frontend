@@ -18,10 +18,10 @@ const SearchView = () => {
     const prevPage = useSelector(state => state.recipeState.prevPage);
     const nextPage = useSelector(state => state.recipeState.nextPage);
     const page = useSelector(state => state.recipeState.page);
+    const limit = 10;
     const history = useHistory();
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
-    const [limit, setLimit] = useState(10);
     const [searchTerm, setSearchTerm] = useState(null);
     const [searchWithInventory, setSearchWithInventory] = useState(null);
     const [check, setCheck] = useState(false);
