@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import Pagination from '../../components/pagination/Pagination';
+import UserCardModal from '../../components/userCardModal/UserCardModal';
 import { fetchUserList } from '../../services/fetchUser';
 import './AdminView.sass';
 
@@ -13,6 +14,8 @@ const AdminView = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [error, setError] = useState(null);
     const [users, setUsers] = useState([]);
+    const [user, setUser] = useState(null);
+    const [openUser, setOpenUser] = useState(false);
 
     useEffect(() => {
         email.current.focus();
@@ -21,13 +24,11 @@ const AdminView = () => {
     const search = async (event) => {
         event.preventDefault();
         const email = event.target[0].value;
-        console.log(email);
         if (email !== '') {
             try {
                 let res = await fetchUserList(token, page, limit, email);
                 setUsers(res.docs);
                 setTotalPages(res.totalPages);
-                console.log(res.docs);
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
             }
@@ -60,6 +61,12 @@ const AdminView = () => {
         }
     }
 
+    const openModal = (user) => {
+        setUser(user);
+        console.log(user);
+        setOpenUser(true);
+    }
+
     return (
 
         <div className='admin-container'>
@@ -77,10 +84,23 @@ const AdminView = () => {
             {users.length > 0 &&
 
                 users.map(user =>
-                    <div className='users-search-results'>
-                        <div className='search-result' key={users.indexOf(user)}>{user.email}</div>
-                        <button className='admin-btn users-btn' name='select' type='button'>select</button>
+                    <div className='users-search-results' key={users.indexOf(user)}>
+                        <div className='search-result-row' key={users.indexOf(user)}>{user.email}</div>
+                        <button
+                            className='admin-btn users-btn'
+                            name='select'
+                            type='button'
+                            onClick={() => openModal(user)}
+                        >select</button>
                     </div>)
+            }
+
+            {openUser &&
+                <UserCardModal
+                    open={openUser}
+                    onClose={() => setOpenUser(false)}
+                    user={user}
+                />
             }
 
             <Pagination
