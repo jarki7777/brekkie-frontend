@@ -125,6 +125,20 @@ const MealTracker = () => {
         <div className='meal-tracker-view'>
             <h1 className='tracker-title'>Meal Tracker</h1>
 
+            <div className='tracker-instructions'>
+                <span>
+                    Click on the "Calories Goal" to select your own personal daily goal
+                    </span>
+                <span>
+                    Keep the track of your meals consumption, use the daily tracker tab to select a specific
+                    day. Use the "Add a serving" button below each recipe to increase by one the portions consumed
+                    in a given day.
+                    </span>
+                <span>
+                    Use the Range tracker tab to watch the stats of a given period of time
+                    </span>
+            </div>
+
             {error && <ErrorMsg>{error}</ErrorMsg>}
 
             <div className='user-tracker-info'>
