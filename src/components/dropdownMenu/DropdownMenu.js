@@ -50,7 +50,7 @@ const DropdownMenu = () => {
             >
                 <div className='menu'>
                     <DropDownItem link='/' leftIcon={<Home />}>Home</DropDownItem>
-                    <DropDownItem leftIcon={<Profile />} goToMenu='userInfo'>User info</DropDownItem>
+                    <DropDownItem link='' leftIcon={<Profile />} goToMenu='userInfo'>User info</DropDownItem>
                     <DropDownItem link='/search' leftIcon={<Food />}>Recipes</DropDownItem>
                     <span className='sign-out-menu-item' onClick={() => dispatch(logOut)}>
                         <span className='icon-button'></span>
@@ -72,7 +72,7 @@ const DropdownMenu = () => {
                     <DropDownItem link='/tracker' leftIcon={<Stats />}>Meal Tracker</DropDownItem>
                     <DropDownItem link='/inventory' leftIcon={<Inventory />}>Pantry</DropDownItem>
                     <DropDownItem link='/shopping' leftIcon={<ShoppingList />}>Shopping List</DropDownItem>
-                    <DropDownItem rightIcon={<Right />} goToMenu='main'>Back</DropDownItem>
+                    <DropDownItem link='' rightIcon={<Right />} goToMenu='main'>Back</DropDownItem>
                 </div>
 
             </CSSTransition>

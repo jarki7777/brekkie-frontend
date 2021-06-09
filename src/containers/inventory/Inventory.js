@@ -19,6 +19,7 @@ const Inventory = () => {
     useEffect(() => {
         if (!token) history.push('/');
         getInventory();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inventory]);
 
     const getInventory = async () => {
@@ -80,7 +81,7 @@ const Inventory = () => {
                     <div className={addFromList} onClick={() => switchInventory(false, true)}>Add from list</div>
                     <div className='inactive-inventory-border'></div>
                 </div>
-                {!accordion && inventory && inventory.map(ingredient => <MyIngredients title={ingredient} />)}
+                {!accordion && inventory && inventory.map(ingredient => <MyIngredients title={ingredient} key={inventory.indexOf(ingredient)}/>)}
                 {!accordion && inventory && inventory.length === 0 && <ErrorMsg>You inventory is empty</ErrorMsg>}
                 {accordion && <InventoryIngredients />}
                 <div className='empty-inventory'>

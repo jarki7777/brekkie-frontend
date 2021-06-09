@@ -13,7 +13,7 @@ const Main = () => {
                     buttonName='Find recipes' link='/search' />
                 <MainPageCard image='food-log-card.jpg' title='Meals tracking'
                     description='Follow the track of your daily meals, calories and macros'
-                    buttonName='Find recipes' link='/tracker' />
+                    buttonName='Tracking' link='/tracker' />
             </div>
         </>
     );
