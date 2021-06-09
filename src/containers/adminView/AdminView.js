@@ -63,7 +63,6 @@ const AdminView = () => {
 
     const openModal = (user) => {
         setUser(user);
-        console.log(user);
         setOpenUser(true);
     }
 
