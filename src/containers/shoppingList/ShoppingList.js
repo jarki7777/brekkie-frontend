@@ -18,7 +18,8 @@ const ShoppingList = () => {
     useEffect(() => {
         if (!token) history.push('/');
         getShoppingList();
-    }, [token]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [token, history]);
 
     const getShoppingList = async () => {
         try {
