@@ -64,6 +64,13 @@ const Comments = (props) => {
         }
     }
 
+    const [commentLength, setCommentLength] = useState(null);
+
+    useEffect(() => {
+        if (commentLength > 255) setError('Comments should not exceed 255 characters');
+        if (commentLength <= 255) setError(null);
+    }, [commentLength]);
+
     return (
         <div className='comments-container'>
             <div className='comments-count'>
@@ -71,18 +78,18 @@ const Comments = (props) => {
             </div>
             <form className='comment-form' onSubmit={(event) => postComment(event)}>
                 <div className='comment-input'>
-                    <div className='comment-input-text'
+                    <span className='comment-input-text'
                         role='textbox'
                         name='search'
-                        maxlength='255'
                         contentEditable
-                    ></div>
+                        onKeyPress={(event) => setCommentLength(event.target.textContent.length)}
+                    ></span>
                 </div>
                 <button className='login-btn search-btn post-btn' name='submit' type='submit'>Post</button>
             </form>
 
-            {comments.length === 0 && <ErrorMsg>There are no comments yet, be the first!</ErrorMsg>}
             {error && <ErrorMsg>{error}</ErrorMsg>}
+            {comments.length === 0 && <ErrorMsg>There are no comments yet, be the first!</ErrorMsg>}
 
             {comments.length !== 0 && comments.map(comment =>
                 <UserComment
