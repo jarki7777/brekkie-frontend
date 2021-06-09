@@ -42,15 +42,12 @@ const MealTracker = () => {
     useEffect(() => {
         getLogsByDay(startDate);
         getUser();
-    }, []);
-
-    useEffect(() => {
-        getUser();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [openCalories]);
 
     useEffect(() => {
         if (!token) history.push('/');
-    }, [token]);
+    }, [token, history]);
 
     useEffect(() => {
         if (logs && logs.totalCalories > caloriesGoal) setCaloriesColor('tracker-total-calories-red');
@@ -58,8 +55,16 @@ const MealTracker = () => {
     }, [logs, caloriesGoal])
 
     useEffect(() => {
+        const getRange = async () => {
+            try {
+                let res = await fetchByRange(startRange, endDate, token);
+                setBarChartData(formatBarChartData(res));
+            } catch (e) {
+                setError('Service is currently unavailable, please try again later');
+            }
+        }
         getRange();
-    }, [endDate]);
+    }, [startRange, endDate, token]);
 
     const getLogsByDay = async (date) => {
         try {
@@ -109,14 +114,6 @@ const MealTracker = () => {
         }
     }
 
-    const getRange = async () => {
-        try {
-            let res = await fetchByRange(startRange, endDate, token);
-            setBarChartData(formatBarChartData(res));
-        } catch (e) {
-            setError('Service is currently unavailable, please try again later');
-        }
-    }
 
     const onChange = (dates) => {
         const [start, end] = dates;
@@ -201,7 +198,7 @@ const MealTracker = () => {
                 <>
                     <div className='chart-title'>Calories vs Goal:</div>
                     <div>
-                        <CaloriesChart data={barChartData} goal={caloriesGoal}/>
+                        <CaloriesChart data={barChartData} goal={caloriesGoal} />
                     </div>
                     <div className='chart-title'>Macro nutrients rate in grams:</div>
                     <div>
@@ -240,10 +237,9 @@ const MealTracker = () => {
                     </div>
 
                     {logs && logs.recipes.map(recipe =>
-                        <div className='results-container'>
+                        <div className='results-container' key={logs.recipes.indexOf(recipe)}>
                             <Link to='/recipe' className='recipe-card-link'>
                                 <RecipeCard
-                                    key={logs.recipes.indexOf(recipe)}
                                     goToRecipe={goToRecipe(recipe._id)}
                                     img={recipe.img}
                                     title={recipe.title}

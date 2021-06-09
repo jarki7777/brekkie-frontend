@@ -45,10 +45,10 @@ export const fetchFoodLogAddServing = async (recipeId, date, token) => {
 export const fetchAddRecipeToFoodLog = async (recipeId, token) => {
     try {
         const res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_FOOD_LOGS}/${recipeId}`,
-        {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }
-        });
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }
+            });
         return res.status
     } catch (e) {
         console.log(e);
@@ -57,13 +57,15 @@ export const fetchAddRecipeToFoodLog = async (recipeId, token) => {
 
 export const fetchByRange = async (from, to, token) => {
     try {
-        let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_FOOD_LOGS_BY_RANGE}?from=${from}&to=${to}`,
-            {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` },
-            });
-        res = await res.json();
-        return res
+        if (from && to) {
+            let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_FOOD_LOGS_BY_RANGE}?from=${from}&to=${to}`,
+                {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` },
+                });
+            res = await res.json();
+            return res
+        }
     } catch (e) {
         console.log(e);
     }

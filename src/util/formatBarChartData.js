@@ -4,8 +4,6 @@ export const formatBarChartData = (rawData) => {
     let formattedData = []
     let totalGrams = []
 
-    // console.log(rawData);
-
     rawData.forEach(element => {
         totalGrams.push(
             element.totalNutrients.totalFat +
