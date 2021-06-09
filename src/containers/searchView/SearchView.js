@@ -165,6 +165,13 @@ const SearchView = () => {
     return (
         <div className='search-view-container'>
 
+            <div className='tracker-instructions'>
+                <span>Use the search bar to explore all the recipe sin the catalog</span>
+                <span>If u want a more customized experience, check the bow below
+                    to find recipes that fit your inventory
+                </span>
+            </div>
+
             {error && <ErrorMsg>{error}</ErrorMsg>}
 
             <form className='search-form' onSubmit={(event) => search(event)}>
@@ -192,7 +199,7 @@ const SearchView = () => {
                         likes={recipe.timesFavorite}
                         calification={recipe.calification}
                         totalVotes={recipe.totalVotes}
-                    /></Link>)}                    
+                    /></Link>)}
             </div>
 
             <Pagination
