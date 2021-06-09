@@ -28,8 +28,8 @@ const InventoryAccordion = (props) => {
                 </span>
             </div>
             {props.open === props.title && props.ingredients.map(ingredient =>
-                <div>
-                    <div className='ingredient-category-drowdown' key={props.ingredients.indexOf(ingredient)}>
+                <div key={props.ingredients.indexOf(ingredient)}>
+                    <div className='ingredient-category-drowdown' >
                         <div className='categroy-ingredient' onClick={() => addToInventory(ingredient)}>
                             <div className='ingredient-row'>
                             <span>{ingredient}</span>
