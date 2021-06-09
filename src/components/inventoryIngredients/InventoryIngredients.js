@@ -71,7 +71,7 @@ const InventoryIngredients = () => {
             setDropDownElement(null);
         }
         toggle();
-    }, [dropDownElement]);
+    }, [dropDownElement, open]);
 
 
     return (
