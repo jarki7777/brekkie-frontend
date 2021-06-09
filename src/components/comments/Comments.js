@@ -11,11 +11,10 @@ const Comments = (props) => {
     const [error, setError] = useState(null);
     const [comments, setComments] = useState([]);
     const [limit, setLimit] = useState(10);
-    const [userRole, setUserRole] = useState('client');
 
     useEffect(() => {
         getComments();
-        setUserRole(user.role);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getComments = async () => {
@@ -91,7 +90,7 @@ const Comments = (props) => {
                     user={comment.user.username}
                     date={comment.date}
                     comment={comment.comment}
-                    userRole={userRole}
+                    userRole={user.role}
                     deleteComment={(event) => deleteComment(event, comment._id)}
                 />
             )}
