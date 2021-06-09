@@ -35,6 +35,7 @@ export const RecipeDetail = (props) => {
         checkIfFavorite();
         checkCounters();
         getShoppingList();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const checkCounters = async () => {
