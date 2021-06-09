@@ -39,6 +39,15 @@ const DropdownMenu = () => {
             </Link>
         );
     }
+    const DropDownItemNoLink = (props) => {
+        return (
+            <div className='menu-item' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+                <span className='icon-button'>{props.leftIcon}</span>
+                {props.children}
+                <span className='icon-right'>{props.rightIcon}</span>
+            </div>
+        );
+    }
     const logOut = { type: LOG_OUT }
     return (
         <div className='dropdown' style={{ height: menuHeight }}>
@@ -50,7 +59,7 @@ const DropdownMenu = () => {
             >
                 <div className='menu'>
                     <DropDownItem link='/' leftIcon={<Home />}>Home</DropDownItem>
-                    <DropDownItem link='' leftIcon={<Profile />} goToMenu='userInfo'>User info</DropDownItem>
+                    <DropDownItemNoLink leftIcon={<Profile />} goToMenu='userInfo'>User info</DropDownItemNoLink>
                     <DropDownItem link='/search' leftIcon={<Food />}>Recipes</DropDownItem>
                     <span className='sign-out-menu-item' onClick={() => dispatch(logOut)}>
                         <span className='icon-button'></span>
@@ -72,7 +81,7 @@ const DropdownMenu = () => {
                     <DropDownItem link='/tracker' leftIcon={<Stats />}>Meal Tracker</DropDownItem>
                     <DropDownItem link='/inventory' leftIcon={<Inventory />}>Pantry</DropDownItem>
                     <DropDownItem link='/shopping' leftIcon={<ShoppingList />}>Shopping List</DropDownItem>
-                    <DropDownItem link='' rightIcon={<Right />} goToMenu='main'>Back</DropDownItem>
+                    <DropDownItemNoLink rightIcon={<Right />} goToMenu='main'>Back</DropDownItemNoLink>
                 </div>
 
             </CSSTransition>
