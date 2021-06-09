@@ -14,7 +14,6 @@ const VoteModal = (props) => {
     const [FillThreeStar, setFillThreeStar] = useState('far fa-star star-vote');
     const [FillFourStar, setFillFourStar] = useState('far fa-star star-vote');
     const [FillFiveStar, setFillFiveStar] = useState('far fa-star star-vote');
-    const [closeModal, setCloseModal] = useState(null);
 
     useEffect(() => {
         if (!props.open) return null;
@@ -58,50 +57,45 @@ const VoteModal = (props) => {
     }
 
     const voteOneStar = async () => {
-        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 1);
-            return closeModal;
+            props.checkCounters();
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
-
+    
     const voteTwoStar = async () => {
-        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 2);
-            return closeModal;
+            props.checkCounters();
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
-
+    
     const voteThreeStar = async () => {
-        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 3);
-            return closeModal;
+            props.checkCounters();
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
-
+    
     const voteFourStar = async () => {
-        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 4);
-            return closeModal;
+            props.checkCounters();
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
     }
-
+    
     const voteFiveStar = async () => {
-        setCloseModal(props.onClose);
         try {
             await fetchVotes(token, props.id, 5);
-            return closeModal;
+            props.checkCounters();
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }

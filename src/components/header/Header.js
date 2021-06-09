@@ -5,47 +5,39 @@ import Login from '../login/Login';
 import SignUp from '../signUp/SignUp';
 import { ReactComponent as Search } from '../../icons/search-solid.svg';
 import { ReactComponent as Menu } from '../../icons/bars-menu.svg';
-import { useSelector } from "react-redux";
+import { ReactComponent as Admin } from '../../icons/user-cog-solid.svg';
+import { useDispatch, useSelector } from "react-redux";
 import './Header.sass';
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { OPEN_SIGNUP_PORTAL, OPEN_LOGIN_PORTAL } from "../../store/actions/actionTypes";
 
 const Header = () => {
     const loginState = useSelector(state => state.loginState);
-    const [openLogin, setOpenLogin] = useState(false);
-    const [openSignUp, setOpenSignUp] = useState(false);
+    const isLoginPortalOpen = useSelector(state => state.loginState.loginPortal);
+    const isSignUpPortal = useSelector(state => state.loginState.signUpPortal);
+    const dispatch = useDispatch();
 
     return (
         <>
             <Navbar>
-                <NavItem icon={<Link to='/search'><Search /></Link>} />
+                {loginState.login && <NavItem icon={<Link to='/search'><Search /></Link>} />}
+                {loginState.role === 'mod' && <NavItem icon={<Link to='/admin'><Admin /></Link>} />}
+                {loginState.role === 'admin' && <NavItem icon={<Link to='/admin'><Admin /></Link>} />}
                 {!loginState.login &&
                     <div className='nav-item-not-logged'>
-                        <button className='nav-bar-auth-btn' onClick={() => setOpenLogin(true)}>Log In</button>
-                        <button className='nav-bar-auth-btn' onClick={() => setOpenSignUp(true)}>Sign Up</button>
+                        <button
+                            className='nav-bar-auth-btn'
+                            onClick={() => dispatch({ type: OPEN_LOGIN_PORTAL })}
+                        >Log In</button>
+                        <button
+                            className='nav-bar-auth-btn'
+                            onClick={() => dispatch({ type: OPEN_SIGNUP_PORTAL })}
+                        >Sign Up</button>
                     </div>
                 }
-                {openLogin &&
-
-                    <Login setOpenLogin={setOpenLogin}
-                        open={openLogin}
-                        onClose={() => setOpenLogin(false)}
-                        showSignUp={() => {
-                            setOpenLogin(false);
-                            setOpenSignUp(true);
-                        }}
-                    />
-                }
-                {openSignUp &&
-                    <SignUp setOpenSignUp={setOpenSignUp} setOpenLogin={setOpenLogin}
-                        open={openSignUp}
-                        onClose={() => setOpenSignUp(false)}
-                        showLogin={() => {
-                            setOpenSignUp(false);
-                            setOpenLogin(true);
-                        }}
-                    />
-                }
+                {isLoginPortalOpen && <Login />}
+                
+                {isSignUpPortal && <SignUp />}
 
                 {loginState.login && <NavItem icon={<Menu />}>
                     <DropdownMenu />

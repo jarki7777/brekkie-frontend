@@ -1,6 +1,6 @@
 import './SearchView.sass';
 import RecipeCard from '../../components/recipeCard/RecipeCard';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Pagination from '../../components/pagination/Pagination';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,22 +11,24 @@ import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetch
 import { SET_RECIPE_ID, SET_SEARCH_RESULTS } from '../../store/actions/actionTypes';
 
 const SearchView = () => {
+    const searchInput = useRef();
     const token = useSelector(state => state.loginState.token);
     const searchResults = useSelector(state => state.recipeState.searchResults);
     const totalPages = useSelector(state => state.recipeState.totalPages);
     const prevPage = useSelector(state => state.recipeState.prevPage);
     const nextPage = useSelector(state => state.recipeState.nextPage);
     const page = useSelector(state => state.recipeState.page);
+    const limit = 10;
     const history = useHistory();
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
-    const [limit, setLimit] = useState(10);
     const [searchTerm, setSearchTerm] = useState(null);
     const [searchWithInventory, setSearchWithInventory] = useState(null);
     const [check, setCheck] = useState(false);
 
     useEffect(() => {
         if (!token) history.push('/');
+        searchInput.current.focus();
     }, [token, history]);
 
     const search = async (event) => {
@@ -163,11 +165,18 @@ const SearchView = () => {
     return (
         <div className='search-view-container'>
 
+            <div className='tracker-instructions'>
+                <span>Use the search bar to explore all the recipe sin the catalog</span>
+                <span>If u want a more customized experience, check the bow below
+                    to find recipes that fit your inventory
+                </span>
+            </div>
+
             {error && <ErrorMsg>{error}</ErrorMsg>}
 
             <form className='search-form' onSubmit={(event) => search(event)}>
                 <div className='search-bar'>
-                    <input className='input-text search-input' type='search' name='search' placeholder='Search by keyword'></input>
+                    <input className='input-text search-input' type='search' name='search' placeholder='Search by keyword' ref={searchInput}></input>
                     <button className='login-btn search-btn' name='submit' type='submit'>Find recipes</button>
                 </div>
                 <div className='search-with-inventory'>
@@ -190,7 +199,7 @@ const SearchView = () => {
                         likes={recipe.timesFavorite}
                         calification={recipe.calification}
                         totalVotes={recipe.totalVotes}
-                    /></Link>)}                    
+                    /></Link>)}
             </div>
 
             <Pagination

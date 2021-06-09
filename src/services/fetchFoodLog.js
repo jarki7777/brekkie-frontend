@@ -54,3 +54,19 @@ export const fetchAddRecipeToFoodLog = async (recipeId, token) => {
         console.log(e);
     }
 }
+
+export const fetchByRange = async (from, to, token) => {
+    try {
+        if (from && to) {
+            let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_FOOD_LOGS_BY_RANGE}?from=${from}&to=${to}`,
+                {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` },
+                });
+            res = await res.json();
+            return res
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}

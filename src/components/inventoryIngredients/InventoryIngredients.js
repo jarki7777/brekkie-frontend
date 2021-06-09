@@ -8,72 +8,71 @@ const InventoryIngredients = () => {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        toggle();
-    }, [dropDownElement]);
-
-    const toggle = () => {
-        switch (dropDownElement) {
-            case 1:
-                if (open !== 'Basic Products') setOpen('Basic Products');
-                if (open === 'Basic Products') setOpen(false);
-                else if (!open) setOpen('Basic Products');
-                break;
-            case 2:
-                if (open !== 'Dairy Products') setOpen('Dairy Products');
-                if (open === 'Dairy Products') setOpen(false);
-                else if (!open) setOpen('Dairy Products');
-                break;
-            case 3:
-                if (open !== 'Cereals') setOpen('Cereals');
-                if (open === 'Cereals') setOpen(false);
-                else if (!open) setOpen('Cereals');
-                break;
-            case 4:
-                if (open !== 'Fruits & Vegetables') setOpen('Fruits & Vegetables');
-                if (open === 'Fruits & Vegetables') setOpen(false);
-                else if (!open) setOpen('Fruits & Vegetables');
-                break;
-            case 5:
-                if (open !== 'Greens') setOpen('Greens');
-                if (open === 'Greens') setOpen(false);
-                else if (!open) setOpen('Greens');
-                break;
-            case 6:
-                if (open !== 'Pork Meat') setOpen('Pork Meat');
-                if (open === 'Pork Meat') setOpen(false);
-                else if (!open) setOpen('Pork Meat');
-                break;
-            case 7:
-                if (open !== 'Cattle Meatt') setOpen('Cattle Meat');
-                if (open === 'Cattle Meat') setOpen(false);
-                else if (!open) setOpen('Cattle Meat');
-                break;
-            case 8:
-                if (open !== 'Lamb Meat') setOpen('Lamb Meat');
-                if (open === 'Lamb Meat') setOpen(false);
-                else if (!open) setOpen('Lamb Meat');
-                break;
-            case 9:
-                if (open !== 'Veal Meat') setOpen('Veal Meat');
-                if (open === 'Veal Meat') setOpen(false);
-                else if (!open) setOpen('Veal Meat');
-                break;
-            case 10:
-                if (open !== 'Nuts') setOpen('Nuts');
-                if (open === 'Nuts') setOpen(false);
-                else if (!open) setOpen('Nuts');
-                break;
-            case 11:
-                if (open !== 'Seasoning') setOpen('Seasoning');
-                if (open === 'Seasoning') setOpen(false);
-                else if (!open) setOpen('Seasoning');
-                break;
-            default:
-                break;
-
+        const toggle = () => {
+            switch (dropDownElement) {
+                case 1:
+                    if (open !== 'Basic Products') setOpen('Basic Products');
+                    if (open === 'Basic Products') setOpen(false);
+                    else if (!open) setOpen('Basic Products');
+                    break;
+                case 2:
+                    if (open !== 'Dairy Products') setOpen('Dairy Products');
+                    if (open === 'Dairy Products') setOpen(false);
+                    else if (!open) setOpen('Dairy Products');
+                    break;
+                case 3:
+                    if (open !== 'Cereals') setOpen('Cereals');
+                    if (open === 'Cereals') setOpen(false);
+                    else if (!open) setOpen('Cereals');
+                    break;
+                case 4:
+                    if (open !== 'Fruits & Vegetables') setOpen('Fruits & Vegetables');
+                    if (open === 'Fruits & Vegetables') setOpen(false);
+                    else if (!open) setOpen('Fruits & Vegetables');
+                    break;
+                case 5:
+                    if (open !== 'Greens') setOpen('Greens');
+                    if (open === 'Greens') setOpen(false);
+                    else if (!open) setOpen('Greens');
+                    break;
+                case 6:
+                    if (open !== 'Pork Meat') setOpen('Pork Meat');
+                    if (open === 'Pork Meat') setOpen(false);
+                    else if (!open) setOpen('Pork Meat');
+                    break;
+                case 7:
+                    if (open !== 'Cattle Meatt') setOpen('Cattle Meat');
+                    if (open === 'Cattle Meat') setOpen(false);
+                    else if (!open) setOpen('Cattle Meat');
+                    break;
+                case 8:
+                    if (open !== 'Lamb Meat') setOpen('Lamb Meat');
+                    if (open === 'Lamb Meat') setOpen(false);
+                    else if (!open) setOpen('Lamb Meat');
+                    break;
+                case 9:
+                    if (open !== 'Veal Meat') setOpen('Veal Meat');
+                    if (open === 'Veal Meat') setOpen(false);
+                    else if (!open) setOpen('Veal Meat');
+                    break;
+                case 10:
+                    if (open !== 'Nuts') setOpen('Nuts');
+                    if (open === 'Nuts') setOpen(false);
+                    else if (!open) setOpen('Nuts');
+                    break;
+                case 11:
+                    if (open !== 'Seasoning') setOpen('Seasoning');
+                    if (open === 'Seasoning') setOpen(false);
+                    else if (!open) setOpen('Seasoning');
+                    break;
+                default:
+                    break;
+            }
+            setDropDownElement(null);
         }
-        setDropDownElement(null);
-    }
+        toggle();
+    }, [dropDownElement, open]);
+
 
     return (
         <>

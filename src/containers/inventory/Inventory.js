@@ -6,6 +6,7 @@ import { fetchEmptyInventory, fetchUserInventory, fetchAddToInventory } from '..
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import './Inventory.sass';
+import { Link } from 'react-router-dom';
 
 const Inventory = () => {
     const token = useSelector(state => state.loginState.token);
@@ -19,6 +20,7 @@ const Inventory = () => {
     useEffect(() => {
         if (!token) history.push('/');
         getInventory();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inventory]);
 
     const getInventory = async () => {
@@ -67,7 +69,8 @@ const Inventory = () => {
             <div className='search-view-container'>
                 {error && <ErrorMsg>{error}</ErrorMsg>}
                 <div className='inventory-instructions'>
-                    Select ingredients from the list or use the input bar to add ingredients individually
+                    Here you can add ingredients to your inventory to make custom searches. Use the search input
+                    to add your own ingredients or select the default ingredients from the "Add from list" tab.
                 </div>
                 <form className='search-form inventory-search' onSubmit={(event) => addFromInput(event)}>
                     <div className='search-bar'>
@@ -80,7 +83,7 @@ const Inventory = () => {
                     <div className={addFromList} onClick={() => switchInventory(false, true)}>Add from list</div>
                     <div className='inactive-inventory-border'></div>
                 </div>
-                {!accordion && inventory && inventory.map(ingredient => <MyIngredients title={ingredient} />)}
+                {!accordion && inventory && inventory.map(ingredient => <MyIngredients title={ingredient} key={inventory.indexOf(ingredient)} />)}
                 {!accordion && inventory && inventory.length === 0 && <ErrorMsg>You inventory is empty</ErrorMsg>}
                 {accordion && <InventoryIngredients />}
                 <div className='empty-inventory'>

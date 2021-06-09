@@ -7,6 +7,7 @@ import { ReactComponent as Liked } from '../../icons/heart-solid.svg';
 import { ReactComponent as Stats } from '../../icons/chart-bar-solid.svg';
 import { ReactComponent as Inventory } from '../../icons/list-ul-solid.svg';
 import { ReactComponent as ShoppingList } from '../../icons/shopping-cart-solid.svg';
+import { ReactComponent as Home } from '../../icons/home-solid.svg';
 import { CSSTransition } from 'react-transition-group';
 import { useState, useRef, useEffect } from 'react';
 import { LOG_OUT } from '../../store/actions/actionTypes';
@@ -38,6 +39,15 @@ const DropdownMenu = () => {
             </Link>
         );
     }
+    const DropDownItemNoLink = (props) => {
+        return (
+            <div className='menu-item' onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}>
+                <span className='icon-button'>{props.leftIcon}</span>
+                {props.children}
+                <span className='icon-right'>{props.rightIcon}</span>
+            </div>
+        );
+    }
     const logOut = { type: LOG_OUT }
     return (
         <div className='dropdown' style={{ height: menuHeight }}>
@@ -48,7 +58,8 @@ const DropdownMenu = () => {
                 onEnter={calcHeight}
             >
                 <div className='menu'>
-                    <DropDownItem leftIcon={<Profile />} goToMenu='userInfo'>User info</DropDownItem>
+                    <DropDownItem link='/' leftIcon={<Home />}>Home</DropDownItem>
+                    <DropDownItemNoLink leftIcon={<Profile />} goToMenu='userInfo'>User info</DropDownItemNoLink>
                     <DropDownItem link='/search' leftIcon={<Food />}>Recipes</DropDownItem>
                     <span className='sign-out-menu-item' onClick={() => dispatch(logOut)}>
                         <span className='icon-button'></span>
@@ -70,7 +81,7 @@ const DropdownMenu = () => {
                     <DropDownItem link='/tracker' leftIcon={<Stats />}>Meal Tracker</DropDownItem>
                     <DropDownItem link='/inventory' leftIcon={<Inventory />}>Pantry</DropDownItem>
                     <DropDownItem link='/shopping' leftIcon={<ShoppingList />}>Shopping List</DropDownItem>
-                    <DropDownItem rightIcon={<Right />} goToMenu='main'>Back</DropDownItem>
+                    <DropDownItemNoLink rightIcon={<Right />} goToMenu='main'>Back</DropDownItemNoLink>
                 </div>
 
             </CSSTransition>

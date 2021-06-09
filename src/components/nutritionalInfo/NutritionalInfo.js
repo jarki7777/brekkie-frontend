@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { formatNutririonalInfo } from '../../util/formatNutritionalinfo';
 import './NutritionalInfo.sass'
 
