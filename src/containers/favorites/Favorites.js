@@ -26,23 +26,23 @@ const Favorites = () => {
     }, [token, history]);
 
     useEffect(() => {
-        getFavorites();
-    }, []);
-
-    const getFavorites = async () => {
-        try {
-            const res = await fetchUserFavorites(token);
-            if (res.length !== 0) {
-                setTotalPages(Math.ceil(res.length / limit));
-                setFavorites(res);
+        const getFavorites = async () => {
+            try {
+                const res = await fetchUserFavorites(token);
+                if (res.length !== 0) {
+                    setTotalPages(Math.ceil(res.length / limit));
+                    setFavorites(res);
+                }
+                if (res.length === 0) setError(`Your favorites are empty`);
+                setShowFavorites(res.slice(0, limit));
+    
+            } catch (e) {
+                setError('Service is currently unavailable, please try again later');
             }
-            if (res.length === 0) setError(`Your favorites are empty`);
-            setShowFavorites(res.slice(0, limit));
-
-        } catch (e) {
-            setError('Service is currently unavailable, please try again later');
         }
-    }
+        getFavorites();
+    }, [limit, token]);
+
 
     const goToRecipe = (id) => {
         dispatch(
