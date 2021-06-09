@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import ErrorMsg from '../../components/errorMsg/ErrorMsg';
 import Pagination from '../../components/pagination/Pagination';
 import UserCardModal from '../../components/userCardModal/UserCardModal';
@@ -7,8 +8,9 @@ import { fetchUserList } from '../../services/fetchUser';
 import './AdminView.sass';
 
 const AdminView = () => {
-    const token = useSelector(state => state.loginState.token);
+    const loginState = useSelector(state => state.loginState);
     const email = useRef();
+    const history = useHistory();
     const [page, setPage] = useState(1);
     const limit = 10
     const [totalPages, setTotalPages] = useState(1);
@@ -18,15 +20,16 @@ const AdminView = () => {
     const [openUser, setOpenUser] = useState(false);
 
     useEffect(() => {
+        if (loginState.role === 'client') history.push('/');
         email.current.focus();
-    }, []);
+    }, [loginState, history]);
 
     const search = async (event) => {
         event.preventDefault();
         const email = event.target[0].value;
         if (email !== '') {
             try {
-                let res = await fetchUserList(token, page, limit, email);
+                let res = await fetchUserList(loginState.token, page, limit, email);
                 setUsers(res.docs);
                 setTotalPages(res.totalPages);
             } catch (e) {
@@ -38,7 +41,7 @@ const AdminView = () => {
     const goNext = async () => {
         try {
             if (page < totalPages) {
-                let res = await fetchUserList(token, page + 1, limit, email);
+                let res = await fetchUserList(loginState.token, page + 1, limit, email);
                 setUsers(res.docs);
                 setTotalPages(res.totalPages);
                 setPage(res.page);
@@ -51,7 +54,7 @@ const AdminView = () => {
     const goPrevious = async () => {
         try {
             if (page > 1) {
-                let res = await fetchUserList(token, page - 1, limit, email);
+                let res = await fetchUserList(loginState.token, page - 1, limit, email);
                 setUsers(res.docs);
                 setTotalPages(res.totalPages);
                 setPage(res.page);

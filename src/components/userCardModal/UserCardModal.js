@@ -6,20 +6,20 @@ import { fetchDeleteUser, fetchUpdateUser } from "../../services/fetchUser";
 import { useSelector } from "react-redux";
 
 const UserCardModal = (props) => {
-    const token = useSelector(state => state.loginState.token);
+    const loginState = useSelector(state => state.loginState);
 
     useEffect(() => {
         if (!props.open) return null;
     }, [props.open]);
 
     const updateUser = async (event) => {
-        const body = { 
-            email: event.target[0].value, 
-            username: event.target[1].value, 
-            role: event.target[2].value, 
+        const body = {
+            email: event.target[0].value,
+            username: event.target[1].value,
+            role: event.target[2].value,
         }
         try {
-            await fetchUpdateUser(token, body);
+            await fetchUpdateUser(loginState.token, body);
         } catch (e) {
             console.log(e);
         }
@@ -27,7 +27,7 @@ const UserCardModal = (props) => {
 
     const deleteUser = async () => {
         try {
-            await fetchDeleteUser(token, props.user._id);
+            await fetchDeleteUser(loginState.token, props.user._id);
         } catch (e) {
             console.log(e);
         }
@@ -46,12 +46,13 @@ const UserCardModal = (props) => {
                     <input className='input-text update-input' type='text' defaultValue={props.user.role} required></input>
                     <div className='admin-modal-btn'>
                         <button className='admin-btn users-btn' name='send' type='submit'>update</button>
-                        <button 
-                        className='admin-btn users-btn' 
-                        name='send' 
-                        type='button'
-                        onClick={() => deleteUser()}
-                        >delete</button>
+                        {loginState.role === 'admin' &&
+                            <button
+                                className='admin-btn users-btn'
+                                name='send'
+                                type='button'
+                                onClick={() => deleteUser()}
+                            >delete</button>}
                     </div>
                 </form>
 

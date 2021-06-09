@@ -5,6 +5,7 @@ import Login from '../login/Login';
 import SignUp from '../signUp/SignUp';
 import { ReactComponent as Search } from '../../icons/search-solid.svg';
 import { ReactComponent as Menu } from '../../icons/bars-menu.svg';
+import { ReactComponent as Admin } from '../../icons/user-cog-solid.svg';
 import { useDispatch, useSelector } from "react-redux";
 import './Header.sass';
 import { Link } from "react-router-dom";
@@ -20,6 +21,8 @@ const Header = () => {
         <>
             <Navbar>
                 {loginState.login && <NavItem icon={<Link to='/search'><Search /></Link>} />}
+                {loginState.role === 'mod' && <NavItem icon={<Link to='/admin'><Admin /></Link>} />}
+                {loginState.role === 'admin' && <NavItem icon={<Link to='/admin'><Admin /></Link>} />}
                 {!loginState.login &&
                     <div className='nav-item-not-logged'>
                         <button
