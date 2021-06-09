@@ -26,8 +26,8 @@ export const RecipeDetail = (props) => {
     const [error, setError] = useState(null);
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(props.likes);
-    const [calificationCount, setVotesCount] = useState(props.calification);
-    const [totalVotesCount, setTotalVotes] = useState(props.totalVotes);
+    const [calification, setCalification] = useState(props.calification);
+    const [totalVotes, setTotalVotes] = useState(props.totalVotes);
     const [openVotes, setOpenVotes] = useState(false);
     const [shoppingList, setShoppingList] = useState([]);
 
@@ -41,8 +41,9 @@ export const RecipeDetail = (props) => {
         try {
             let res = await fetchById(props.id, token);
             setLikesCount(res.timesFavorite);
-            setVotesCount(res.totalVotes);
-            setTotalVotes(res.calification);
+            setCalification(res.calification);
+            setTotalVotes(res.totalVotes);
+            setOpenVotes(false)
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
@@ -65,11 +66,13 @@ export const RecipeDetail = (props) => {
         if (liked) {
             await unlikeRecipe();
             setLiked(false);
+            checkCounters();
         }
 
         if (!liked) {
             await likeRecipe();
             setLiked(true);
+            checkCounters();
         }
     }
 
@@ -143,22 +146,23 @@ export const RecipeDetail = (props) => {
 
             <div className='social-interaction'>
                 <div className='likes-element'>
-                    {liked && <Liked />}
+                    {liked && <Liked onClick={() => switchLike()}/>}
                     {!liked && <NotLiked onClick={() => switchLike()} />}
                     {likesCount}
                 </div>
                 <div className='favs-element'>
-                    <Calification onClick={() => setOpenVotes(true)} />
-                    {calificationCount}
-                    ({totalVotesCount})
+                    <Calification onClick={() => setOpenVotes(true)}/>
+                    {calification}
+                    ({totalVotes})
                 </div>
             </div>
 
             {openVotes &&
-                <VoteModal setOpenVotes={setOpenVotes}
+                <VoteModal /*setOpenVotes={setOpenVotes}*/
                     open={openVotes}
                     onClose={() => setOpenVotes(false)}
                     id={props.id}
+                    checkCounters={checkCounters}
                 />
             }
 
