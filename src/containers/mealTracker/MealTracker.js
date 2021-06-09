@@ -16,7 +16,7 @@ import { fetchUserProfile } from "../../services/fetchUser";
 import { formarChartInfo } from '../../util/formatChartInfo';
 import NutrientsPieChart from "../../components/nutrientsPieChart/NutrientsPieChart";
 import { formatBarChartData } from "../../util/formatBarChartData";
-import RangeBarChart from "../../components/rangeBarChart/RangeBarChart";
+import { CaloriesChart, MacrosChart, MicrosChart } from "../../components/rangeBarChart/RangeBarChart";
 
 
 const MealTracker = () => {
@@ -109,7 +109,6 @@ const MealTracker = () => {
         }
     }
 
-
     const getRange = async () => {
         try {
             let res = await fetchByRange(startRange, endDate, token);
@@ -199,9 +198,20 @@ const MealTracker = () => {
                 </div>}
 
             {rangeTracker === 'active-tracker' &&
-                <div className='tracker-pie-graph'>
-                    <RangeBarChart data ={barChartData}/>
-                </div>
+                <>
+                    <div className='chart-title'>Calories vs Goal:</div>
+                    <div>
+                        <CaloriesChart data={barChartData} goal={caloriesGoal}/>
+                    </div>
+                    <div className='chart-title'>Macro nutrients rate in grams:</div>
+                    <div>
+                        <MacrosChart data={barChartData} />
+                    </div>
+                    <div className='chart-title'>Micro nutrients rate in grams:</div>
+                    <div>
+                        <MicrosChart data={barChartData} />
+                    </div>
+                </>
             }
 
             {dailyTracker === 'active-tracker' &&
