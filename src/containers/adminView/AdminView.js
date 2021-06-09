@@ -34,6 +34,32 @@ const AdminView = () => {
         }
     }
 
+    const goNext = async () => {
+        try {
+            if (page < totalPages) {
+                let res = await fetchUserList(token, page + 1, limit, email);
+                setUsers(res.docs);
+                setTotalPages(res.totalPages);
+                setPage(res.page);
+            }
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
+    const goPrevious = async () => {
+        try {
+            if (page > 1) {
+                let res = await fetchUserList(token, page - 1, limit, email);
+                setUsers(res.docs);
+                setTotalPages(res.totalPages);
+                setPage(res.page);
+            }
+        } catch (e) {
+            setError('Service is currently unavailable, please try again later');
+        }
+    }
+
     return (
 
         <div className='admin-container'>
@@ -60,8 +86,8 @@ const AdminView = () => {
             <Pagination
                 actualPage={page}
                 totalPages={totalPages}
-                // goPrevious={() => goPrevious()}
-                // goNext={() => goNext()}
+                goPrevious={() => goPrevious()}
+                goNext={() => goNext()}
                 document={'Page'}
             />
         </div>
