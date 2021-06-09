@@ -8,6 +8,7 @@ import Inventory from './containers/inventory/Inventory';
 import ShoppingList from './containers/shoppingList/ShoppingList';
 import Favorites from './containers/favorites/Favorites';
 import MealTracker from './containers/mealTracker/MealTracker';
+import AdminView from './containers/adminView/AdminView';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path='/shopping' component={ShoppingList} exact />
           <Route path='/favorites' component={Favorites} exact />
           <Route path='/tracker' component={MealTracker} exact />
+          <Route path='/admin' component={AdminView} exact />
           <Redirect to='/' />
         </Switch>
       </BrowserRouter>
