@@ -76,8 +76,16 @@ const ShoppingList = () => {
 
     return (
         <div className='search-view-container'>
-            {error && <ErrorMsg>{error}</ErrorMsg>}
             <div className='shopping-list-title'>Manage your Shopping List</div>
+
+            <div className='tracker-instructions'>
+                <span>You'll find the ingredients you've added from the recipes here, use this list to never 
+                    forget to buy all what you need to make our amazing recipes.
+                </span>
+                <span>You can add custom ingredients using the text box too!</span>
+            </div>
+
+            {error && <ErrorMsg>{error}</ErrorMsg>}
 
             <form className='search-form inventory-search' onSubmit={(event) => addFromInput(event)}>
                 <div className='search-bar'>
