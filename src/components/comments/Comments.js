@@ -114,3 +114,12 @@ const Comments = (props) => {
 }
 
 export default Comments;
+
+
+
+
+<div className='contenedor'>
+    <div className='tarjeta'>
+
+    </div>
+</div>
