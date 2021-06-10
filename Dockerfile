@@ -8,6 +8,6 @@ COPY package.json ./
 RUN npm install --silent
 RUN npm install react-scripts@4.0.3 -g --silent
 
-COPY . ./brekkie-frontend
+COPY . ./
 
 CMD ["npm", "start"]
