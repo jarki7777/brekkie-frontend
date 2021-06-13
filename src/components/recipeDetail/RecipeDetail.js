@@ -96,8 +96,8 @@ export const RecipeDetail = (props) => {
     const addServing = async () => {
         try {
             const date = dateFormatter(Date.now());
-            await fetchFoodLogAddServing(props.id, date, token);
             await fetchAddRecipeToFoodLog(props.id, token);
+            // await fetchFoodLogAddServing(props.id, date, token); BUG DETECTED
             history.push('/tracker');
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
@@ -133,7 +133,7 @@ export const RecipeDetail = (props) => {
                 <div className='calories'>{props.calories} Calories per serve</div>
             </div>
 
-            <div className='add-serving-btn add-serving-recipe-detail' onClick={() => addServing()}>Add a serving to the day</div>
+            <div className='add-serving-btn add-serving-recipe-detail' onClick={() => addServing()}>Add recipe to the daily track</div>
 
             <div className='recipe-summary'>
                 <span className='summary-element'>Serves {props.serves}</span>
