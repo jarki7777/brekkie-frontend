@@ -69,6 +69,12 @@ const SearchView = () => {
 
             if (!keyword && !withInventory) {
                 res = await fetchAll(1, 10, token);
+                dispatch(
+                    {
+                        type: SET_SEARCH_TERM,
+                        payload: null
+                    }
+                );
             }
 
             if (keyword && !withInventory) {
@@ -78,11 +84,17 @@ const SearchView = () => {
                         type: SET_SEARCH_TERM,
                         payload: keyword
                     }
-                )
+                );
             }
 
             if (withInventory) {
                 res = await fetchByInventory(1, 10, token);
+                dispatch(
+                    {
+                        type: SET_SEARCH_TERM,
+                        payload: null
+                    }
+                );
             }
             dispatch(
                 {
