@@ -29,7 +29,7 @@ export const formatBarChartData = (rawData) => {
             protein: element.totalNutrients.totalProteins
         });
     });
-    
+
     for (let i = 0; i < totalGrams.length; i++) {
         formattedData[i].name = dateFormatterNoYear(formattedData[i].name)
         formattedData[i].fat = Math.round(formattedData[i].fat) * 10 / 10;
@@ -40,5 +40,18 @@ export const formatBarChartData = (rawData) => {
         formattedData[i].sugar = Math.round(formattedData[i].sugar) * 10 / 10;
         formattedData[i].protein = Math.round(formattedData[i].protein) * 10 / 10;
     }
+
+    const compare = (a, b) => {
+        if (a.name < b.name) {
+            return -1;
+        }
+        if (a.name > b.name) {
+            return 1;
+        }
+        return 0;
+    }
+
+    formattedData.sort(compare);
+    
     return formattedData;
 }
