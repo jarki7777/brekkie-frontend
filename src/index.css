@@ -21,24 +21,24 @@ a {
 
 @font-face {
   font-family: 'SF-Pro';
-  src: url(./fonts/SF-Pro/SF-Pro-Text-Regular.otf) format('opentype');
+  src: local('SF-Pro'), url(./fonts/SF-Pro/SF-Pro-Text-Regular.otf);
   font-weight: 400;
 }
 
 @font-face {
   font-family: 'SF-Pro';
-  src: url(./fonts/SF-Pro/SF-Pro-Text-Medium.otf) format('opentype');
+  src: local('SF-Pro'), url(./fonts/SF-Pro/SF-Pro-Text-Medium.otf);
   font-weight: 600;
 }
 
 @font-face {
  font-family: 'SF-Pro';
- src: url(./fonts/SF-Pro/SF-Pro-Text-Bold.otf) format('opentype');
+ src: local('SF-Pro'), url(./fonts/SF-Pro/SF-Pro-Text-Bold.otf);
  font-weight: 700;
 }
 
 @font-face {
   font-family: 'SF-Pro';
-  src: url(./fonts/SF-Pro/SF-Pro-Text-Heavy.otf) format('opentype');
+  src: local('SF-Pro'), url(./fonts/SF-Pro/SF-Pro-Text-Heavy.otf);
   font-weight: 900;
 }
