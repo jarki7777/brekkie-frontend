@@ -5,7 +5,7 @@ const Main = () => {
     return (
         <>
             <div className='main-container'>
-                <MainPageCard image='inventory-card.webp' title='Inventory'
+                <MainPageCard image='inventory-card.jpg' title='Inventory'
                     description='Fill your inventory and find recipes with what you have'
                     buttonName='Add Items' link='/inventory' />
                 <MainPageCard image='find-recipes-card.jpg' title='Discover'

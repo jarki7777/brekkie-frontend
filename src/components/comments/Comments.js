@@ -89,9 +89,9 @@ const Comments = (props) => {
             </form>
 
             {error && <ErrorMsg>{error}</ErrorMsg>}
-            {comments.length === 0 && <ErrorMsg>There are no comments yet, be the first!</ErrorMsg>}
+            {comments && comments.length === 0 && <ErrorMsg>There are no comments yet, be the first!</ErrorMsg>}
 
-            {comments.length !== 0 && comments.map(comment =>
+            {comments && comments.length !== 0 && comments.map(comment =>
                 <UserComment
                     key={comments.indexOf(comment)}
                     user={comment.user.username}
@@ -114,12 +114,3 @@ const Comments = (props) => {
 }
 
 export default Comments;
-
-
-
-
-<div className='contenedor'>
-    <div className='tarjeta'>
-
-    </div>
-</div>

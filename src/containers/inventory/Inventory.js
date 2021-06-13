@@ -6,7 +6,6 @@ import { fetchEmptyInventory, fetchUserInventory, fetchAddToInventory } from '..
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import './Inventory.sass';
-import { Link } from 'react-router-dom';
 
 const Inventory = () => {
     const token = useSelector(state => state.loginState.token);
