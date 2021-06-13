@@ -43,15 +43,15 @@ const SearchView = () => {
             let res = null
 
             if (!keyword && !withInventory) {
-                res = await fetchAll(page, limit, token);
+                res = await fetchAll(1, 10, token);
             }
 
             if (keyword && !withInventory) {
-                res = await fetchByKeyword(keyword, page, limit, token);
+                res = await fetchByKeyword(keyword, 1, 10, token);
             }
 
             if (withInventory) {
-                res = await fetchByInventory(page, limit, token);
+                res = await fetchByInventory(1, 10, token);
             }
             dispatch(
                 {
