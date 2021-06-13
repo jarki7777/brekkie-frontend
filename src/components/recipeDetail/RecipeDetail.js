@@ -96,8 +96,8 @@ export const RecipeDetail = (props) => {
     const addServing = async () => {
         try {
             const date = dateFormatter(Date.now());
-            await fetchFoodLogAddServing(props.id, date, token);
             await fetchAddRecipeToFoodLog(props.id, token);
+            // await fetchFoodLogAddServing(props.id, date, token); BUG DETECTED
             history.push('/tracker');
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
