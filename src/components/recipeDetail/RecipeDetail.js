@@ -133,7 +133,7 @@ export const RecipeDetail = (props) => {
                 <div className='calories'>{props.calories} Calories per serve</div>
             </div>
 
-            <div className='add-serving-btn add-serving-recipe-detail' onClick={() => addServing()}>Add a serving to the day</div>
+            <div className='add-serving-btn add-serving-recipe-detail' onClick={() => addServing()}>Add recipe to the daily track</div>
 
             <div className='recipe-summary'>
                 <span className='summary-element'>Serves {props.serves}</span>

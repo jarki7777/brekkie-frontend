@@ -256,7 +256,7 @@ const MealTracker = () => {
                         <div className='results-container' key={logs.recipes.indexOf(recipe)}>
                             <Link to='/recipe' className='recipe-card-link'>
                                 <RecipeCard
-                                    goToRecipe={goToRecipe(recipe._id)}
+                                    goToRecipe={() => goToRecipe(recipe._id)}
                                     img={recipe.img}
                                     title={recipe.title}
                                     likes={recipe.timesFavorite}
