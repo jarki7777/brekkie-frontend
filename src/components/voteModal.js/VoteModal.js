@@ -59,7 +59,7 @@ const VoteModal = (props) => {
     const voteOneStar = async () => {
         try {
             await fetchVotes(token, props.id, 1);
-            props.checkCounters();
+            // props.checkCounters();
         } catch (e) {
             setError('Service is currently unavailable, please try again later');
         }
