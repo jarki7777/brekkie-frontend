@@ -1,4 +1,4 @@
-import { SET_RECIPE_ID, SET_SEARCH_RESULTS } from '../actions/actionTypes';
+import { SET_RECIPE_ID, SET_SEARCH_RESULTS, SET_SEARCH_TERM } from '../actions/actionTypes';
 
 const recipeInitialState = {
     id: null,
@@ -6,7 +6,8 @@ const recipeInitialState = {
     totalPages: 1,
     prevPage: false,
     nextPage: false,
-    page: 1
+    page: 1,
+    searchTerm: null
 }
 
 const recipeReducer = (recipeState = recipeInitialState, action) => {
@@ -18,7 +19,7 @@ const recipeReducer = (recipeState = recipeInitialState, action) => {
                     id: action.payload
                 }
             );
-            case SET_SEARCH_RESULTS:
+        case SET_SEARCH_RESULTS:
             return (
                 {
                     ...recipeState,
@@ -28,9 +29,16 @@ const recipeReducer = (recipeState = recipeInitialState, action) => {
                     nextPage: action.payload.nextPage,
                     page: action.payload.page
                 }
-                );
-                default:
-                    return recipeState
+            );
+        case SET_SEARCH_TERM:
+            return (
+                {
+                    ...recipeState,
+                    searchTerm: action.payload
+                }
+            );
+        default:
+            return recipeState
     }
 }
 

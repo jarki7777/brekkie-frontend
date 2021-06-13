@@ -59,6 +59,7 @@ const MealTracker = () => {
             try {
                 let res = await fetchByRange(startRange, endDate, token);
                 setBarChartData(formatBarChartData(res));
+                setError(null)
             } catch (e) {
                 setError('Service is currently unavailable, please try again later');
             }
@@ -75,6 +76,7 @@ const MealTracker = () => {
                 setChartInfo(formarChartInfo(res));
             }
             if (!res) {
+                setLogs(null)
                 setError('There are no records for this day');
                 setLogs(null)
             }
@@ -246,9 +248,9 @@ const MealTracker = () => {
                             />}
                     </div>
 
-                    <div className='tracker-pie-graph'>
+                    {logs && <div className='tracker-pie-graph'>
                         <NutrientsPieChart data={chartInfo} />
-                    </div>
+                    </div>}
 
                     {logs && logs.recipes.map(recipe =>
                         <div className='results-container' key={logs.recipes.indexOf(recipe)}>

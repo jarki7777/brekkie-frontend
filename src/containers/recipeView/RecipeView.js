@@ -16,22 +16,25 @@ const RecipeView = () => {
 
     useEffect(() => {
         if (!token || !recipeId) history.push('/');
-        getRecipe(recipeId, token);
-    }, [history, recipeId, token]);
+    }, [token, recipeId, history]);
 
-    const getRecipe = async (id, token) => {
-        try {
-            let res = await fetchById(id, token);
-            setRecipe(res);
-        } catch (e) {
-            setError('Service is currently unavailable, please try again later');
+    useEffect(() => {
+        const getRecipe = async (id, token) => {
+            try {
+                let res = await fetchById(id, token);
+                setRecipe(res);
+            } catch (e) {
+                setError('Service is currently unavailable, please try again later');
+            }
         }
-    }
+        if (recipeId) getRecipe(recipeId, token);
+    }, [recipeId, token]);
+
 
     return (
         <div className='recipe-view'>
             {error && <ErrorMsg>{error}</ErrorMsg>}
-            {recipe && <RecipeDetail
+            {recipeId && recipe && <RecipeDetail
                 id={recipe._id}
                 title={recipe.title}
                 img={recipe.img}
@@ -58,7 +61,7 @@ const RecipeView = () => {
                 calification={recipe.calification}
                 totalVotes={recipe.totalVotes}
             />}
-            <Comments />
+            {recipeId && recipe && <Comments />}
         </div>
     );
 }
