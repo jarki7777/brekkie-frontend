@@ -1,5 +1,3 @@
-import { dateFormatter } from "../util/dateFormatter";
-
 export const fetchFoodLog = async (page, limit, token) => {
     try {
         let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_FOOD_LOGS}?page=${page}&limit=${limit}`,
@@ -16,8 +14,7 @@ export const fetchFoodLog = async (page, limit, token) => {
 }
 export const fetchFoodLogByDay = async (date, token) => {
     try {
-        const dateFormatted = dateFormatter(date);
-        let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_FOOD_LOGS_BY_DATE}?date=${dateFormatted}`,
+        let res = await fetch(`${process.env.REACT_APP_BASE_URL}${process.env.REACT_APP_FOOD_LOGS_BY_DATE}?date=${date}`,
             {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json', 'authorization': `Bearer ${token}` }

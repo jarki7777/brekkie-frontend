@@ -9,10 +9,5 @@ export const dateFormatter = (unformattedDate) => {
 }
 
 export const dateFormatterNoYear = (unformattedDate) => {
-    const date = new Date(unformattedDate);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const dateFormatted = `${month}-${day}`;
-
-    return dateFormatted
+    return unformattedDate.toString().slice(5, 10);
 }
