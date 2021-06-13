@@ -8,7 +8,7 @@ import { ReactComponent as Square } from '../../icons/square-regular.svg';
 import { ReactComponent as SquareCheck } from '../../icons/check-square-regular.svg';
 import { useHistory, Link } from 'react-router-dom';
 import { fetchAll, fetchByInventory, fetchByKeyword } from '../../services/fetchRecipe';
-import { SET_RECIPE_ID, SET_SEARCH_RESULTS } from '../../store/actions/actionTypes';
+import { SET_RECIPE_ID, SET_SEARCH_RESULTS, SET_SEARCH_TERM } from '../../store/actions/actionTypes';
 
 const SearchView = () => {
     const searchInput = useRef();
@@ -18,11 +18,11 @@ const SearchView = () => {
     const prevPage = useSelector(state => state.recipeState.prevPage);
     const nextPage = useSelector(state => state.recipeState.nextPage);
     const page = useSelector(state => state.recipeState.page);
+    const searchTerm = useSelector(state => state.recipeState.searchTerm);
     const limit = 10;
     const history = useHistory();
     const dispatch = useDispatch();
     const [error, setError] = useState(null);
-    const [searchTerm, setSearchTerm] = useState(null);
     const [searchWithInventory, setSearchWithInventory] = useState(null);
     const [check, setCheck] = useState(false);
 
@@ -31,11 +31,36 @@ const SearchView = () => {
         searchInput.current.focus();
     }, [token, history]);
 
+    useEffect(() => {
+        const initialSearch = async () => {
+            try {
+                if (!searchResults || searchResults.length === 0) {
+                    let res = await fetchAll(1, 10, token);
+                    dispatch(
+                        {
+                            type: SET_SEARCH_RESULTS,
+                            payload: {
+                                searchResults: res.docs,
+                                totalPages: res.totalPages,
+                                prevPage: res.hasPrevPage,
+                                nextPage: res.hasNextPage,
+                                page: res.page
+                            }
+                        }
+                    );
+                }
+            } catch (e) {
+                setError('Service is currently unavailable, please try again later');
+            }
+        }
+        initialSearch();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     const search = async (event) => {
         event.preventDefault();
         const keyword = event.target[0].value;
         const withInventory = event.target[2].checked;
-        setSearchTerm(keyword);
         setSearchWithInventory(withInventory);
         setError(null);
 
@@ -48,6 +73,12 @@ const SearchView = () => {
 
             if (keyword && !withInventory) {
                 res = await fetchByKeyword(keyword, 1, 10, token);
+                dispatch(
+                    {
+                        type: SET_SEARCH_TERM,
+                        payload: keyword
+                    }
+                )
             }
 
             if (withInventory) {
@@ -84,11 +115,11 @@ const SearchView = () => {
                 }
 
                 if (searchTerm && !searchWithInventory) {
-                    res = await fetchByKeyword(searchTerm, page, limit, token);
+                    res = await fetchByKeyword(searchTerm, newPage, limit, token);
                 }
 
                 if (searchWithInventory) {
-                    res = await fetchByInventory(page, limit, token);
+                    res = await fetchByInventory(newPage, limit, token);
                 }
 
                 dispatch(
@@ -168,7 +199,7 @@ const SearchView = () => {
             <div className='tracker-instructions'>
                 <span>Use the search bar to explore all the recipe sin the catalog</span>
                 <span>If u want a more customized experience, check the bow below
-                    to find recipes that fit your inventory
+                to find recipes that fit your inventory
                 </span>
             </div>
 
