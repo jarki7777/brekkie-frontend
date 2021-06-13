@@ -78,7 +78,6 @@ const MealTracker = () => {
             if (!res) {
                 setLogs(null)
                 setError('There are no records for this day');
-                setLogs(null)
             }
         } catch (e) {
             setError('Service is currently unavailable, please try again later');

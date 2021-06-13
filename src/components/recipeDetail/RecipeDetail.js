@@ -13,8 +13,8 @@ import { fetchAddToShoppingList, fetchShoppingList } from '../../services/fetchS
 import ErrorMsg from '../errorMsg/ErrorMsg';
 import { fetchById } from '../../services/fetchRecipe';
 import VoteModal from '../voteModal.js/VoteModal';
-import { fetchAddRecipeToFoodLog, fetchFoodLogAddServing } from '../../services/fetchFoodLog';
-import { dateFormatter } from '../../util/dateFormatter';
+import { fetchAddRecipeToFoodLog/*, fetchFoodLogAddServing*/ } from '../../services/fetchFoodLog';
+// import { dateFormatter } from '../../util/dateFormatter';
 import { useHistory } from 'react-router';
 
 export const RecipeDetail = (props) => {
@@ -95,7 +95,7 @@ export const RecipeDetail = (props) => {
 
     const addServing = async () => {
         try {
-            const date = dateFormatter(Date.now());
+            // const date = dateFormatter(Date.now());
             await fetchAddRecipeToFoodLog(props.id, token);
             // await fetchFoodLogAddServing(props.id, date, token); BUG DETECTED
             history.push('/tracker');
